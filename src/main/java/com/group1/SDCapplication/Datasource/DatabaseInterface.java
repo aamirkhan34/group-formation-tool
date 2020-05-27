@@ -1,4 +1,4 @@
-package core.datasource;
+package com.group1.SDCapplication.Datasource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
