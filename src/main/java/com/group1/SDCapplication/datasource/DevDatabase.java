@@ -1,4 +1,4 @@
-package com.group1.SDCapplication.Datasource;
+package com.group1.SDCapplication.datasource;
 
 // import org.springframework.context.annotation.Configuration;
 import java.sql.Connection;

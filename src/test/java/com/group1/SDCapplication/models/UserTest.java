@@ -1,6 +1,6 @@
-package com.group1.SDCapplication;
+package com.group1.SDCapplication.models;
 import static org.junit.jupiter.api.Assertions.*;
-import com.group1.SDCapplication.Models.User;
+import com.group1.SDCapplication.models.User;
 import org.junit.jupiter.api.Test;
 
 

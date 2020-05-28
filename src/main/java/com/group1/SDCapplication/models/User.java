@@ -1,4 +1,4 @@
-package com.group1.SDCapplication.Models;
+package com.group1.SDCapplication.models;
 
 public class User {
     private long id;
