@@ -30,7 +30,7 @@ deploy-test:
   stage: deploy
   tags:
     - dalfcs_gitlab_docker_ci
-  images: ruby:2.6
+  image: ruby:2.6
   script: 
     - app-get update -qy
     - app-get install -y ruby-dev
