@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Guest home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<nav th:replace="userlayout :: usernavbar"></nav>
+<div class="container">
+    <div>
+        <p> This is guest page</p>
+        <p> Courses provided are</p>
+        <table class="tab-container">
+            <thead>
+            <tr>
+                <th>Course number</th>
+                <th>Course name</th>
+                <th>instructor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="aCourse : ${courses}">
+                <td th:text="${aCourse.courseName}"></td>
+                <td th:text="${aCourse.courseNumber}"></td>
+                <td th:text="${aCourse.instructor}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <form th:action="@{/user/logout}" method="post">
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
