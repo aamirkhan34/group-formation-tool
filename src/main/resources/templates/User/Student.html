@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<nav th:replace="userlayout :: usernavbar"></nav>
+<div class="container">
+    <div>
+        <p> This is Student page</p>
+        <p>Token is </p>
+        <form th:action="@{/user/logout}" method="post">
+            <p th:text="${token}"><p th:text="${role}"></p>
+            <button type="submit" class="btn btn-primary btn-block">Log out</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

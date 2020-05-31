@@ -1,9 +1,13 @@
 package com.group1.SDCapplication.models;
 
 public class User {
+
+
     private long id;
     private String firstname;
     private String lastname;
+    private String email;
+    private String password;
 
     public User(long id, String firstname, String lastname, String email, String password) {
         this.id = id;
@@ -12,7 +16,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
+    
     public User(){
 
     }
@@ -57,9 +61,7 @@ public class User {
         this.password = password;
     }
 
-    private String email;
 
-    private String password;
 
 
 
