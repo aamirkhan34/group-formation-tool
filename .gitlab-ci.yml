@@ -32,8 +32,8 @@ deploy-test:
     - dalfcs_gitlab_docker_ci
   image: ruby:2.6
   script: 
-    - app-get update -qy
-    - app-get install -y ruby-dev
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
   only:
