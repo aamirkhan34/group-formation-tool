@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserValidation {
-    private String Token;
+    private String token;
     UserLoginDao userLoginDao = new UserLoginDao();
     JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
     public boolean userValidation(UserCredentials userCredentials){
@@ -17,8 +17,8 @@ public class UserValidation {
         return result;
     }
     public String generateToken(UserCredentials userCredentials){
-        Token = jwtTokenUtil.generateToken(userCredentials);
-        return Token;
+        token = jwtTokenUtil.generateToken(userCredentials);
+        return token;
     }
     public List<String> getUserRoles(UserCredentials userCredentials){
         List<String> userRoles = new ArrayList<>();
