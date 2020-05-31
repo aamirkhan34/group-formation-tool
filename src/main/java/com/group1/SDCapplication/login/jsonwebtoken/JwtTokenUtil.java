@@ -63,6 +63,8 @@ public class JwtTokenUtil implements Serializable , JwtTokenInterface{
 
     @Override
     public boolean validateUserRole(String token, String role) {
-        return false;
+        List<String > roles = (List<String >)getAllClaimsFromToken(token).get("roles");
+
+        return roles.contains(role);
     }
 }

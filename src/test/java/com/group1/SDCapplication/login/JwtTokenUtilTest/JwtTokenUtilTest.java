@@ -69,7 +69,11 @@ public class JwtTokenUtilTest implements Serializable {
     @Test
     @Order(3)
     public void testValidateUserRole(){
-        jwtTokenUtil = new JwtTokenMock();
-        assertTrue(jwtTokenUtil.validateUserRole(token,"Guest"), ()-> "Role validated failed");
+//        jwtTokenUtil = new JwtTokenMock();
+        assertTrue(jwtTokenUtil.validateUserRole(token,"Student"), ()-> "Role validated failed");
+        assertTrue(jwtTokenUtil.validateUserRole(token,"TA"), ()-> "Role validated failed");
+        assertFalse(jwtTokenUtil.validateUserRole(token,"Guest"), ()-> "Role validated failed");
+        assertFalse(jwtTokenUtil.validateUserRole(token,"Instructor"), ()-> "Role validated failed");
+        assertFalse(jwtTokenUtil.validateUserRole(token,"Admin"), ()-> "Role validated failed");
     }
 }
