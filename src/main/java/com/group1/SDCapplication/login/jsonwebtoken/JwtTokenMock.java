@@ -22,6 +22,11 @@ public class JwtTokenMock implements JwtTokenInterface {
     }
 
     @Override
+    public String generateTemporaryToken(Long UID) {
+        return null;
+    }
+
+    @Override
     public boolean validateUserRole(String token, String role) {
         return false;
     }

@@ -50,6 +50,15 @@ public class JwtTokenUtilTest implements Serializable {
     public void testGenerateToken(){
         assertFalse(null == token, () -> "Token not generated correctly");
     }
+
+    @Test
+    @Order(1)
+    public void testGenerateTemporaryToken(){
+        String  tempToken = jwtTokenUtil.generateTemporaryToken(10010L);
+        assertFalse(null == tempToken, () -> "Token not generated correctly");
+
+    }
+
     @Test
     @Order(2)
     public void testGetUsernameFromToken() {
@@ -76,4 +85,5 @@ public class JwtTokenUtilTest implements Serializable {
         assertFalse(jwtTokenUtil.validateUserRole(token,"Instructor"), ()-> "Role validated failed");
         assertFalse(jwtTokenUtil.validateUserRole(token,"Admin"), ()-> "Role validated failed");
     }
+
 }

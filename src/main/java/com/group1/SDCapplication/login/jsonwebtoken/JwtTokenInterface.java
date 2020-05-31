@@ -11,5 +11,6 @@ public interface JwtTokenInterface {
     public String getUsernameFromToken(String token);
     public Claims getAllClaimsFromToken(String token);
     public String generateTokenWithRoles(User user, List<String > roles );
+    public String generateTemporaryToken(Long UID);
     public boolean validateUserRole(String token, String role);
 }
