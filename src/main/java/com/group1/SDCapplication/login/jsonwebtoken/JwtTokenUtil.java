@@ -18,6 +18,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtTokenUtil implements Serializable , JwtTokenInterface{
     private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final long JWT_TEMP_TOKEN_VALIDITY = 5 * 60;
     private String secret = "CSCI5308";
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -51,6 +52,16 @@ public class JwtTokenUtil implements Serializable , JwtTokenInterface{
         claims.put("roles", roles);
         return doGenerateToken(claims, "CSCI5308");
     }
+
+    @Override
+    public String generateTemporaryToken(Long UID) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("UID",UID);
+        return Jwts.builder().setClaims(claims).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TEMP_TOKEN_VALIDITY * 10))
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
+
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 10))
