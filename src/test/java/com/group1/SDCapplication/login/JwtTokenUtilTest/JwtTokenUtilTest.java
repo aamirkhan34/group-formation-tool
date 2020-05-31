@@ -1,11 +1,13 @@
 package com.group1.SDCapplication.login.JwtTokenUtilTest;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+
+import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.login.models.UserCredentials;
+import com.group1.SDCapplication.models.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.TestComponent;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,15 +16,40 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @TestComponent
 public class JwtTokenUtilTest implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
     private String secret = "CSCI5308";
-    public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+    private JwtTokenUtil jwtTokenUtil;
+    private User testUser;
+    private String  token;
+    private List<String > roles;
+
+    @BeforeAll
+    public void generateTestUser(){
+        testUser = new User(5308L,"test","family","test@dal.ca","password");
+        roles = new ArrayList<String >();
+        roles.add("Student");
+        roles.add("TA");
+        jwtTokenUtil = new JwtTokenUtil();
+        token = jwtTokenUtil.generateTokenWithRoles(testUser,roles);
     }
+//
+    @Test
+    public void testGenerateToken(){
+        assertFalse(null == token, () -> "Token not generated correctly");
+
+    }
+    @Test
+    public void testGetUsernameFromToken(String token) {
+        assertTrue(jwtTokenUtil.getAllClaimsFromToken(token).getSubject().equals("CSCI5308"),()-> "Subject extracted correctly");
+    }
+
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
@@ -46,8 +73,7 @@ public class JwtTokenUtilTest implements Serializable {
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 10))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public void testValidateToken(String token, UserDetails userDetails) {
+        assertTrue((jwtTokenUtil.getUsernameFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token)));
     }
 }

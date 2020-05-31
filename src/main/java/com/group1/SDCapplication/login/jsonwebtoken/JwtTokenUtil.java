@@ -2,12 +2,11 @@ package com.group1.SDCapplication.login.jsonwebtoken;
 
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 import com.group1.SDCapplication.login.models.UserCredentials;
+import com.group1.SDCapplication.models.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -30,16 +29,25 @@ public class JwtTokenUtil implements Serializable {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
     public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
-    public String generateToken(UserCredentials userCredentials) {
+    public String generateToken(User user) {
+
+        return generateTokenWithRoles(user, new ArrayList<>());
+    }
+    public String generateTokenWithRoles(User user, List<String >roles ){
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userCredentials.getEmail());
+        claims.put("UID",user.getId());
+        claims.put("email",user.getEmail());
+        claims.put("first name",user.getFirstname());
+        claims.put("last name",user.getLastname());
+        claims.put("roles", roles);
+        return doGenerateToken(claims, "CSCI5308");
     }
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))

@@ -5,6 +5,7 @@ import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.login.services.UserValidation;
 import com.group1.SDCapplication.models.Courses;
+import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.user.services.GuestUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,10 @@ public class UserController {
         UserValidation userValidation = new UserValidation();
         boolean isUserValid = userValidation.userValidation(userCredentials);
         if(isUserValid){
-            Token = userValidation.generateToken(userCredentials);
+            User user = new User();
+            user.setEmail(userCredentials.getEmail());
+            user.setPassword(userCredentials.getPassword());
+            Token = userValidation.generateToken(user);
             userRoles = userValidation.getUserRoles(userCredentials);
         for (String role: userRoles) {
             finalRole = role;
