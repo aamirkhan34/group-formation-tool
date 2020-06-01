@@ -1,10 +1,10 @@
 package com.group1.SDCapplication.user.usercontroller;
 
-import com.group1.SDCapplication.login.dao.UserLoginDao;
 import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.login.services.UserValidation;
 import com.group1.SDCapplication.models.Courses;
+import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.user.services.GuestUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private String Token;
+    private String token;
     JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
 //    @GetMapping("/home")
@@ -33,18 +33,19 @@ public class UserController {
         UserValidation userValidation = new UserValidation();
         boolean isUserValid = userValidation.userValidation(userCredentials);
         if(isUserValid){
-            Token = userValidation.generateToken(userCredentials);
+            User user = userValidation.getUserDetails(userCredentials);
             userRoles = userValidation.getUserRoles(userCredentials);
+            token = userValidation.generateTokenWithRoles(user,userRoles);
         for (String role: userRoles) {
             finalRole = role;
         }
-            model.addAttribute("token", Token);
+            model.addAttribute("token", token);
             model.addAttribute("role", finalRole);
-            if(finalRole.equals("student") && !jwtTokenUtil.isTokenExpired(Token))
+            if(finalRole.equals("student") && !jwtTokenUtil.isTokenExpired(token))
             {
                 return "/User/Student";
             }
-            if(finalRole.equals("guest") && !jwtTokenUtil.isTokenExpired(Token))
+            if(finalRole.equals("guest") && !jwtTokenUtil.isTokenExpired(token))
             {
                 GuestUser guestUser = new GuestUser();
                 List<Courses> coursesForGuest = new ArrayList<>();
@@ -52,7 +53,7 @@ public class UserController {
                 model.addAttribute("courses", coursesForGuest);
                 return "/User/Guest";
             }
-            else if(finalRole.equals("instructor") && !jwtTokenUtil.isTokenExpired(Token))
+            else if(finalRole.equals("instructor") && !jwtTokenUtil.isTokenExpired(token))
             {
                 return "/User/Instructor";
             }
@@ -75,7 +76,7 @@ public class UserController {
     @PostMapping("/logout")
     public String userLogout(Model model){
         String logouttoken = (String) model.getAttribute("token");
-        model.addAttribute("token", Token);
+        model.addAttribute("token", token);
         System.out.println("logout function called");
         System.out.println(logouttoken);
         return "/Home/index";
