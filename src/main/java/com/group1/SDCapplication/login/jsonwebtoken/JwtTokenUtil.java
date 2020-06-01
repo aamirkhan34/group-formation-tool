@@ -19,8 +19,8 @@ public class JwtTokenUtil implements Serializable , JwtTokenInterface{
     private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
     public static final long JWT_TOKEN_VALIDITY_FORGOT_PASSWORD = 6000 * 1000;
-
     public static final long JWT_TEMP_TOKEN_VALIDITY = 5 * 60;
+
     private String secret = "CSCI5308";
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);

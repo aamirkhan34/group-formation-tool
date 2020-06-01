@@ -31,8 +31,8 @@ public class CoursesDao implements Course{
                     course.setCourseName(courseName);
                     String instructorNUmber = rs.getString("instructor_number");
                     course.setInstructor(instructorNUmber);
+                    allCourses.add(course);
                 }
-                allCourses.add(course);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {

@@ -25,7 +25,7 @@ public class ResetPasswordController {
             return modelAndView;
         }
         else {
-            modelAndView.setViewName("/Home/index");
+            modelAndView.setViewName("/Home/error");
             return modelAndView;
         }
     }
@@ -35,11 +35,16 @@ public class ResetPasswordController {
         model.addAttribute("userResetPassword", user);
         String userEmail = user.getEmail();
         String password = user.getPassword();
+        System.out.println(userEmail);
+        System.out.println(password);
         boolean result = userPasswordReset.passwordReset(userEmail, password);
+        System.out.println(result);
         if(result){
             modelAndView.setViewName("/Home/index");
         }
-
+        else {
+            modelAndView.setViewName("/Home/error");
+        }
         return modelAndView;
     }
 }
