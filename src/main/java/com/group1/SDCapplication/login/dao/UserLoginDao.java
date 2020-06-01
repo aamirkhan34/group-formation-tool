@@ -1,7 +1,6 @@
 package com.group1.SDCapplication.login.dao;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
-import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.signup.security.PasswordEncryptDecrypt;
 
@@ -9,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserLoginDao implements UserLogIn{
+public class UserLoginDao implements UserLogin {
 
     DevDatabase dev = new DevDatabase();
     PasswordEncryptDecrypt passwordEncryptDecrypt = new PasswordEncryptDecrypt();
@@ -67,6 +66,9 @@ public class UserLoginDao implements UserLogIn{
         return user;
     }
 
+
+
+    @Override
     public List<String> userRole(String userName){
 
         String USER_ROLE_QUERY = "select rl.role_name as role_name from user as us inner join role as rl inner join user_role as ur \n" +

@@ -18,22 +18,6 @@ public class UserLoginDaoTest  {
     }
 
 
-
-
-//    @Override
-//    public boolean isUserValidTest(String username, String password) {
-//        if(username == "testusername" && password == "testpassword"){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public List<String> userRoleTest(){
-//        List<String> userRole = new ArrayList<>();
-//        userRole.add("student");
-//        userRole.add("guest");
-//        return userRole;
-//    }
     @Test
     public void testGetUser(){
         User user = userLoginDao.getUser("premkumar.menni@dal.ca");

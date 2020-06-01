@@ -18,8 +18,15 @@ public class UserValidation {
         boolean result = userLoginDao.isUserValid(userName, passWord);
         return result;
     }
+    public User getUserDetails(UserCredentials userCredentials){
+        return userLoginDao.getUser(userCredentials.getEmail());
+    }
     public String generateToken(User userCredentials){
         token = jwtTokenUtil.generateToken(userCredentials);
+        return token;
+    }
+    public String generateTokenWithRoles(User userCredentials, List<String >roles){
+        token = jwtTokenUtil.generateTokenWithRoles(userCredentials,roles);
         return token;
     }
     public List<String> getUserRoles(UserCredentials userCredentials){
