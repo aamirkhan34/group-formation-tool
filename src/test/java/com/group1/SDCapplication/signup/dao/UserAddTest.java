@@ -4,5 +4,5 @@ import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.models.UserTest;
 
 public interface UserAddTest {
-    public String addUserToDBTest(UserTest user);
+    public void addUserToDBTest();
 }

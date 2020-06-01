@@ -17,7 +17,7 @@ public class CoursesDao implements Course{
         DevDatabase devDatabase = new DevDatabase();
         Courses course = new Courses();
         List<Courses> allCourses = new ArrayList<>();
-        Connection devConnection;
+        Connection devConnection = null;
         {
             try {
                 String SELECT_COURSE_QUERY = "SELECT course_number, course_name,instructor_number from course";
@@ -33,13 +33,13 @@ public class CoursesDao implements Course{
                     course.setInstructor(instructorNUmber);
                 }
                 allCourses.add(course);
-
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
+
         return allCourses;
     }
 
