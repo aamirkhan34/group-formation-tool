@@ -2,6 +2,7 @@ package com.group1.SDCapplication.login.dao;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
 import com.group1.SDCapplication.login.models.UserCredentials;
+import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.signup.security.PasswordEncryptDecrypt;
 
 import java.sql.*;
@@ -12,6 +13,9 @@ public class UserLoginDao implements UserLogIn{
 
     DevDatabase dev = new DevDatabase();
     PasswordEncryptDecrypt passwordEncryptDecrypt = new PasswordEncryptDecrypt();
+
+
+
 
     public boolean isUserValid(String userName, String password){
         String USER_SELECT_QUERY = "SELECT email, password from user where email = "+ "'" + userName + "'";
@@ -38,6 +42,31 @@ public class UserLoginDao implements UserLogIn{
             return false;
         }
     }
+
+    @Override
+    public User getUser(String  email) {
+        String USER_SELECT_QUERY = "SELECT UID, first_name,last_name, email from user where email = ?";
+        User user = null;
+        try{
+            PreparedStatement statement = dev.getConnection().prepareStatement(USER_SELECT_QUERY);
+            statement.setString(1, email);
+
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            user = new User();
+            user.setId(rs.getLong("UID"));
+            user.setFirstname(rs.getString("first_name"));
+            user.setLastname(rs.getString("last_name"));
+            user.setEmail(rs.getString("email"));
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
     public List<String> userRole(String userName){
 
         String USER_ROLE_QUERY = "select rl.role_name as role_name from user as us inner join role as rl inner join user_role as ur \n" +

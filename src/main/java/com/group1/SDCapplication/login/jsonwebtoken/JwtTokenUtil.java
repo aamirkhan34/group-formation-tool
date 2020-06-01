@@ -58,13 +58,13 @@ public class JwtTokenUtil implements Serializable , JwtTokenInterface{
         Map<String, Object> claims = new HashMap<>();
         claims.put("UID",UID);
         return Jwts.builder().setClaims(claims).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TEMP_TOKEN_VALIDITY * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TEMP_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
     public Boolean validateToken(String token, UserDetails userDetails) {
