@@ -1,4 +1,4 @@
-package com.group1.SDCapplication.user.usercontroller;
+package com.group1.SDCapplication.user.controller;
 
 import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.login.models.UserCredentials;
@@ -19,11 +19,6 @@ public class UserController {
 
     private String token;
     JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
-
-//    @GetMapping("/home")
-//    public String userLoggedin(@RequestAttribute String token, Model model){
-//        return "User/Home";
-//    }
 
     @PostMapping("/home")
     public String userHome(@ModelAttribute UserCredentials userCredentials, Model model){

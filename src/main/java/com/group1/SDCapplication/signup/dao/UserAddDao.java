@@ -38,8 +38,10 @@ public class UserAddDao  implements UserAdd{
                 stmt.executeUpdate(ROLE_INSERT_QUERY);
                 if (res == 1) {
                     result = "Signup Successful";
+                    devConnection.close();
                 } else {
                     result = "Signup is not Successful";
+                    devConnection.close();
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -61,6 +63,7 @@ public class UserAddDao  implements UserAdd{
             Connection devConnection = dev.getConnection();
             Statement stmt = devConnection.createStatement();
             rs = stmt.executeQuery(USER_EXIST);
+            devConnection.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {

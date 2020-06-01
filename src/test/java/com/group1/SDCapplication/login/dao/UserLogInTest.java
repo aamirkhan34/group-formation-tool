@@ -4,5 +4,5 @@ import org.junit.jupiter.api.Test;
 
 public interface UserLogInTest {
     @Test
-    public boolean isUserValidTest(String username, String password);
+    public void isUserValidTest();
 }

@@ -27,12 +27,13 @@ public class UserLoginDao implements UserLogin {
                 userPassword = passwordEncryptDecrypt.passwordDecrypt(rs.getString("password"));
             }
             if(password.equals(userPassword)){
+                devConnection.close();
                 return true;
             }
             else {
+                devConnection.close();
                 return false;
             }
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return false;
@@ -40,6 +41,7 @@ public class UserLoginDao implements UserLogin {
             throwables.printStackTrace();
             return false;
         }
+
     }
 
     @Override
@@ -83,13 +85,39 @@ public class UserLoginDao implements UserLogin {
                     String role = rs.getString("role_name");
                     userRole.add(role);
             }
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return userRole;
+    }
+    public boolean isUserValid(String email){
+
+        String USER_SELECT_QUERY = "SELECT email from user where email = "+ "'" + email + "'";
+        try {
+            String userEmail = null;
+            Connection devConnection = dev.getConnection();
+            Statement stmt = devConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(USER_SELECT_QUERY);
+            while (rs.next()){
+                userEmail = rs.getString("email");
+            }
+            if(email.equals(userEmail)){
+                devConnection.close();
+                return true;
+            }
+            else {
+                devConnection.close();
+                return false;
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
     }
 }

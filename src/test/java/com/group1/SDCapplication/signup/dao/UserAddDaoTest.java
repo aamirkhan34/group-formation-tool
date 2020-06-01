@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test;
 
 public class UserAddDaoTest implements UserAddTest{
 
-
-
     @Test
     @Override
-    public String addUserToDBTest(UserTest user) {
+    public void addUserToDBTest() {
 
-        return null;
+
     }
 
     @Test
