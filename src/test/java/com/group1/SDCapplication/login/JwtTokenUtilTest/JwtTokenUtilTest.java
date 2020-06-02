@@ -44,7 +44,7 @@ public class JwtTokenUtilTest implements Serializable {
 
         token = jwtTokenUtil.generateTokenWithRoles(testUser,roles);
     }
-//
+
     @Test
     @Order(1)
     public void testGenerateToken(){

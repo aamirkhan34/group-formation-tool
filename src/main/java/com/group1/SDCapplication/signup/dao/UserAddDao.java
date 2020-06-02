@@ -56,8 +56,10 @@ public class UserAddDao  implements UserAdd{
         }
     }
 
+    @Override
     public boolean userNotExist(String email){
         String USER_EXIST = "SELECT email FROM user where email =" + "'"+ email +"'";
+        boolean result = false;
         ResultSet rs = null;
         try {
             Connection devConnection = dev.getConnection();
@@ -74,10 +76,12 @@ public class UserAddDao  implements UserAdd{
             while (rs.next()){
                 String userEmail =  rs.getString("email");
                 if(userEmail == ""){
-                    return true;
+                    result = true;
+                    return result;
                 }
                 else {
-                    return false;
+                    result = false;
+                    return result;
                 }
             }
         }
@@ -85,6 +89,6 @@ public class UserAddDao  implements UserAdd{
             e.printStackTrace();
         }
 
-        return true;
+        return result;
     }
 }

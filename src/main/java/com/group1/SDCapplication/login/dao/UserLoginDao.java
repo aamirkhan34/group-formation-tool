@@ -37,7 +37,6 @@ public class UserLoginDao implements UserLogin {
             throwables.printStackTrace();
             return false;
         }
-
     }
 
     @Override

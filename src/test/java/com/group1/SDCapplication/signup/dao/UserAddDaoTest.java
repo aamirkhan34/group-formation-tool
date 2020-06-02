@@ -1,19 +1,17 @@
 package com.group1.SDCapplication.signup.dao;
 
+import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.models.UserTest;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class UserAddDaoTest implements UserAddTest{
+public class UserAddDaoTest {
 
-    @Test
-    @Override
-    public void addUserToDBTest() {
-
-
-    }
+    UserAddDao userAddDao = new UserAddDao();
 
     @Test
     public void userNotExistTest(){
-
+        assertFalse(userAddDao.userNotExist("testemail"), ()->"error while searching user");
     }
+
 }

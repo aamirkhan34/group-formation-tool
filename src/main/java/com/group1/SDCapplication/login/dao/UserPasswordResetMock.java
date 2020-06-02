@@ -23,8 +23,8 @@ public class UserPasswordResetMock implements UserPasswordReset{
 
     @Override
     public boolean updatePassword(String email, String encryptedPassword) {
-        String decryptedpassword = passwordEncryptDecrypt.passwordDecrypt(encryptedPassword);
-        if (email == "testuser" && decryptedpassword == "testpassword"){
+        String decryptedPassword = passwordEncryptDecrypt.passwordDecrypt(encryptedPassword);
+        if (email == "testuser" && decryptedPassword == "testpassword"){
             return true;
         }
         else {

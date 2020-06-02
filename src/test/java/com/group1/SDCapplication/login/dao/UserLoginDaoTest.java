@@ -25,4 +25,10 @@ public class UserLoginDaoTest  {
         assertTrue(userLoginDao.isUserValid(user.getEmail(), user.getPassword()) == false);
     }
 
+    @Test
+    public void isUserValid(){
+        UserLoginDao userLoginDao = new UserLoginDao();
+        assertTrue(userLoginDao.isUserValid("testemail") == false);
+    }
+
 }
