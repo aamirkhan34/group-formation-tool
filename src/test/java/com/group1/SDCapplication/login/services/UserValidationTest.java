@@ -14,13 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserValidationTest {
-    public String TokenTest;
     UserLogin userLoginDao;
-
-
-
-    JwtTokenUtilTest jwtTokenUtilTest = new JwtTokenUtilTest();
-    UserCredentialsTest userCredentialsTest = new UserCredentialsTest();
 
     @BeforeEach
     public void  initialize(){
@@ -35,10 +29,9 @@ public class UserValidationTest {
         System.out.println(result);
         assertTrue(result);
     }
-//
+
     @Test
     public void generateTokenTest(){
-//        Token = jwtTokenUtilTest.generateToken();
         String token = "sampletoken";
         assertTrue(token.equals("sampletoken"));
     }

@@ -63,7 +63,6 @@ public class UserAddDao  implements UserAdd{
             Connection devConnection = dev.getConnection();
             Statement stmt = devConnection.createStatement();
             rs = stmt.executeQuery(USER_EXIST);
-            devConnection.close();
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
@@ -85,6 +84,7 @@ public class UserAddDao  implements UserAdd{
         catch (SQLException e){
             e.printStackTrace();
         }
+
         return true;
     }
 }

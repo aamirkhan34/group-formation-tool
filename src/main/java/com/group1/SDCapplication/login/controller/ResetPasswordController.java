@@ -1,6 +1,6 @@
 package com.group1.SDCapplication.login.controller;
 
-import com.group1.SDCapplication.login.dao.UserPasswordReset;
+import com.group1.SDCapplication.login.dao.UserPasswordResetDao;
 import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.models.User;
 import org.springframework.stereotype.Controller;
@@ -34,14 +34,14 @@ public class ResetPasswordController {
     }
     @PostMapping("/user/passwordreset")
     public String  passwordReset(@ModelAttribute User user, Model model, @ModelAttribute String email){
-        UserPasswordReset userPasswordReset = new UserPasswordReset();
+        UserPasswordResetDao userPasswordResetDao = new UserPasswordResetDao();
         model.addAttribute("userResetPassword", user);
         model.addAttribute("tokenError", false);
         String userEmail = user.getEmail();
         String password = user.getPassword();
         System.out.println(userEmail);
         System.out.println(password);
-        boolean result = userPasswordReset.passwordReset(userEmail, password);
+        boolean result = userPasswordResetDao.passwordReset(userEmail, password);
         System.out.println(result);
         if(result){
             return "/Home/index";
