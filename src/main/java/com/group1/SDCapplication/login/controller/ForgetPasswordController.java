@@ -37,7 +37,7 @@ public class ForgetPasswordController {
             String token = forgotPasswordValidation.getToken(user.getEmail());
             if(sendEmail(user.getEmail(), token))
             {
-                return "/Home/index";
+                return "Home/index";
             }
             else {
                 return "/Login/ForgetPassword";

@@ -16,7 +16,6 @@ public class UserPasswordReset {
         PasswordEncryptDecrypt passwordEncryptDecrypt = new PasswordEncryptDecrypt();
         String encryptedPassword = passwordEncryptDecrypt.passwordEncrypt(userPassword);
         if(updatePassword(userEmail, encryptedPassword)){
-            System.out.println("password reset success");
             return true;
         }
         else {
@@ -27,7 +26,6 @@ public class UserPasswordReset {
     public boolean updatePassword(String email, String encryptedPassword){
         long userId = getUserID(email);
         String PASSWORD_UPDATE_QUERY = "UPDATE user set password= '" + encryptedPassword + "' where UID =" + userId;
-        System.out.println(PASSWORD_UPDATE_QUERY);
         Statement stmt = null;
         try {
             Connection devConnection = dev.getConnection();
@@ -40,8 +38,8 @@ public class UserPasswordReset {
             else {
                 return false;
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
             return false;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -59,6 +57,7 @@ public class UserPasswordReset {
             while (rs.next()){
                 userId = rs.getLong("UID");
             }
+            devConnection.close();
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }

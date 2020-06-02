@@ -9,12 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserLoginDao implements UserLogin {
-
     DevDatabase dev = new DevDatabase();
     PasswordEncryptDecrypt passwordEncryptDecrypt = new PasswordEncryptDecrypt();
-
-
-
 
     public boolean isUserValid(String userName, String password){
         String USER_SELECT_QUERY = "SELECT email, password from user where email = "+ "'" + userName + "'";
@@ -51,7 +47,6 @@ public class UserLoginDao implements UserLogin {
         try{
             PreparedStatement statement = dev.getConnection().prepareStatement(USER_SELECT_QUERY);
             statement.setString(1, email);
-
             ResultSet rs = statement.executeQuery();
             rs.next();
             user = new User();
@@ -59,16 +54,11 @@ public class UserLoginDao implements UserLogin {
             user.setFirstname(rs.getString("first_name"));
             user.setLastname(rs.getString("last_name"));
             user.setEmail(rs.getString("email"));
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return user;
     }
-
-
 
     @Override
     public List<String> userRole(String userName){
@@ -85,6 +75,7 @@ public class UserLoginDao implements UserLogin {
                     String role = rs.getString("role_name");
                     userRole.add(role);
             }
+            devConnection.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
@@ -92,8 +83,8 @@ public class UserLoginDao implements UserLogin {
         }
         return userRole;
     }
-    public boolean isUserValid(String email){
 
+    public boolean isUserValid(String email){
         String USER_SELECT_QUERY = "SELECT email from user where email = "+ "'" + email + "'";
         try {
             String userEmail = null;

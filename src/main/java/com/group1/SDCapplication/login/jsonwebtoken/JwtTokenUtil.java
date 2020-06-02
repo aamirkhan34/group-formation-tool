@@ -4,8 +4,6 @@ package com.group1.SDCapplication.login.jsonwebtoken;
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
-
-import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.models.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -18,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtTokenUtil implements Serializable , JwtTokenInterface{
     private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-    public static final long JWT_TOKEN_VALIDITY_FORGOT_PASSWORD = 6000 * 1000;
+    public static final long JWT_TOKEN_VALIDITY_FORGOT_PASSWORD = 600 * 1000;
     public static final long JWT_TEMP_TOKEN_VALIDITY = 5 * 60;
 
     private String secret = "CSCI5308";
@@ -89,7 +87,6 @@ public class JwtTokenUtil implements Serializable , JwtTokenInterface{
     @Override
     public boolean validateUserRole(String token, String role) {
         List<String > roles = (List<String >)getAllClaimsFromToken(token).get("roles");
-
         return roles.contains(role);
     }
 }
