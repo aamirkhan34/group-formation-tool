@@ -53,7 +53,7 @@ public class UserController {
                 return "/User/Instructor";
             }
             else {
-                return "/index";
+                return "index";
             }
         }
         else {
