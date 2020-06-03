@@ -15,7 +15,7 @@ public class SignupController {
     public String userSignup(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("mailExists", false);
-        return "/Signup/Signup";
+        return "signup";
     }
 
     @PostMapping("/signup")
@@ -24,13 +24,13 @@ public class SignupController {
         String response = userSignup.addNewUser(user);
         if(response == "Signup Successful")
         {
-            return "/index";
+            return "index";
         }
         else {
             String mailExist = "Mail already exists";
             model.addAttribute("mailExists", mailExist);
             model.addAttribute("response", response);
-            return "/Signup/Signup";
+            return "signup";
         }
 
     }

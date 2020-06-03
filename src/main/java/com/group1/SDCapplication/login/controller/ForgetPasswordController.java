@@ -23,7 +23,7 @@ public class ForgetPasswordController {
     public String Forget_Password( Model model){
         model.addAttribute("user", new User());
         model.addAttribute("emailError", false);
-        return "/Login/ForgetPassword";
+        return "forgetPassword";
     }
 
     @PostMapping("/forgetpassword")
@@ -40,13 +40,13 @@ public class ForgetPasswordController {
                 return "/index";
             }
             else {
-                return "/Login/ForgetPassword";
+                return "forgetPassword";
             }
         }
         else {
             String emailError = "Email does not exist in our system";
             model.addAttribute("emailError", emailError);
-            return "/Login/ForgetPassword";
+            return "forgetPassword";
         }
     }
     public boolean sendEmail(String userEmail, String token){
