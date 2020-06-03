@@ -1,55 +1,38 @@
-image: java:8-jdk
+image: gradle:alpine
 
 variables:
-    GIT_STRATEGY: clone
-
-stages:
- - build
- - test
- - deploy
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GIT_STRATEGY: clone
 
 before_script:
- - export GRADLE_USER_HOME=`pwd`/.gradle
- 
- 
-cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
+  - chmod +x ./gradlew
+  - export GRADLE_USER_HOME='pwd'/.gradle
 
 build:
   stage: build
-  script:
-    - chmod +x ./gradlew
-    - ./gradlew assemble
-  artifacts:
-    paths:
-      - build/libs/*.jar
-  only:
-    - loginsignupfunctionality
   tags:
     - grad
+  script: ./gradlew --build-cache assemble
+  only:
+    - loginsignupfunctionality
 
 test:
   stage: test
-  script:
-    - chmod +x ./gradlew
-    - ./gradlew check
-  only:
-    - loginsignupfunctionality
   tags:
     - grad
-    
-deploy:
-    stage: deploy
-    script:
-      - git remote remove heroku
-      - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_REPO || true
-      - git remote -v
-      - git push -fq heroku HEAD:master
-    only:
-      - loginsignupfunctionality
-    tags:
-    - grad
-      
-     
+  script: ./gradlew check
+  only:
+    - loginsignupfunctionality
+
+deploy-test:
+  stage: deploy
+  tags:
+    - dalfcs_gitlab_docker_ci
+  image: ruby:2.6
+  script: 
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+  only:
+    - loginsignupfunctionality
