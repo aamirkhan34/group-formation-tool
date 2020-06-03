@@ -3,6 +3,7 @@ package com.group1.SDCapplication.user.dao;
 import com.group1.SDCapplication.datasource.DevDatabase;
 
 import com.group1.SDCapplication.models.Courses;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,11 +27,11 @@ public class CoursesDao implements Course{
                 ResultSet rs = stmt.executeQuery(SELECT_COURSE_QUERY);
                 while (rs.next()) {
                     String courseNumber = rs.getString("course_number");
-                    course.setCourseNumber(courseNumber);
+                    course.setCourseID(courseNumber);
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
-                    String instructorNUmber = rs.getString("instructor_number");
-                    course.setInstructor(instructorNUmber);
+                    Long instructorNUmber = rs.getLong("instructor_number");
+                    course.setIntsructor_number(instructorNUmber);
                 }
                 allCourses.add(course);
 

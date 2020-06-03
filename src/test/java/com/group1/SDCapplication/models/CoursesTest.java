@@ -38,8 +38,8 @@ public class CoursesTest {
     @Test
     public void getCourseNumberTest(){
         Courses courses = new Courses();
-        courses.setCourseNumber("1");
-        assertTrue(courses.getCourseNumber().equals("1"));
+        courses.setCourseID("1");
+        assertTrue(courses.getCourseID().equals("1"));
     }
 
     @Test
