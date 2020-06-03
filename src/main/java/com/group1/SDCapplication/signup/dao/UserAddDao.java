@@ -38,8 +38,10 @@ public class UserAddDao  implements UserAdd{
                 stmt.executeUpdate(ROLE_INSERT_QUERY);
                 if (res == 1) {
                     result = "Signup Successful";
+                    devConnection.close();
                 } else {
                     result = "Signup is not Successful";
+                    devConnection.close();
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -54,14 +56,17 @@ public class UserAddDao  implements UserAdd{
         }
     }
 
+    @Override
     public boolean userNotExist(String email){
         String USER_EXIST = "SELECT email FROM user where email =" + "'"+ email +"'";
+        boolean result = false;
         ResultSet rs = null;
         try {
             Connection devConnection = dev.getConnection();
             Statement stmt = devConnection.createStatement();
             rs = stmt.executeQuery(USER_EXIST);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e)
+        {
             e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -71,16 +76,19 @@ public class UserAddDao  implements UserAdd{
             while (rs.next()){
                 String userEmail =  rs.getString("email");
                 if(userEmail == ""){
-                    return true;
+                    result = true;
+                    return result;
                 }
                 else {
-                    return false;
+                    result = false;
+                    return result;
                 }
             }
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return true;
+
+        return result;
     }
 }
