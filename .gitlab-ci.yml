@@ -11,7 +11,7 @@ before_script:
 build:
   stage: build
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
   script: ./gradlew --build-cache assemble
   only:
     - loginsignupfunctionality
@@ -21,7 +21,7 @@ build:
 test:
   stage: test
   tags:
-    - grad
+    - dalfcs_gitlab_docker_ci
   script: ./gradlew check
   only:
     - loginsignupfunctionality
