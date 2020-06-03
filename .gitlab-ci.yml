@@ -14,8 +14,9 @@ build:
     - grad
   script: ./gradlew --build-cache assemble
   only:
-    refs:
-      - branches
+    - loginsignupfunctionality
+#    refs:
+#      - branches
 
 test:
   stage: test
@@ -23,8 +24,10 @@ test:
     - grad
   script: ./gradlew check
   only:
-    refs:
-      - branches
+    - loginsignupfunctionality
+#    refs:
+#      -
+#      - branches
 
 deploy-test:
   stage: deploy
