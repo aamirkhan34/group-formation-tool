@@ -24,7 +24,7 @@ import com.group1.SDCapplication.user.services.GuestUser;
 
 @Controller
 @RequestMapping("/course")
-public class CourseListingController {
+public class ArchivedCourseListingController {
 
 	@GetMapping("/courselisting")
 	public String courseListing(Model model) {
@@ -46,14 +46,14 @@ public class CourseListingController {
 		model.addAttribute("role", finalRole);
 		
 		if (finalRole.equals("student")) {
-			Course clist = new StudentCourseDao();
+			Course clist = new StudentCourseDao("am754815@dal.ca");
 			model.addAttribute("courses", clist.getCourses());
 		} else if (finalRole.equals("instructor")) {
-			Course clist = new InstructorCourseDao();
+			Course clist = new InstructorCourseDao("heywood@dal.ca");
 			model.addAttribute("courses", clist.getCourses());
 		} else
 		{
-			Course clist = new TaCourseDao();
+			Course clist = new TaCourseDao("xyz@dal.ca");
 			model.addAttribute("courses", clist.getCourses());
 		}
 		

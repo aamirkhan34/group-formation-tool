@@ -1,10 +1,14 @@
 package com.group1.SDCapplication.user.controller;
 
+import com.group1.SDCapplication.courseadministration.dao.InstructorCourseDao;
+import com.group1.SDCapplication.courseadministration.dao.StudentCourseDao;
+import com.group1.SDCapplication.courseadministration.dao.TaCourseDao;
 import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.login.services.UserValidation;
 import com.group1.SDCapplication.models.Courses;
 import com.group1.SDCapplication.models.User;
+import com.group1.SDCapplication.user.dao.Course;
 import com.group1.SDCapplication.user.services.GuestUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +42,9 @@ public class UserController {
             model.addAttribute("role", finalRole);
             if(finalRole.equals("student") && !jwtTokenUtil.isTokenExpired(token))
             {
-                return "/User/Student";
+            	Course clist = new StudentCourseDao(user.getEmail());
+    			model.addAttribute("courses", clist.getCourses());
+                return "/Course/course-listing";
             }
             if(finalRole.equals("guest") && !jwtTokenUtil.isTokenExpired(token))
             {
@@ -48,10 +54,17 @@ public class UserController {
                 model.addAttribute("courses", coursesForGuest);
                 return "/User/Guest";
             }
-            else if((finalRole.equals("instructor") || finalRole.equals("teacher_assistant")) && !jwtTokenUtil.isTokenExpired(Token))
-
+            else if((finalRole.equals("instructor") || finalRole.equals("ta")) && !jwtTokenUtil.isTokenExpired(token))
             {
-                return "/User/InstructorTA";
+            	if (finalRole.equals("instructor"))
+    			{
+        			Course clist = new InstructorCourseDao(user.getEmail());
+        			model.addAttribute("courses", clist.getCourses());
+    			} else {
+    				Course clist = new TaCourseDao(user.getEmail());
+        			model.addAttribute("courses", clist.getCourses());
+    			}
+                return "/Course/course-listing";
             }
             else {
                 return "Home/index";

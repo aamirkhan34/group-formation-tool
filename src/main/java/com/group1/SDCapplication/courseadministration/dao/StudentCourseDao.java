@@ -12,7 +12,14 @@ import com.group1.SDCapplication.models.Courses;
 import com.group1.SDCapplication.user.dao.Course;
 
 public class StudentCourseDao implements Course {
-
+	
+	private String email;
+	
+	public StudentCourseDao(String email) {
+		super();
+		this.email = email;
+	}
+	
 	@Override
 	public List<Courses> getCourses() {
 		DevDatabase devDatabase = new DevDatabase();
@@ -24,7 +31,7 @@ public class StudentCourseDao implements Course {
 				String QUERY = "SELECT C.course_number, C.course_name FROM course C\n"
 						+ "JOIN student_learning_course SLC ON C.course_number = SLC.course_number \n"
 						+ "JOIN student S ON SLC.banner_number = S.banner_number \n" + "JOIN user U ON S.UID = U.UID \n"
-						+ "WHERE U.email = 'am754815@dal.ca';";
+						+ "WHERE U.email = '" + email + "';";
 
 				devConnection = devDatabase.getConnection();
 				Statement stmt = devConnection.createStatement();

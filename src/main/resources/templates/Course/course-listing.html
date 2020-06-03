@@ -11,58 +11,75 @@
 </head>
 
 <body>
-<nav th:replace="userlayout :: usernavbar"></nav>
-<div class="container my-2">
-    <div class="card">
-        <div class="card-body">
-            <div th:switch="${courses}" class="container my-5">
-                <div class="col-md-10">
-                    <h2 th:case="null">No record found !!</h2>
-                    <div th:case="*">
-                        <table class="table table-striped table-responsive-md">
-                            <thead>
-                            <tr>
-                                <th>Course Number</th>
-                                <th>Course Name</th>
-                                <!-- <th>Instructor</th> -->
-                                <th th:switch="${role}" th:case="'instructor'">Tools</th>
-                                <th th:switch="${role}" th:case="'teacher_assistant'">Tools</th>
-                                <!-- <th>Delete</th> -->
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="c : ${courses}">
-                                <td th:text="${c.courseNumber}"></td>
-                                <td th:text="${c.courseName}"></td>
-                                <!-- <td th:text="${c.instructor}"></td> -->
-                                <td th:switch="${role}" th:case="'instructor'">
-                                	<form method="GET" th:action="@{/administercourse/courseadministerpage/{courseNumber}(courseNumber=${c.courseNumber})}">
-							            <button type="submit" name="submmit" value="value" class="btn btn-primary">
-							            	Manage
-							            </button>
-							        </form>
-                                </td>
-                                <td th:switch="${role}" th:case="'teacher_assistant'">
-                                	<form method="GET" th:action="@{/administercourse/courseadministerpage/{courseNumber}(courseNumber=${c.courseNumber})}">
-							            <button type="submit" name="submmit" value="value" class="btn btn-primary">
-							            	Manage
-							            </button>
-							        </form>
-                                </td>
-                                <!-- <td>
-                                    <a th:href="@{/delete/{id}(id=${c.courseNumber})}"
-                                       class="btn btn-primary">
-                                        <i class="fas fa-user-times ml-2"></i>
-                                    </a>
-                                </td> -->
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- <nav th:replace="userlayout :: usernavbar"></nav> -->
+	<nav th:fragment="usernavbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	
+	    <a class="navbar-brand">Software Development Project</a>
+	
+	    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+	        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	            <li class="nav-item">
+	                <a class="nav-link" th:href="@{/}">Home </a>
+	            </li>
+				<li class="nav-item active">
+	                <!-- <a class="nav-link" th:href="@{/course/courselisting}">Course</a> -->
+	                <a class="nav-link" href="#">Course</a>
+	            </li>
+	
+	            <li class="nav-item">
+	                <a class="nav-link" th:href="@{/user/logout}">Logout</a>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
+	<div class="container my-2">
+	    <div class="card">
+	        <div class="card-body">
+	            <div th:switch="${courses}" class="container my-5">
+	                <div class="col-md-10">
+	                    <h2 th:case="null">No record found !!</h2>
+	                    <div th:case="*">
+	                        <table class="table table-striped table-responsive-md">
+	                            <thead>
+	                            <tr>
+	                                <th>Course Number</th>
+	                                <th>Course Name</th>
+	                                <!-- <th>Instructor</th> -->
+	                                <th th:switch="${role}" th:case="'instructor'">Tools</th>
+	                                <th th:switch="${role}" th:case="'ta'">Tools</th>
+	                                <!-- <th>Delete</th> -->
+	                            </tr>
+	                            </thead>
+	                            <tbody>
+	                            <tr th:each="c : ${courses}">
+	                                <td th:text="${c.courseNumber}"></td>
+	                                <td th:text="${c.courseName}"></td>
+	                                <!-- <td th:text="${c.instructor}"></td> -->
+	                                <td th:switch="${role}" th:case="'instructor'">
+	                                	<form method="GET" th:action="@{/administercourse/courseadministerpage/{courseNumber}(courseNumber=${c.courseNumber})}">
+								            <button type="submit" name="submit" value="value" class="btn btn-primary">
+								            	Manage
+								            </button>
+								        </form>
+	                                </td>
+	                                <td th:switch="${role}" th:case="'ta'">
+	                                	<form method="GET" th:action="@{/administercourse/courseadministerpage/{courseNumber}(courseNumber=${c.courseNumber})}">
+								            <button type="submit" name="submit" value="value" class="btn btn-primary">
+								            	Manage
+								            </button>
+								        </form>
+	                                </td>
+	                            </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>
 </html>
