@@ -27,7 +27,7 @@ public class UserLoginDao implements UserLogin {
                 return true;
             }
             else {
-            	System.out.println("UserPassword: "+userPassword.toString());
+//            	System.out.println("UserPassword: "+userPassword.toString());
                 devConnection.close();
                 return false;
             }

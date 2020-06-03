@@ -35,14 +35,14 @@ public class InstructorCourseDao implements Course {
 				devConnection = devDatabase.getConnection();
 				Statement stmt = devConnection.createStatement();
 				ResultSet rs = stmt.executeQuery(QUERY);
-				System.out.println(rs.toString());
+				
 				while (rs.next()) {
 					String courseNumber = rs.getString("course_number");
 					course.setCourseNumber(courseNumber);
-//                    String courseName = rs.getString("course_name");
+
 					String courseName = rs.getString("course_name");
 					course.setCourseName(courseName);
-//                    String instructorNUmber = rs.getString("instructor_number");
+
 					String instructorNUmber = "instructor_number";
 					course.setInstructor(instructorNUmber);
 				}
