@@ -22,6 +22,7 @@ public class UserLoginDaoTest  {
         user.setEmail("testemail");
         user.setPassword("testpassword");
         assertTrue((user.getEmail() == "testemail" && user.getPassword() == "testpassword") == true);
+        System.out.println(userLoginDao);
         assertTrue(userLoginDao.isUserValid(user.getEmail(), user.getPassword()) == false);
     }
 
