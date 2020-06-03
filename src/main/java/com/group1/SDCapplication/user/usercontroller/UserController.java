@@ -52,9 +52,9 @@ public class UserController {
                 model.addAttribute("courses", coursesForGuest);
                 return "/User/Guest";
             }
-            else if(finalRole.equals("instructor") && !jwtTokenUtil.isTokenExpired(Token))
+            else if((finalRole.equals("instructor") || finalRole.equals("teacher_assistant")) && !jwtTokenUtil.isTokenExpired(Token))
             {
-                return "/User/Instructor";
+                return "/User/InstructorTA";
             }
             else {
                 return "/Home/index";
