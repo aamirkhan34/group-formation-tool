@@ -17,7 +17,6 @@ build:
     refs:
       - branches
 
-
 test:
   stage: test
   tags:
@@ -26,7 +25,6 @@ test:
   only:
     refs:
       - branches
-
 
 deploy-test:
   stage: deploy

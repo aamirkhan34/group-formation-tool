@@ -1,0 +1,52 @@
+package com.group1.SDCapplication.courseadministration.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.group1.SDCapplication.courseadministration.dao.InstructorCourseDao;
+import com.group1.SDCapplication.courseadministration.dao.StudentCourseDao;
+import com.group1.SDCapplication.courseadministration.dao.TaCourseDao;
+import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.login.models.UserCredentials;
+import com.group1.SDCapplication.login.services.UserValidation;
+import com.group1.SDCapplication.models.Courses;
+import com.group1.SDCapplication.user.dao.Course;
+import com.group1.SDCapplication.user.services.GuestUser;
+
+@Controller
+@RequestMapping("/course")
+public class ArchivedCourseListingController {
+
+	@GetMapping("/courselisting")
+	public String courseListing(Model model) {
+		String tokenDetails = (String) model.getAttribute("token");
+
+		String finalRole = "instructor";
+		
+		model.addAttribute("role", finalRole);
+		
+		if (finalRole.equals("student")) {
+			Course clist = new StudentCourseDao("am754815@dal.ca");
+			model.addAttribute("courses", clist.getCourses());
+		} else if (finalRole.equals("instructor")) {
+			Course clist = new InstructorCourseDao("heywood@dal.ca");
+			model.addAttribute("courses", clist.getCourses());
+		} else
+		{
+			Course clist = new TaCourseDao("xyz@dal.ca");
+			model.addAttribute("courses", clist.getCourses());
+		}
+		
+		return "course-listing";
+	}
+
+}

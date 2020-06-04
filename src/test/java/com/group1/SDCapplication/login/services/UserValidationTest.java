@@ -24,7 +24,6 @@ public class UserValidationTest {
         String userName = "testusername";
         String passWord = "testpassword";
         boolean result = userLoginDao.isUserValid(userName, passWord);
-        System.out.println(result);
         assertTrue(result);
     }
 
@@ -38,7 +37,6 @@ public class UserValidationTest {
     public void getUserRolesTest(){
         List<String> userRolesTest = new ArrayList<>();
         userRolesTest = userLoginDao.getUserRole("");
-        System.out.println(userRolesTest);
         assertEquals(userRolesTest, userLoginDao.getUserRole(""));
     }
 

@@ -68,7 +68,6 @@ public class JwtTokenUtilTest implements Serializable {
     @Order(3)
     public void testGetAllClaimsFromToken() {
         Claims claims = jwtTokenUtil.getAllClaimsFromToken(token);
-        System.out.println(claims.get("UID"));
         assertTrue((Long.valueOf((Integer)claims.get("UID"))).equals(5308L),()-> "UID not extracted correctly");
         assertTrue(claims.get("first name").equals("test"),()-> "first name not extracted correctly");
         assertTrue(claims.get("last name").equals("family"),()-> "last name not extracted correctly");

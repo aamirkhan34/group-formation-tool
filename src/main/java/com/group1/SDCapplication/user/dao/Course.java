@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface Course {
     public List<Courses> getCourses();
+	/* public List<Courses> getCoursesByRole(); */
 }
