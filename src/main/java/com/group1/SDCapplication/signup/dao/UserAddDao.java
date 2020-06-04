@@ -1,5 +1,6 @@
 package com.group1.SDCapplication.signup.dao;
 import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.signup.security.PasswordEncryptDecrypt;
 
@@ -10,7 +11,7 @@ import java.sql.Statement;
 
 
 public class UserAddDao  implements UserAdd{
-    DevDatabase dev = new DevDatabase();
+    ProductionDatabase dev = new ProductionDatabase();
     @Override
     public String addUserToDB(User user) {
         PasswordEncryptDecrypt passwordEncryptDecrypt = new PasswordEncryptDecrypt();

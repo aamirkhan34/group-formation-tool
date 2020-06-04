@@ -1,6 +1,7 @@
 package com.group1.SDCapplication.admin.dao;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.models.Courses;
 import com.group1.SDCapplication.models.Instructor;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDao implements IAdminRepository {
-    DevDatabase devDatabase = new DevDatabase();
+    ProductionDatabase devDatabase = new ProductionDatabase();
 
     @Override
     public List<Courses> loadAllCourses() {
@@ -54,7 +55,7 @@ public class CourseDao implements IAdminRepository {
 
     @Override
     public List<Courses> findById(String id) {
-        DevDatabase devDatabase = new DevDatabase();
+        ProductionDatabase devDatabase = new ProductionDatabase();
         List<Courses> allCourses = new ArrayList<>();
         Connection devConnection;
         {
@@ -117,7 +118,7 @@ public class CourseDao implements IAdminRepository {
 
     @Override
     public List<Instructor> getAllInstructors() {
-        DevDatabase devDatabase = new DevDatabase();
+        ProductionDatabase devDatabase = new ProductionDatabase();
         List<Instructor> allInstructors = new ArrayList<>();
         Connection devConnection;
         {

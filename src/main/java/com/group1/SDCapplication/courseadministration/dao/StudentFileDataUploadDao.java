@@ -11,6 +11,7 @@ import java.util.List;
 import com.group1.SDCapplication.courseadministration.services.EmailNotification;
 import com.group1.SDCapplication.courseadministration.services.UserNotification;
 import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.login.services.UserValidation;
 import com.group1.SDCapplication.models.Student;
@@ -21,7 +22,7 @@ import com.group1.SDCapplication.signup.security.PasswordEncryptDecrypt;
 public class StudentFileDataUploadDao implements UserAdd {
 
 	public boolean createNewStudent(Student user) {
-		DevDatabase dev = new DevDatabase();
+		ProductionDatabase dev = new ProductionDatabase();
 
 		String firstName = user.getFirstname();
 		String lastName = user.getLastname();
@@ -83,7 +84,7 @@ public class StudentFileDataUploadDao implements UserAdd {
 	}
 
 	public boolean checkUpdateUserRole(Student user) {
-		DevDatabase dev = new DevDatabase();
+		ProductionDatabase dev = new ProductionDatabase();
 
 		boolean isRoleStudent = false;
 		String email = user.getEmail();
@@ -147,7 +148,7 @@ public class StudentFileDataUploadDao implements UserAdd {
 	}
 
 	public boolean enrollInCourse(Student user, String courseNumber) {
-		DevDatabase dev = new DevDatabase();
+		ProductionDatabase dev = new ProductionDatabase();
 
 		String bannerId = user.getBannerId();
 
@@ -209,7 +210,7 @@ public class StudentFileDataUploadDao implements UserAdd {
 
 	@Override
 	public boolean userNotExist(String email) {
-		DevDatabase dev = new DevDatabase();
+		ProductionDatabase dev = new ProductionDatabase();
 		String USER_EXIST = "SELECT email FROM user where email =" + "'" + email + "'";
 		boolean result = false;
 		ResultSet rs = null;

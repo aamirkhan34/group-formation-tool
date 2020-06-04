@@ -1,6 +1,7 @@
 package com.group1.SDCapplication.login.dao;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.models.User;
 import com.group1.SDCapplication.signup.security.PasswordEncryptDecrypt;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserLoginDao implements UserLogin {
-    DevDatabase dev = new DevDatabase();
+    ProductionDatabase dev = new ProductionDatabase();
     PasswordEncryptDecrypt passwordEncryptDecrypt = new PasswordEncryptDecrypt();
 
     public boolean isUserValid(String userName, String password){

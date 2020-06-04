@@ -1,6 +1,7 @@
 package com.group1.SDCapplication.login.dao;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.signup.security.PasswordEncryptDecrypt;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.sql.Statement;
 
 public class UserPasswordResetDao implements UserPasswordReset {
 
-    DevDatabase dev = new DevDatabase();
+    ProductionDatabase dev = new ProductionDatabase();
 
     @Override
     public boolean passwordReset(String userEmail, String userPassword){

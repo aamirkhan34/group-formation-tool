@@ -2,6 +2,7 @@ package com.group1.SDCapplication.user.dao;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
 
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.models.Courses;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class CoursesDao implements Course{
 
     @Override
     public List<Courses> getCourses() {
-        DevDatabase devDatabase = new DevDatabase();
+        ProductionDatabase devDatabase = new ProductionDatabase();
 
         List<Courses> allCourses = new ArrayList<>();
             try {

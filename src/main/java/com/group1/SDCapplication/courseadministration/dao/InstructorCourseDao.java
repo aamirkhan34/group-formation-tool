@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.group1.SDCapplication.datasource.DevDatabase;
+import com.group1.SDCapplication.datasource.ProductionDatabase;
 import com.group1.SDCapplication.models.Courses;
 import com.group1.SDCapplication.user.dao.Course;
 
@@ -22,7 +23,7 @@ public class InstructorCourseDao implements Course {
 	
 	@Override
 	public List<Courses> getCourses() {
-		DevDatabase devDatabase = new DevDatabase();
+		ProductionDatabase devDatabase = new ProductionDatabase();
 		Courses course = new Courses();
 		List<Courses> allCourses = new ArrayList<>();
 		
