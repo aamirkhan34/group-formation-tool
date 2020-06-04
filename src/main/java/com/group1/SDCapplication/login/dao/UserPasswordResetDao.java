@@ -35,11 +35,14 @@ public class UserPasswordResetDao implements UserPasswordReset {
             int rs = stmt.executeUpdate(PASSWORD_UPDATE_QUERY);
             if(rs == 1)
             {
+                devConnection.close();
                 return true;
             }
             else {
+                devConnection.close();
                 return false;
             }
+
         } catch (SQLException throwable) {
             throwable.printStackTrace();
             return false;

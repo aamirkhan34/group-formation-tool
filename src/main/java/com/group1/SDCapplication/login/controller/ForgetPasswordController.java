@@ -23,7 +23,7 @@ public class ForgetPasswordController {
     public String Forget_Password( Model model){
         model.addAttribute("user", new User());
         model.addAttribute("emailError", false);
-        return "/Login/ForgetPassword";
+        return "forgetPassword";
     }
 
     @PostMapping("/forgetpassword")
@@ -37,16 +37,16 @@ public class ForgetPasswordController {
             String token = forgotPasswordValidation.getToken(user.getEmail());
             if(sendEmail(user.getEmail(), token))
             {
-                return "Home/index";
+                return "/index";
             }
             else {
-                return "/Login/ForgetPassword";
+                return "forgetPassword";
             }
         }
         else {
             String emailError = "Email does not exist in our system";
             model.addAttribute("emailError", emailError);
-            return "/Login/ForgetPassword";
+            return "forgetPassword";
         }
     }
     public boolean sendEmail(String userEmail, String token){
@@ -56,7 +56,7 @@ public class ForgetPasswordController {
             simpleMessage.setSubject("Password Reset email for SDC application");
             String url = "Please find the link provided to reset your password. Linke will be " +
                     "active for 10minutes" +
-                    "      " + "http://localhost:8080/user/passwordreset?token=" + token;
+                    "      " + "https://asdc-group1-project.herokuapp.com/user/passwordreset?token=" + token;
             simpleMessage.setText(url);
             javaMailSender.send(simpleMessage);
             return true;

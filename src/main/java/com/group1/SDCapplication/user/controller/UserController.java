@@ -44,7 +44,7 @@ public class UserController {
             {
             	Course clist = new StudentCourseDao(user.getEmail());
     			model.addAttribute("courses", clist.getCourses());
-                return "/Course/course-listing";
+                return "course-listing";
             }
             if(finalRole.equals("guest") && !jwtTokenUtil.isTokenExpired(token))
             {
@@ -52,7 +52,7 @@ public class UserController {
                 List<Courses> coursesForGuest = new ArrayList<>();
                 coursesForGuest = guestUser.getCourses();
                 model.addAttribute("courses", coursesForGuest);
-                return "/User/Guest";
+                return "guest";
             }
             else if((finalRole.equals("instructor") || finalRole.equals("ta")) && !jwtTokenUtil.isTokenExpired(token))
             {
@@ -64,28 +64,28 @@ public class UserController {
     				Course clist = new TaCourseDao(user.getEmail());
         			model.addAttribute("courses", clist.getCourses());
     			}
-                return "/Course/course-listing";
+                return "course-listing";
             }
             else {
-                return "Home/index";
+                return "index";
             }
         }
         else {
             String loginError = "Invalid Credentials";
             model.addAttribute("loginError", loginError);
-            return "/Login/Login";
+            return "login";
         }
     }
 
     @GetMapping("/logout")
     public String userLoggedout(){
-        return "/Home/index";
+        return "index";
     }
 
     @PostMapping("/logout")
     public String userLogout(Model model){
         model.addAttribute("token", token);
-        return "Home/index";
+        return "index";
     }
 
 }

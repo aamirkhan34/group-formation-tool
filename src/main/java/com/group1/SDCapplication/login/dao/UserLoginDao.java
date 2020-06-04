@@ -45,7 +45,8 @@ public class UserLoginDao implements UserLogin {
         String USER_SELECT_QUERY = "SELECT UID, first_name,last_name, email from user where email = ?";
         User user = null;
         try{
-            PreparedStatement statement = dev.getConnection().prepareStatement(USER_SELECT_QUERY);
+            Connection devConnection = dev.getConnection();
+            PreparedStatement statement = devConnection.prepareStatement(USER_SELECT_QUERY);
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
             rs.next();
@@ -54,6 +55,7 @@ public class UserLoginDao implements UserLogin {
             user.setFirstname(rs.getString("first_name"));
             user.setLastname(rs.getString("last_name"));
             user.setEmail(rs.getString("email"));
+            devConnection.close();
         }catch (Exception e){
             e.printStackTrace();
         }

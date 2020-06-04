@@ -57,7 +57,7 @@ public class ArchivedCourseListingController {
 			model.addAttribute("courses", clist.getCourses());
 		}
 		
-		return "/Course/course-listing";
+		return "course-listing";
 	}
 
 }

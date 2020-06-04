@@ -12,7 +12,7 @@ public class LoginController {
     public String Login(Model model){
         model.addAttribute("loginError", false);
         model.addAttribute("userCredentials", new UserCredentials());
-        return "/Login/Login";
+        return "login";
     }
 
 }

@@ -65,28 +65,19 @@ public class UserAddDao  implements UserAdd{
             Connection devConnection = dev.getConnection();
             Statement stmt = devConnection.createStatement();
             rs = stmt.executeQuery(USER_EXIST);
+            if(rs.next()){
+                result = false;
+                devConnection.close();
+            }
+            else {
+                result = true;
+                devConnection.close();
+            }
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
-
-        try {
-            while (rs.next()){
-                String userEmail =  rs.getString("email");
-                if(userEmail == ""){
-                    result = true;
-                    return result;
-                }
-                else {
-                    result = false;
-                    return result;
-                }
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
         }
 
         return result;

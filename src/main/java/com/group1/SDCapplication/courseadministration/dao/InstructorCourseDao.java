@@ -25,36 +25,36 @@ public class InstructorCourseDao implements Course {
 		DevDatabase devDatabase = new DevDatabase();
 		Courses course = new Courses();
 		List<Courses> allCourses = new ArrayList<>();
-		Connection devConnection;
-		{
-			try {
-				String QUERY = "SELECT C.course_number, C.course_name FROM course C\n"
-						+ "JOIN instructor I ON C.instructor_number = I.instructor_number \n"
-						+ "JOIN user U ON I.UID = U.UID \n" + "WHERE U.email = '" + email + "';";
+		
+		try {
+			String QUERY = "SELECT C.course_number, C.course_name FROM course C\n"
+					+ "JOIN instructor I ON C.instructor_number = I.instructor_number \n"
+					+ "JOIN user U ON I.UID = U.UID \n" + "WHERE U.email = '" + email + "';";
 
-				devConnection = devDatabase.getConnection();
-				Statement stmt = devConnection.createStatement();
-				ResultSet rs = stmt.executeQuery(QUERY);
-				
-				while (rs.next()) {
-					String courseNumber = rs.getString("course_number");
-					course.setCourseNumber(courseNumber);
+			Connection devConnection = devDatabase.getConnection();
+			Statement stmt = devConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(QUERY);
+			
+			while (rs.next()) {
+				String courseNumber = rs.getString("course_number");
+				course.setCourseNumber(courseNumber);
 
-					String courseName = rs.getString("course_name");
-					course.setCourseName(courseName);
+				String courseName = rs.getString("course_name");
+				course.setCourseName(courseName);
 
-					String instructorNUmber = "instructor_number";
-					course.setInstructor(instructorNUmber);
-				}
-				allCourses.add(course);
-
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException throwables) {
-				throwables.printStackTrace();
+				String instructorNUmber = "instructor_number";
+				course.setInstructor(instructorNUmber);
 			}
-		}
-		return allCourses;
+			allCourses.add(course);
+			devConnection.close();
 
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		
+		return allCourses;
 	}
 }

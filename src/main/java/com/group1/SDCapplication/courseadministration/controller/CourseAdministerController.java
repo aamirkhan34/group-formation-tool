@@ -23,7 +23,7 @@ public class CourseAdministerController {
 //		System.out.println(tokenDetails.toString());
 		// Add students/ins/ta details, course info.
 		model.addAttribute("courseNumber", courseNumber);
-		return "/Course/course-administer";
+		return "course-administer";
 	}
 
 	@PostMapping("/addstudents/{courseNumber}")
@@ -32,17 +32,16 @@ public class CourseAdministerController {
 		// TODO: Get user email
 		System.out.println(courseNumber);
 		System.out.println(file);
-		
+
 		model.addAttribute("courseNumber", courseNumber);
-		
+
 		// Validation
 		UserFileDataValidation ui = new StudentFileDataValidation(file);
 		Boolean isFileValid = ui.validateFileType();
 
-		
 		model.addAttribute("status", true);
-		
-		return "/Course/upload-status";
+
+		return "upload-status";
 	}
 
 }
