@@ -13,7 +13,7 @@ public class CoursesDaoMock implements Course {
         List<Courses> coursesList = new ArrayList<>();
         for (int i = 0; i<2; i++){
             Courses course = new Courses();
-            course.setInstructor("2");
+            course.setInstructor_name("2");
             course.setCourseName("Adv SDC");
             course.setCourseNumber("CSCI5308");
             coursesList.add(course);

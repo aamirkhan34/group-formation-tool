@@ -25,7 +25,7 @@ public class SignupController {
         System.out.println(response);
         if(response == "Signup Successful")
         {
-            return "index";
+            return "login";
         }
         else {
             String mailExist = "Mail already exists";

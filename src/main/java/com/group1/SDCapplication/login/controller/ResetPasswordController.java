@@ -38,7 +38,7 @@ public class ResetPasswordController {
         boolean result = userPasswordResetDao.passwordReset(userEmail, password);
         System.out.println(result);
         if(result){
-            return "index";
+            return "login";
         }
         else {
             String error = "Invalid Token";

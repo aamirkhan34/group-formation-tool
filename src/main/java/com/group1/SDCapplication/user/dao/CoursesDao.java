@@ -32,7 +32,7 @@ public class CoursesDao implements Course{
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
                     String instructorName = rs.getString("firstname");
-                    course.setInstructor(instructorName);
+                    course.setInstructor_name(instructorName);
                     allCourses.add(course);
                 }
                 devConnection.close();

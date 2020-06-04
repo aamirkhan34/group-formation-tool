@@ -20,7 +20,7 @@ public class AdminController {
         AdminService service = new AdminService();
         courses = service.getAllCourses();
         model.addAttribute("courses", courses);
-        return "/Admin/admin";
+        return "admin";
     }
 
     @RequestMapping(path = {"/add", "/edit/{id}"})
@@ -37,7 +37,7 @@ public class AdminController {
             model.addAttribute("course", courses);
             model.addAttribute("instructorList",instrutors);
         }
-        return "/Admin/add-edit-course";
+        return "add-edit-course";
     }
 
     @RequestMapping(path = "/createCourse", method = RequestMethod.POST)
@@ -48,7 +48,7 @@ public class AdminController {
         service.createOrUpdateCourse(course);
         List<Courses> courses  = service.getAllCourses();
         model.addAttribute("courses", courses);
-        return "/Admin/admin";
+        return "admin";
     }
 
     @RequestMapping(path = "/delete/{id}")
@@ -58,6 +58,6 @@ public class AdminController {
         service.deleteCourseByCourseNumber(id);
         List<Courses> courses  = service.getAllCourses();
         model.addAttribute("courses", courses);
-        return "/Admin/admin";
+        return "admin";
     }
 }

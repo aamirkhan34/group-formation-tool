@@ -52,6 +52,10 @@ public class UserController {
             {
                 return "instructor";
             }
+            else if(finalRole.equals("admin") && !jwtTokenUtil.isTokenExpired(token))
+            {
+                return "admin";
+            }
             else {
                 return "index";
             }
