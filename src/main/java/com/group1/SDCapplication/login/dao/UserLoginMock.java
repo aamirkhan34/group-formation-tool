@@ -20,7 +20,7 @@ public class UserLoginMock implements UserLogin {
     }
 
     @Override
-    public List<String> userRole(String email) {
+    public List<String> getUserRole(String email) {
         List<String> userRole = new ArrayList<>();
         userRole.add("student");
         userRole.add("guest");

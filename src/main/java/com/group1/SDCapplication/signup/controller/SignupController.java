@@ -22,7 +22,9 @@ public class SignupController {
     public String userSignup(@ModelAttribute User user, Model model){
         UserSignup userSignup = new UserSignup();
         String response = userSignup.addNewUser(user);
+
         System.out.println(response);
+
         if(response == "Signup Successful")
         {
             return "index";

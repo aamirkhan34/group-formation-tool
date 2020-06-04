@@ -3,16 +3,28 @@ package com.group1.SDCapplication.models;
 public class Courses {
     private String courseNumber;
     private String courseName;
-    private String instructor;
+    private String instructor_name;
+    private Long instructor_number;
+    private Long course_id;
 
-    public Courses(){
-
+    public Long getCourse_id() {
+        return course_id;
     }
 
-    public Courses(String courseNumber, String courseName, String instructor) {
-        this.courseNumber = courseNumber;
-        this.courseName = courseName;
-        this.instructor = instructor;
+    public void setCourse_id(Long course_id) {
+        this.course_id = course_id;
+    }
+
+    public Long getInstructor_number() {
+        return instructor_number;
+    }
+
+    public void setInstructor_number(Long instructor_number) {
+        this.instructor_number = instructor_number;
+    }
+
+    public Courses() {
+
     }
 
     public String getCourseNumber() {
@@ -31,11 +43,11 @@ public class Courses {
         this.courseName = courseName;
     }
 
-    public String getInstructor() {
-        return instructor;
+    public String getInstructor_name() {
+        return instructor_name;
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public void setInstructor_name(String instructor_name) {
+        this.instructor_name = instructor_name;
     }
 }

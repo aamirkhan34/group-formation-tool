@@ -20,14 +20,14 @@ public class ForgetPasswordController {
     private JavaMailSender javaMailSender;
 
     @GetMapping("/forgetpassword")
-    public String Forget_Password( Model model){
+    public String forgetPassword(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("emailError", false);
         return "forgetPassword";
     }
 
     @PostMapping("/forgetpassword")
-    public String Send_Email_with_password(@ModelAttribute User user, Model model)
+    public String sendEmailWithPassword(@ModelAttribute User user, Model model)
     {
         ForgotPasswordValidation forgotPasswordValidation = new ForgotPasswordValidation();
         UserLoginDao userLoginDao = new UserLoginDao();
@@ -37,7 +37,7 @@ public class ForgetPasswordController {
             String token = forgotPasswordValidation.getToken(user.getEmail());
             if(sendEmail(user.getEmail(), token))
             {
-                return "/index";
+                return "index";
             }
             else {
                 return "forgetPassword";
