@@ -17,8 +17,7 @@ build:
     refs:
       - branches
   except:
-    variables:
-      - $CI_COMMIT_REF_NAME =~ release/1.0.0
+    - release/1.0.0
 
 
 test:
@@ -30,8 +29,7 @@ test:
     refs:
       - branches
   except:
-    variables:
-      - $CI_COMMIT_REF_NAME =~ release/1.0.0
+    - release/1.0.0
 
 
 deploy-test:
