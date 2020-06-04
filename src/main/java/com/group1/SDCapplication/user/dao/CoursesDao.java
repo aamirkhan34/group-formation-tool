@@ -35,6 +35,7 @@ public class CoursesDao implements Course{
                     course.setInstructor(instructorName);
                     allCourses.add(course);
                 }
+                devConnection.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {

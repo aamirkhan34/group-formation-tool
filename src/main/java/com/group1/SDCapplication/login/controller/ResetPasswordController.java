@@ -35,8 +35,6 @@ public class ResetPasswordController {
         model.addAttribute("tokenError", false);
         String userEmail = user.getEmail();
         String password = user.getPassword();
-        System.out.println(userEmail);
-        System.out.println(password);
         boolean result = userPasswordResetDao.passwordReset(userEmail, password);
         System.out.println(result);
         if(result){

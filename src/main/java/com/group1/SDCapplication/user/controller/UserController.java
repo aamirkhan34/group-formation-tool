@@ -65,13 +65,13 @@ public class UserController {
 
     @GetMapping("/logout")
     public String userLoggedout(){
-        return "/index";
+        return "index";
     }
 
     @PostMapping("/logout")
     public String userLogout(Model model){
         model.addAttribute("token", token);
-        return "/index";
+        return "index";
     }
 
 }
