@@ -62,7 +62,7 @@ public class UserLoginDao implements UserLogin {
     }
 
     @Override
-    public List<String> userRole(String userName){
+    public List<String> getUserRole(String userName){
 
         String USER_ROLE_QUERY = "select rl.role_name as role_name from user as us inner join role as rl inner join user_role as ur \n" +
                 "on us.UID = ur.UID and ur.role_id = rl.role_id where us.email = "+"'"+ userName + "'";

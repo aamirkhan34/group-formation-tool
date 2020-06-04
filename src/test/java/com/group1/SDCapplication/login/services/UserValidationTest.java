@@ -1,10 +1,8 @@
 package com.group1.SDCapplication.login.services;
 
-import com.group1.SDCapplication.login.JwtTokenUtilTest.JwtTokenUtilTest;
 import com.group1.SDCapplication.login.dao.UserLogin;
-import com.group1.SDCapplication.login.dao.UserLoginDao;
 import com.group1.SDCapplication.login.dao.UserLoginMock;
-import com.group1.SDCapplication.login.models.UserCredentialsTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -39,9 +37,9 @@ public class UserValidationTest {
     @Test
     public void getUserRolesTest(){
         List<String> userRolesTest = new ArrayList<>();
-        userRolesTest = userLoginDao.userRole("");
+        userRolesTest = userLoginDao.getUserRole("");
         System.out.println(userRolesTest);
-        assertEquals(userRolesTest, userLoginDao.userRole(""));
+        assertEquals(userRolesTest, userLoginDao.getUserRole(""));
     }
 
 }

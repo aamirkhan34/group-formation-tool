@@ -32,7 +32,7 @@ public class UserValidation {
     public List<String> getUserRoles(UserCredentials userCredentials){
         List<String> userRoles = new ArrayList<>();
         String userName = userCredentials.getEmail();
-        userRoles = userLoginDao.userRole(userName);
+        userRoles = userLoginDao.getUserRole(userName);
         return userRoles;
     }
 }

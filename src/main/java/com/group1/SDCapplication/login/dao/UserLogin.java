@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserLogin {
     public boolean isUserValid(String username, String password);
     public User getUser(String  email);
-    public List<String> userRole(String email);
+    public List<String> getUserRole(String email);
 }
