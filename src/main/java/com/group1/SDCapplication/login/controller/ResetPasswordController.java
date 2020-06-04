@@ -36,7 +36,7 @@ public class ResetPasswordController {
         String userEmail = user.getEmail();
         String password = user.getPassword();
         boolean result = userPasswordResetDao.passwordReset(userEmail, password);
-        System.out.println(result);
+
         if(result){
             return "index";
         }

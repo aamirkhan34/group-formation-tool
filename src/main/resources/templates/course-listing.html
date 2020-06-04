@@ -47,17 +47,17 @@
 	                            <tr>
 	                                <th>Course Number</th>
 	                                <th>Course Name</th>
-	                                <!-- <th>Instructor</th> -->
+	                                
 	                                <th th:switch="${role}" th:case="'instructor'">Tools</th>
 	                                <th th:switch="${role}" th:case="'ta'">Tools</th>
-	                                <!-- <th>Delete</th> -->
+	                                
 	                            </tr>
 	                            </thead>
 	                            <tbody>
 	                            <tr th:each="c : ${courses}">
 	                                <td th:text="${c.courseNumber}"></td>
 	                                <td th:text="${c.courseName}"></td>
-	                                <!-- <td th:text="${c.instructor}"></td> -->
+	                                
 	                                <td th:switch="${role}" th:case="'instructor'">
 	                                	<form method="GET" th:action="@{/administercourse/courseadministerpage/{courseNumber}(courseNumber=${c.courseNumber})}">
 								            <button type="submit" name="submit" value="value" class="btn btn-primary">

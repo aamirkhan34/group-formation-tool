@@ -41,9 +41,6 @@ public class InstructorCourseDao implements Course {
 
 				String courseName = rs.getString("course_name");
 				course.setCourseName(courseName);
-
-				String instructorNUmber = "instructor_number";
-				course.setInstructor(instructorNUmber);
 			}
 			allCourses.add(course);
 			devConnection.close();

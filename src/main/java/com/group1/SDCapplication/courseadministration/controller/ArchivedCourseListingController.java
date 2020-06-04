@@ -29,20 +29,9 @@ public class ArchivedCourseListingController {
 	@GetMapping("/courselisting")
 	public String courseListing(Model model) {
 		String tokenDetails = (String) model.getAttribute("token");
-		System.out.println(tokenDetails);
-//		List<String> userRoles = new ArrayList<>();
+
 		String finalRole = "instructor";
 		
-//		UserValidation userValidation = new UserValidation();
-//		userRoles = userValidation.getUserRoles(userCredentials);
-//		
-//		for (String role : userRoles) {
-//			finalRole = role;
-//		}
-//		
-//		model.addAttribute("role", finalRole);
-//		System.out.println(finalRole.toString());
-//		System.out.println(userCredentials.toString());
 		model.addAttribute("role", finalRole);
 		
 		if (finalRole.equals("student")) {

@@ -23,8 +23,6 @@ public class SignupController {
         UserSignup userSignup = new UserSignup();
         String response = userSignup.addNewUser(user);
 
-        System.out.println(response);
-
         if(response == "Signup Successful")
         {
             return "index";

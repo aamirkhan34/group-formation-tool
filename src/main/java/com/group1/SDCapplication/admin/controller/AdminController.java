@@ -44,7 +44,6 @@ public class AdminController {
     public String createOrUpdateCourse(@ModelAttribute Courses course,Model model)
     {
         AdminService service = new AdminService();
-        System.out.println(course.getCourseNumber());
         service.createOrUpdateCourse(course);
         List<Courses> courses  = service.getAllCourses();
         model.addAttribute("courses", courses);
