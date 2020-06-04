@@ -1,7 +1,7 @@
 package com.group1.SDCapplication.models;
 
 public class Courses {
-    private String courseID;
+    private String courseNumber;
     private String courseName;
     private String instructor_name;
     private Long intsructor_number;
@@ -18,12 +18,12 @@ public class Courses {
 
     }
 
-    public String getCourseID() {
-        return courseID;
+    public String getCourseNumber() {
+        return courseNumber;
     }
 
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
+    public void setCourseNumber(String courseNumber) {
+        this.courseNumber = courseNumber;
     }
 
     public String getCourseName() {

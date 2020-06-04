@@ -3,7 +3,6 @@ package com.group1.SDCapplication.admin.dao;
 import com.group1.SDCapplication.datasource.DevDatabase;
 import com.group1.SDCapplication.models.Courses;
 import com.group1.SDCapplication.models.Instructor;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +29,7 @@ public class CourseDao implements IAdminRepository {
                 while (rs.next()) {
                     Courses course = new Courses();
                     String courseNumber = rs.getString("course_number");
-                    course.setCourseID(courseNumber);
+                    course.setCourseNumber(courseNumber);
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
                     String instructor_name = rs.getString("instuctor_name");
@@ -38,6 +37,9 @@ public class CourseDao implements IAdminRepository {
                     course.setInstructor_name(instructor_name);
                     allCourses.add(course);
                 }
+                devConnection.close();
+                stmt.close();
+                rs.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
@@ -70,7 +72,7 @@ public class CourseDao implements IAdminRepository {
                 while (rs.next()) {
                     Courses course = new Courses();
                     String courseNumber = rs.getString("course_number");
-                    course.setCourseID(courseNumber);
+                    course.setCourseNumber(courseNumber);
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
                     String instructor_name = rs.getString("instuctor_name");
@@ -78,6 +80,9 @@ public class CourseDao implements IAdminRepository {
                     course.setIntsructor_number(instructor_number);
                     allCourses.add(course);
                 }
+                devConnection.close();
+                stmt.close();
+                rs.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
@@ -98,6 +103,9 @@ public class CourseDao implements IAdminRepository {
             while(resultSet.next()){
                 size++;
             }
+            devConnection.close();
+            stmt.close();
+            resultSet.close();
             return size != 0 ? true : false;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -108,7 +116,7 @@ public class CourseDao implements IAdminRepository {
     }
 
     @Override
-    public List<Instructor> gretalInstructors() {
+    public List<Instructor> getAllInstructors() {
         DevDatabase devDatabase = new DevDatabase();
         List<Instructor> allInstructors = new ArrayList<>();
         Connection devConnection;
@@ -126,6 +134,9 @@ public class CourseDao implements IAdminRepository {
                     Instructor instuctor = new Instructor(instructor_number, instructor_name);
                     allInstructors.add(instuctor);
                 }
+                devConnection.close();
+                stmt.close();
+                rs.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
@@ -137,14 +148,15 @@ public class CourseDao implements IAdminRepository {
 
     @Override
     public String createOrUpdateCourse(Courses course) {
-        if (!checkCourseExist(course.getCourseID())) {
+        if (!checkCourseExist(course.getCourseNumber())) {
             String USER_INSERT_QUERY = "insert into course(course_number,course_name,instructor_number) " +
-                    "values('" + course.getCourseID() + "','" + course.getCourseName() + "','" + course.getIntsructor_number() + ';';
+                    "values('" + course.getCourseNumber() + "','" + course.getCourseName() + "'," + course.getIntsructor_number() + ");";
             try {
-                int res;
                 Connection devConnection = devDatabase.getConnection();
                 Statement stmt = devConnection.createStatement();
-                res = stmt.executeUpdate(USER_INSERT_QUERY);
+                int res = stmt.executeUpdate(USER_INSERT_QUERY);
+                devConnection.close();
+                stmt.close();
                 return "Course inserted";
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -153,12 +165,14 @@ public class CourseDao implements IAdminRepository {
             }
         } else {
             String update_query = "update course set course_name='" + course.getCourseName() + "' " +
-                    ", instructor_number = '" + course.getIntsructor_number() + "' where course_number='" + course.getCourseID() + "';";
+                    ", instructor_number = '" + course.getIntsructor_number() + "' where course_number='" + course.getCourseNumber() + "';";
             try {
                 int res;
                 Connection devConnection = devDatabase.getConnection();
                 Statement stmt = devConnection.createStatement();
                 res = stmt.executeUpdate(update_query);
+                devConnection.close();
+                stmt.close();
                 return "Course Updated";
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

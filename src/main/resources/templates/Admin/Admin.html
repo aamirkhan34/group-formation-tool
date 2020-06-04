@@ -35,17 +35,17 @@
                             </thead>
                             <tbody>
                             <tr th:each="c : ${courses}">
-                                <td th:text="${c.courseID}"></td>
+                                <td th:text="${c.courseNumber}"></td>
                                 <td th:text="${c.courseName}"></td>
                                 <td th:text="${c.instructor_name}"></td>
                                 <td>
-                                    <a th:href="@{/edit/{id}(id=${c.courseID})}"
+                                    <a th:href="@{/edit/{id}(id=${c.courseNumber})}"
                                        class="btn btn-primary">
                                         <i class="fas fa-user-edit ml-2"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a th:href="@{/delete/{id}(id=${c.courseID})}"
+                                    <a th:href="@{/delete/{id}(id=${c.courseNumber})}"
                                        class="btn btn-primary">
                                         <i class="fas fa-user-times ml-2"></i>
                                     </a>

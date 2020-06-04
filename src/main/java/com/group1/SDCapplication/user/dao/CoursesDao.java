@@ -27,7 +27,7 @@ public class CoursesDao implements Course{
                 ResultSet rs = stmt.executeQuery(SELECT_COURSE_QUERY);
                 while (rs.next()) {
                     String courseNumber = rs.getString("course_number");
-                    course.setCourseID(courseNumber);
+                    course.setCourseNumber(courseNumber);
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
                     Long instructorNUmber = rs.getLong("instructor_number");

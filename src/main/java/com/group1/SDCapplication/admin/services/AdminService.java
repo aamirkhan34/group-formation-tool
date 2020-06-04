@@ -32,7 +32,7 @@ public class AdminService {
     }
 
     public List<Instructor> getAllInstructors() {
-        List<Instructor> result = adminService.gretalInstructors();
+        List<Instructor> result = adminService.getAllInstructors();
 
         if(result.size() > 0) {
             return result;

@@ -11,7 +11,7 @@ public interface IAdminRepository {
 
     List<Courses> findById(String id);
 
-    List<Instructor> gretalInstructors();
+    List<Instructor> getAllInstructors();
 
     String createOrUpdateCourse  (Courses course);
 

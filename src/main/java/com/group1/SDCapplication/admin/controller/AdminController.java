@@ -41,11 +41,13 @@ public class AdminController {
     }
 
     @RequestMapping(path = "/createCourse", method = RequestMethod.POST)
-    public String createOrUpdateCourse(Model model,@ModelAttribute Courses course)
+    public String createOrUpdateCourse(@ModelAttribute Courses course,Model model)
     {
         AdminService service = new AdminService();
-        System.out.println(course.getCourseID());
+        System.out.println(course.getCourseNumber());
         service.createOrUpdateCourse(course);
+        List<Courses> courses  = service.getAllCourses();
+        model.addAttribute("courses", courses);
         return "/Admin/admin";
     }
 
@@ -54,6 +56,8 @@ public class AdminController {
     {
         AdminService service = new AdminService();
         service.deleteCourseByCourseNumber(id);
+        List<Courses> courses  = service.getAllCourses();
+        model.addAttribute("courses", courses);
         return "/Admin/admin";
     }
 }

@@ -52,6 +52,9 @@ public class UserController {
                 model.addAttribute("courses", coursesForGuest);
                 return "/User/Guest";
             }
+            if(finalRole.equals("admin") && !jwtTokenUtil.isTokenExpired(Token)){
+                return "/Admin/admin";
+            }
             else if(finalRole.equals("instructor") && !jwtTokenUtil.isTokenExpired(Token))
             {
                 return "/User/Instructor";
