@@ -79,7 +79,7 @@ public class CourseDao implements IAdminRepository {
                     course.setCourseName(courseName);
                     String instructor_name = rs.getString("instuctor_name");
                     Long instructor_number = rs.getLong("instructor_number");
-                    course.setIntsructor_number(instructor_number);
+                    course.setInstructor_number(instructor_number);
                     Long course_id = rs.getLong("course_id");
                     course.setCourse_id(course_id);
                     allCourses.add(course);
@@ -154,7 +154,7 @@ public class CourseDao implements IAdminRepository {
     public String createOrUpdateCourse(Courses course) {
         if (!checkCourseExist(course.getCourse_id())) {
             String USER_INSERT_QUERY = "insert into course(course_number,course_name,instructor_number) " +
-                    "values('" + course.getCourseNumber() + "','" + course.getCourseName() + "'," + course.getIntsructor_number() + ");";
+                    "values('" + course.getCourseNumber() + "','" + course.getCourseName() + "'," + course.getInstructor_number() + ");";
             try {
                 Connection devConnection = devDatabase.getConnection();
                 Statement stmt = devConnection.createStatement();
@@ -169,7 +169,7 @@ public class CourseDao implements IAdminRepository {
             }
         } else {
             String update_query = "update course set course_name='" + course.getCourseName() + "' " +
-                    ", instructor_number = '" + course.getIntsructor_number() + "' where course_id='" + course.getCourse_id() + "';";
+                    ", instructor_number = '" + course.getInstructor_number() + "' where course_id='" + course.getCourse_id() + "';";
             try {
                 int res;
                 Connection devConnection = devDatabase.getConnection();

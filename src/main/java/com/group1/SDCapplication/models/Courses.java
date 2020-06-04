@@ -4,7 +4,7 @@ public class Courses {
     private String courseNumber;
     private String courseName;
     private String instructor_name;
-    private Long intsructor_number;
+    private Long instructor_number;
     private Long course_id;
 
     public Long getCourse_id() {
@@ -15,12 +15,12 @@ public class Courses {
         this.course_id = course_id;
     }
 
-    public Long getIntsructor_number() {
-        return intsructor_number;
+    public Long getInstructor_number() {
+        return instructor_number;
     }
 
-    public void setIntsructor_number(Long intsructor_number) {
-        this.intsructor_number = intsructor_number;
+    public void setInstructor_number(Long instructor_number) {
+        this.instructor_number = instructor_number;
     }
 
     public Courses() {
