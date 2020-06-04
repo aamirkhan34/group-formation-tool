@@ -18,10 +18,6 @@ public class CourseAdministerController {
 
 	@GetMapping("/courseadministerpage/{courseNumber}")
 	public String renderCourseAdminPage(@PathVariable("courseNumber") String courseNumber, Model model) {
-//		System.out.println(courseNumber);
-//		String tokenDetails = (String) model.getAttribute("token");
-//		System.out.println(tokenDetails.toString());
-		// Add students/ins/ta details, course info.
 		model.addAttribute("courseNumber", courseNumber);
 		return "course-administer";
 	}
@@ -29,7 +25,7 @@ public class CourseAdministerController {
 	@PostMapping("/addstudents/{courseNumber}")
 	public String addStudentsViaCsv(@RequestParam("file") MultipartFile file,
 			@PathVariable("courseNumber") String courseNumber, Model model) {
-		// TODO: Get user email
+
 		System.out.println(courseNumber);
 		System.out.println(file);
 
