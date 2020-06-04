@@ -53,7 +53,7 @@ public class UserController {
                 return "/User/Instructor";
             }
             else {
-                return "Home/index";
+                return "/index";
             }
         }
         else {
@@ -65,13 +65,13 @@ public class UserController {
 
     @GetMapping("/logout")
     public String userLoggedout(){
-        return "/Home/index";
+        return "/index";
     }
 
     @PostMapping("/logout")
     public String userLogout(Model model){
         model.addAttribute("token", token);
-        return "Home/index";
+        return "/index";
     }
 
 }
