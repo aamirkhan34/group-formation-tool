@@ -11,7 +11,7 @@ public class UserAddDaoTest {
 
     @Test
     public void userNotExistTest(){
-        assertFalse(userAddDao.userNotExist("testemail"), ()->"error while searching user");
+        assertFalse(userAddDao.userNotExist("test5@gmail.com"), ()->"error while searching user");
     }
 
 }
