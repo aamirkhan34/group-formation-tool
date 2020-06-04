@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create an account</title>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -37,29 +37,25 @@
     <nav th:replace="layout :: samplenavbar"></nav>
 
         <div class="login-form">
-            <form action="/signup" th:object="${user}" method="post">
-                <h2 class="text-center">Signup</h2>
+            <form th:action="@{/user/home}" method="post" th:object="${userCredentials}">
+                <h2 class="text-center">Log in</h2>       
                 <div class="form-group">
-                    <input type="text" class="form-control" th:field="*{firstname}" placeholder="Firstname" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" th:field="*{lastname}" placeholder="Lastname" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="email" class="form-control" th:field="*{email}" placeholder="Email" required="required">
+                    <input type="text" class="form-control" th:field="*{email}" placeholder="Email" required="required">
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" th:field="*{password}" placeholder="Password" required="required">
                 </div>
-                
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Signup</button>
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
                 </div>
+                <div class="clearfix">
+                    <a th:href="@{/forgetpassword}" class="pull-right">Forgot Password?</a>
+                </div>        
             </form>
-            <p class="text-center text-danger" th:if="${mailExists}">Mail already exists</p>
-            <p class="text-center"><a th:href="@{/login}">Go to Login page</a></p>
+            <p class="text-center" th:if="${loginError}">Incorrect credentials</p>
+
+            <p class="text-center"><a th:href="@{/signup}">Create an Account</a></p>
         </div>
 
-</div>
 </body>
 </html>

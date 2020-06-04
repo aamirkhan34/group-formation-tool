@@ -13,14 +13,14 @@
 <nav th:replace="userlayout :: usernavbar"></nav>
 <div class="container">
     <div>
-        <p> This is guest page</p>
-        <p> Courses provided are</p>
-        <table class="tab-container">
+
+        <h2 class="text-center"> Courses provided are</h2>
+        <table class="table">
             <thead>
             <tr>
-                <th>Course number</th>
-                <th>Course name</th>
-                <th>instructor</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Course Number</th>
+                <th scope="col">Instructor Name</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +31,7 @@
             </tr>
             </tbody>
         </table>
+
         <form th:action="@{/user/logout}" method="post">
             <button type="submit">Log out</button>
         </form>

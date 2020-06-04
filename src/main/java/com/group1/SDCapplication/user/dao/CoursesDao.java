@@ -3,7 +3,6 @@ package com.group1.SDCapplication.user.dao;
 import com.group1.SDCapplication.datasource.DevDatabase;
 
 import com.group1.SDCapplication.models.Courses;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,32 +15,32 @@ public class CoursesDao implements Course{
     @Override
     public List<Courses> getCourses() {
         DevDatabase devDatabase = new DevDatabase();
-        Courses course = new Courses();
+
         List<Courses> allCourses = new ArrayList<>();
-        Connection devConnection;
-        {
             try {
-                String SELECT_COURSE_QUERY = "SELECT course_number, course_name,instructor_number from course";
-                devConnection = devDatabase.getConnection();
+                String SELECT_COURSE_QUERY = "SELECT co.course_number AS course_number, co.course_name as course_name, " +
+                        "us.first_name as firstname from course as co " +
+                        "inner join instructor as inst inner join user as us on " +
+                        "co.instructor_number = inst.instructor_number and inst.UID = us.UID";
+                Connection devConnection = devDatabase.getConnection();
                 Statement stmt = devConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(SELECT_COURSE_QUERY);
-                while (rs.next()) {
+                while(rs.next()) {
+                    Courses course = new Courses();
                     String courseNumber = rs.getString("course_number");
                     course.setCourseNumber(courseNumber);
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
-                    Long instructorNUmber = rs.getLong("instructor_number");
-                    course.setIntsructor_number(instructorNUmber);
+                    String instructorName = rs.getString("firstname");
+                    course.setInstructor(instructorName);
+                    allCourses.add(course);
                 }
-                allCourses.add(course);
-
+                devConnection.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        }
         return allCourses;
     }
-
 }
