@@ -35,12 +35,10 @@ public class CourseAdministerController {
 		
 		model.addAttribute("courseNumber", courseNumber);
 		
-		// Validate, parse and upload CSV
-//		UserFileDataValidation ui = new StudentFileDataValidation(file);
-//		if (ui.validateFile() == false) {
-//			model.addAttribute("message", "An error occurred while processing the CSV file.");
-//            model.addAttribute("status", false);
-//		}
+		// Validation
+		UserFileDataValidation ui = new StudentFileDataValidation(file);
+		Boolean isFileValid = ui.validateFileType();
+
 		
 		model.addAttribute("status", true);
 		

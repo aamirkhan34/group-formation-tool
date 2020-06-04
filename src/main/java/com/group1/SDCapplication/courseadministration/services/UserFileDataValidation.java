@@ -4,7 +4,7 @@ import java.util.List;
 
 
 public interface UserFileDataValidation {
-	Boolean validateFile();
+	Boolean validateFileType();
 	Boolean validateFields();
 	Boolean validateData();
 }
