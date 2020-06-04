@@ -33,7 +33,9 @@ public class UserController {
             token = userValidation.generateTokenWithRoles(user,userRoles);
             for (String role: userRoles) {
                 finalRole = role;
+                System.out.println(finalRole);
             }
+            System.out.println(finalRole);
             model.addAttribute("token", token);
             model.addAttribute("role", finalRole);
             if(finalRole.equals("student") && !jwtTokenUtil.isTokenExpired(token))
