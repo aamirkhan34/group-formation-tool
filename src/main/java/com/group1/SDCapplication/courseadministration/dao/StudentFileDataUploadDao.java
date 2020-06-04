@@ -159,8 +159,13 @@ public class StudentFileDataUploadDao implements UserAdd {
 			String EN_CHK_QUERY = "Select banner_number, course_number from student_learning_course where banner_number = '"
 					+ bannerId + "' and course_number = '" + courseNumber + "';";
 			ResultSet rs = stmt.executeQuery(EN_CHK_QUERY);
-
-			if (rs.getFetchSize() == 0) {
+			
+			String fetchData = "";
+			while (rs.next()) {
+				fetchData = rs.getString("banner_number");
+			}
+			
+			if (fetchData.isEmpty()) {
 				String ENROLL_QUERY = "INSERT INTO student_learning_course (banner_number, course_number) VALUES ('"
 						+ bannerId + "','" + courseNumber + "');";
 				stmt.executeUpdate(ENROLL_QUERY);
