@@ -16,9 +16,6 @@ build:
   only:
     refs:
       - branches
-  except:
-    - master
-
 
 test:
   stage: test
@@ -30,7 +27,6 @@ test:
       - branches
   except:
     - master
-
 
 deploy-test:
   stage: deploy
