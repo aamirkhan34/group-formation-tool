@@ -46,7 +46,7 @@ public class AdminService {
         return result;
     }
 
-    public String deleteCourseByCourseNumber(String courseNumber) {
+    public String deleteCourseByCourseNumber(Long courseNumber) {
         String result = adminService.deleteCourseByCourseNumber(courseNumber);
         return result;
     }

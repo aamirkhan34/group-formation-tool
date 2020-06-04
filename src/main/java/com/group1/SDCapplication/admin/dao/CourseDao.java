@@ -19,10 +19,11 @@ public class CourseDao implements IAdminRepository {
         Connection devConnection;
         {
             try {
-                String SELECT_COURSE_QUERY = "SELECT course_number, course_name,instructor.instructor_number,CONCAT(user.first_name,\" \",user.last_name) as instuctor_name\n" +
+                String SELECT_COURSE_QUERY = "SELECT course_number,course_id, course_name,instructor.instructor_number,\n" +
+                        " CONCAT(user.first_name, ' ',user.last_name) as instuctor_name\n" +
                         " from course\n" +
-                        " inner join instructor on instructor.instructor_number = course.instructor_number\n" +
-                        " inner join user on user.UID=instructor.UID where course.delete_flag=0;";
+                        " Left join instructor on instructor.instructor_number = course.instructor_number\n" +
+                        " left join user on user.UID=instructor.UID where course.delete_flag=0;";
                 devConnection = devDatabase.getConnection();
                 Statement stmt = devConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(SELECT_COURSE_QUERY);
@@ -33,8 +34,9 @@ public class CourseDao implements IAdminRepository {
                     String courseName = rs.getString("course_name");
                     course.setCourseName(courseName);
                     String instructor_name = rs.getString("instuctor_name");
-                    Long instructor_number = rs.getLong("instructor_number");
                     course.setInstructor_name(instructor_name);
+                    Long course_id = rs.getLong("course_id");
+                    course.setCourse_id(course_id);
                     allCourses.add(course);
                 }
                 devConnection.close();
@@ -61,11 +63,11 @@ public class CourseDao implements IAdminRepository {
         Connection devConnection;
         {
             try {
-                String SELECT_COURSE_QUERY = "SELECT course_number, course_name,CONCAT(user.first_name,\" \",user.last_name) as instuctor_name, course.instructor_number\n" +
+                String SELECT_COURSE_QUERY = "SELECT course_number, course_id,course_name,CONCAT(user.first_name,\" \",user.last_name) as instuctor_name, course.instructor_number\n" +
                         " from course\n" +
                         " inner join instructor on instructor.instructor_number = course.instructor_number\n" +
                         " inner join user on user.UID=instructor.UID\n" +
-                        " where course.course_number='" + id + "';";
+                        " where course.course_id='" + id + "';";
                 devConnection = devDatabase.getConnection();
                 Statement stmt = devConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(SELECT_COURSE_QUERY);
@@ -78,6 +80,8 @@ public class CourseDao implements IAdminRepository {
                     String instructor_name = rs.getString("instuctor_name");
                     Long instructor_number = rs.getLong("instructor_number");
                     course.setIntsructor_number(instructor_number);
+                    Long course_id = rs.getLong("course_id");
+                    course.setCourse_id(course_id);
                     allCourses.add(course);
                 }
                 devConnection.close();
@@ -92,8 +96,8 @@ public class CourseDao implements IAdminRepository {
         return allCourses;
     }
 
-    public boolean checkCourseExist(String courseName) {
-        String courseExists = "select * from course where course_number='" + courseName + "';";
+    public boolean checkCourseExist(Long course_id) {
+        String courseExists = "select * from course where course_id='" + course_id + "';";
         ResultSet resultSet = null;
         try {
             Connection devConnection = devDatabase.getConnection();
@@ -148,7 +152,7 @@ public class CourseDao implements IAdminRepository {
 
     @Override
     public String createOrUpdateCourse(Courses course) {
-        if (!checkCourseExist(course.getCourseNumber())) {
+        if (!checkCourseExist(course.getCourse_id())) {
             String USER_INSERT_QUERY = "insert into course(course_number,course_name,instructor_number) " +
                     "values('" + course.getCourseNumber() + "','" + course.getCourseName() + "'," + course.getIntsructor_number() + ");";
             try {
@@ -165,7 +169,7 @@ public class CourseDao implements IAdminRepository {
             }
         } else {
             String update_query = "update course set course_name='" + course.getCourseName() + "' " +
-                    ", instructor_number = '" + course.getIntsructor_number() + "' where course_number='" + course.getCourseNumber() + "';";
+                    ", instructor_number = '" + course.getIntsructor_number() + "' where course_id='" + course.getCourse_id() + "';";
             try {
                 int res;
                 Connection devConnection = devDatabase.getConnection();
@@ -184,9 +188,9 @@ public class CourseDao implements IAdminRepository {
     }
 
     @Override
-    public String deleteCourseByCourseNumber(String courseNumber) {
-        if (checkCourseExist(courseNumber)) {
-            String delete_query = "update course set delete_flag=1 where course_number='"+courseNumber+"';";
+    public String deleteCourseByCourseNumber(Long course_id) {
+        if (checkCourseExist(course_id)) {
+            String delete_query = "update course set delete_flag=1 where course_id='"+course_id+"';";
             try {
                 int res;
                 Connection devConnection = devDatabase.getConnection();

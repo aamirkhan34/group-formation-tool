@@ -15,5 +15,5 @@ public interface IAdminRepository {
 
     String createOrUpdateCourse  (Courses course);
 
-    String deleteCourseByCourseNumber(String courseNumber);
+    String deleteCourseByCourseNumber(Long courseNumber);
 }

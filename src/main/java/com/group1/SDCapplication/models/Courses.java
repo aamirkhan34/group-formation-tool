@@ -5,6 +5,15 @@ public class Courses {
     private String courseName;
     private String instructor_name;
     private Long intsructor_number;
+    private Long course_id;
+
+    public Long getCourse_id() {
+        return course_id;
+    }
+
+    public void setCourse_id(Long course_id) {
+        this.course_id = course_id;
+    }
 
     public Long getIntsructor_number() {
         return intsructor_number;

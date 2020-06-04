@@ -23,7 +23,7 @@ public class AdminController {
         return "/Admin/admin";
     }
 
-    @RequestMapping(path = {"/edit", "/edit/{id}"})
+    @RequestMapping(path = {"/add", "/edit/{id}"})
     public String editEmployeeById(Model model, @PathVariable("id") Optional<String> id)
     {
         AdminService service = new AdminService();
@@ -52,7 +52,7 @@ public class AdminController {
     }
 
     @RequestMapping(path = "/delete/{id}")
-    public String deleteCourseByCourseNumber(Model model, @PathVariable("id") String id)
+    public String deleteCourseByCourseNumber(Model model, @PathVariable("id") Long id)
     {
         AdminService service = new AdminService();
         service.deleteCourseByCourseNumber(id);
