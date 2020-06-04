@@ -9,10 +9,11 @@ import java.util.List;
 
 public class AdminService {
     CourseDao adminService = new CourseDao();
+
     public List<Courses> getAllCourses() {
         CourseDao getCourses = new CourseDao();
         List<Courses> result = getCourses.loadAllCourses();
-        if(result.size() > 0) {
+        if (result.size() > 0) {
             return result;
         } else {
             return new ArrayList<Courses>();
@@ -23,7 +24,7 @@ public class AdminService {
         CourseDao getCourse = new CourseDao();
         List<Courses> course = getCourse.findById(id);
 
-        if(course.size()==1) {
+        if (course.size() == 1) {
             return course.get(0);
         } else {
             return null;
@@ -34,7 +35,7 @@ public class AdminService {
     public List<Instructor> getAllInstructors() {
         List<Instructor> result = adminService.getAllInstructors();
 
-        if(result.size() > 0) {
+        if (result.size() > 0) {
             return result;
         } else {
             return new ArrayList<Instructor>();

@@ -1,5 +1,6 @@
 package com.group1.SDCapplication.user.controller;
 
+import com.group1.SDCapplication.admin.services.AdminService;
 import com.group1.SDCapplication.login.jsonwebtoken.JwtTokenUtil;
 import com.group1.SDCapplication.login.models.UserCredentials;
 import com.group1.SDCapplication.login.services.UserValidation;
@@ -56,6 +57,10 @@ public class UserController {
             }
             else if(finalRole.equals("admin") && !jwtTokenUtil.isTokenExpired(token))
             {
+                List<Courses> courses = new ArrayList<>();
+                AdminService service = new AdminService();
+                courses = service.getAllCourses();
+                model.addAttribute("courses", courses);
                 return "admin";
             }
             else {

@@ -27,16 +27,17 @@
                         <div class="form-group col-md-8">
                             <label for="courseNumber" class="col-form-label">Course number</label>
                             <input type="text" th:field="*{courseNumber}" class="form-control"
-                                   id="courseNumber" placeholder="Course number" />
+                                   id="courseNumber" placeholder="Course number" required="required"/>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="courseName" class="col-form-label">Course Name</label>
                             <input type="text" th:field="*{courseName}" class="form-control"
-                                   id="courseName" placeholder="Course Name" />
+                                   id="courseName" placeholder="Course Name" required="required"/>
                         </div>
                         <div class="form-group col-md-8" th:if="${course.instructor_number}">
                             <label  class="col-form-label">Instructor </label>
                             <select th:field="*{instructor_number}" class="form-control" name="example" id="example" />
+                           <option value="0">--Select Instructor--</option>
                             <option th:each="instructor : ${instructorList}"
                                     th:value="${instructor.instuctor_number}"
                                     th:text="${instructor.instuctor_name}"
@@ -47,6 +48,7 @@
                         <div class="form-group col-md-8" th:unless="${course.instructor_number}">
                             <label  class="col-form-label">Instructor </label>
                             <select th:field="*{instructor_number}" class="form-control" name="example" id="example1" />
+                            <option value="0">--Select Instructor--</option>
                             <option th:each="instructor : ${instructorList}"
                                     th:value="${instructor.instuctor_number.toString()}"
                                     th:text="${instructor.instuctor_name}">

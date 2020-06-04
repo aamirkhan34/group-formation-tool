@@ -15,7 +15,7 @@ import java.util.Optional;
 public class AdminController {
 
     @GetMapping("/admin")
-    public String index(Model model)  {
+    public String index(Model model) {
         List<Courses> courses = new ArrayList<>();
         AdminService service = new AdminService();
         courses = service.getAllCourses();
@@ -24,39 +24,35 @@ public class AdminController {
     }
 
     @RequestMapping(path = {"/add", "/edit/{id}"})
-    public String editEmployeeById(Model model, @PathVariable("id") Optional<String> id)
-    {
+    public String editEmployeeById(Model model, @PathVariable("id") Optional<String> id) {
         AdminService service = new AdminService();
         List<Instructor> instrutors = service.getAllInstructors();
         if (id.isPresent()) {
             Courses entity = service.getCourseById(id.get());
             model.addAttribute("course", entity);
-            model.addAttribute("instructorList",instrutors);
+            model.addAttribute("instructorList", instrutors);
         } else {
             Courses courses = new Courses();
             model.addAttribute("course", courses);
-            model.addAttribute("instructorList",instrutors);
+            model.addAttribute("instructorList", instrutors);
         }
         return "add-edit-course";
     }
 
     @RequestMapping(path = "/createCourse", method = RequestMethod.POST)
-    public String createOrUpdateCourse(@ModelAttribute Courses course,Model model)
-    {
+    public String createOrUpdateCourse(@ModelAttribute Courses course, Model model) {
         AdminService service = new AdminService();
-        System.out.println(course.getCourseNumber());
         service.createOrUpdateCourse(course);
-        List<Courses> courses  = service.getAllCourses();
+        List<Courses> courses = service.getAllCourses();
         model.addAttribute("courses", courses);
         return "admin";
     }
 
     @RequestMapping(path = "/delete/{id}")
-    public String deleteCourseByCourseNumber(Model model, @PathVariable("id") Long id)
-    {
+    public String deleteCourseByCourseNumber(Model model, @PathVariable("id") Long id) {
         AdminService service = new AdminService();
         service.deleteCourseByCourseNumber(id);
-        List<Courses> courses  = service.getAllCourses();
+        List<Courses> courses = service.getAllCourses();
         model.addAttribute("courses", courses);
         return "admin";
     }
