@@ -21,11 +21,11 @@ public class ResetPasswordController {
         user.setEmail(userEmail);
         if(!isTokenValid){
             model.addAttribute("userResetPassword", user);
-            return "/Login/ResetPassword/ResetPassword";
+            return "resetPassword";
         }
         else {
             model.addAttribute("tokenError", true);
-            return "/Home/error";
+            return "error";
         }
     }
     @PostMapping("/user/passwordreset")
@@ -35,17 +35,15 @@ public class ResetPasswordController {
         model.addAttribute("tokenError", false);
         String userEmail = user.getEmail();
         String password = user.getPassword();
-        System.out.println(userEmail);
-        System.out.println(password);
         boolean result = userPasswordResetDao.passwordReset(userEmail, password);
         System.out.println(result);
         if(result){
-            return "/index";
+            return "index";
         }
         else {
             String error = "Invalid Token";
             model.addAttribute("tokenError", error);
-            return "/Home/error";
+            return "error";
         }
     }
 }

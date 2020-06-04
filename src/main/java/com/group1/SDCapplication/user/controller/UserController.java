@@ -38,7 +38,7 @@ public class UserController {
             model.addAttribute("role", finalRole);
             if(finalRole.equals("student") && !jwtTokenUtil.isTokenExpired(token))
             {
-                return "/User/Student";
+                return "student";
             }
             if(finalRole.equals("guest") && !jwtTokenUtil.isTokenExpired(token))
             {
@@ -46,32 +46,32 @@ public class UserController {
                 List<Courses> coursesForGuest = new ArrayList<>();
                 coursesForGuest = guestUser.getCourses();
                 model.addAttribute("courses", coursesForGuest);
-                return "/User/Guest";
+                return "guest";
             }
             else if(finalRole.equals("instructor") && !jwtTokenUtil.isTokenExpired(token))
             {
-                return "/User/Instructor";
+                return "instructor";
             }
             else {
-                return "/index";
+                return "index";
             }
         }
         else {
             String loginError = "Invalid Credentials";
             model.addAttribute("loginError", loginError);
-            return "/Login/Login";
+            return "login";
         }
     }
 
     @GetMapping("/logout")
     public String userLoggedout(){
-        return "/index";
+        return "index";
     }
 
     @PostMapping("/logout")
     public String userLogout(Model model){
         model.addAttribute("token", token);
-        return "/index";
+        return "index";
     }
 
 }
