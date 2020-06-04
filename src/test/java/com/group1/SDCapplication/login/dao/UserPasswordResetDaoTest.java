@@ -13,6 +13,11 @@ public class UserPasswordResetDaoTest {
         boolean result = userPasswordResetDao.passwordReset("testemail", "testpassword");
         assertFalse(result, ()-> "error while changing password");
     }
-
+    @Test
+    public void  testGetUserID(){
+        UserPasswordResetDao userPasswordResetDao = new UserPasswordResetDao();
+        long uid = userPasswordResetDao.getUserID("test5@gmail.com");
+        assertTrue(uid == 22L,()->"Wrong email");
+    }
 
 }
