@@ -56,7 +56,7 @@ public class ForgetPasswordController {
             simpleMessage.setSubject("Password Reset email for SDC application");
             String url = "Please find the link provided to reset your password. Linke will be " +
                     "active for 10minutes" +
-                    "      " + "https://asdc-group1-production-site.herokuapp.com/user/passwordreset?token=" + token;
+                    "      " + "https://asdc-group1-production.herokuapp.com/user/passwordreset?token=" + token;
             simpleMessage.setText(url);
             javaMailSender.send(simpleMessage);
             return true;

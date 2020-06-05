@@ -11,7 +11,7 @@ before_script:
 build:
   stage: build
   tags:
-    - ugrad
+    - grad
   script: ./gradlew --build-cache assemble
   only:
     refs:
@@ -20,7 +20,7 @@ build:
 test:
   stage: test
   tags:
-    - ugrad
+    - grad
   script: ./gradlew check
   only:
     refs:
