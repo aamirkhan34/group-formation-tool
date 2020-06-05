@@ -1,4 +1,4 @@
-image: gradle:alpine
+  image: gradle:alpine
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -11,7 +11,7 @@ before_script:
 build:
   stage: build
   tags:
-    - grad
+    - ugrad
   script: ./gradlew --build-cache assemble
   only:
     refs:
@@ -20,7 +20,7 @@ build:
 test:
   stage: test
   tags:
-    - grad
+    - ugrad
   script: ./gradlew check
   only:
     refs:
