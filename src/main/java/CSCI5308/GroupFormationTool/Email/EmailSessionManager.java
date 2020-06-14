@@ -19,6 +19,7 @@ public class EmailSessionManager {
         user = config.getUserName();
         password = config.getPassword();
         contentType = config.getContentType();
+        prop = new Properties();
         prop.put("mail.smtp.auth",config.getAuth());
         prop.put("mail.smtp.starttls.enable",config.getStartTls());
         prop.put("mail.smtp.host",config.getHost());
