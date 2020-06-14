@@ -39,4 +39,6 @@ DROP TABLE Multiple_question;
 
 DROP TABLE Question;
 
+DROP TABLE Question_type;
+
 DROP TABLE User;
