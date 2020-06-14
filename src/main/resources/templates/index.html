@@ -1,47 +1,53 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Group 1 Software Development application</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+	<head>
+		<title>CSCI5308 - Group Formation Tool</title>
+		<!-- Normalize.css by Nicolas Gallagher, used from https://necolas.github.io/normalize.css/ 
+			 Necessary to reset some default browser styles for consistent appearance across browsers. -->
+		<link th:href="@{/styles/cssandjs/normalize.css}" rel="stylesheet" />
 
-</head>
-<body>
+		<!-- This file includes all default styles for this application. -->
+		<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+	</head>
+	<body class="bodyGridContainer">
+		<header class="bodyGridRow headerGridContainer">
+			<h1>CSCI5308 Group Formation Tool</h1>
+		</header>
 
-<nav th:fragment="samplenavbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" th:href="@{/}">Software Development project</a>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/}">Home </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signup">Signup</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container mt-20">
-    <div class="control-box">
-        <p>
-            CSCI5308 is in desperate need of tool support and automation before it becomes a core
-            required course in the MACS program and enrollment jumps from an average of 30 students to
-            120 students. We need a tool to facilitate the organization of students into groups, and to
-            organize, track and display the results of peer group assessments.
-        </p>
-
-    </div>
-
-
-</div>
-</body>
+		<!-- I got the idea for how to do this from https://www.thymeleaf.org/doc/articles/springsecurity.html -->
+		<div class="bodyGridRow userProfileGridContainer" sec:authorize="isAuthenticated()">
+			<h4 class="userProfileGridCol1" th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
+			<form class="userProfileGridCol4" th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out"/>
+			</form>
+		</div>
+	
+		<main class="bodyGridRow mainGridContainer">
+			<aside class="mainGridRow welcomeInfoBox">
+				<h2>Welcome to the CSCI5308 Group Formation Tool!!</h2>
+			</aside>
+			<div class="mainGridRow" sec:authorize="isAuthenticated()">
+				<!-- Display list of courses. -->
+				<!-- Learned how to do this here: https://www.baeldung.com/thymeleaf-list -->
+				<h4>Available courses:</h4>
+				<table>
+					<tr th:each="course : ${courses}">
+						<td><a th:href="@{/course/course(id=${course.id})}" th:text="${course.title}">Title</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="mainGridCentreCard" sec:authorize="!isAuthenticated()">
+				<!-- Send them to login. -->
+				<p>This site requires you to be logged in.</p>
+			</div>
+			<a class="signupLogin mainGridRow mainGridCentreCard" sec:authorize="!isAuthenticated()" th:href="@{/login}">Click here to log in!</a>
+		</main>
+		<footer class="bodyGridRow footerGridContainer">
+			<p><strong>CSCI5308 (Advanced Topics in Software Development)</strong> is a graduate course offered for students enrolled in the <a href="https://www.dal.ca/macs" target="_blank">Master of Applied Computer Science (MACS)</a> at the <a href="https://www.dal.ca/cs" target="_blank">Faculty of Computer Science</a>, <a href="https://www.dal.ca" target="_blank">Dalhousie University</a>.</p>
+		</footer>
+	</body>
 </html>
