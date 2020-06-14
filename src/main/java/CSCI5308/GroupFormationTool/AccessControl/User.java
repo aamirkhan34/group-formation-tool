@@ -130,13 +130,17 @@ public class User
 	public boolean createUser(
 		IUserPersistence userDB,
 		IPasswordEncryption passwordEncryption,
-		IUserNotifications notification) throws MessagingException {
+		IUserNotifications notification) {
 		String rawPassword = password;
 		this.password = passwordEncryption.encryptPassword(this.password);
 		boolean success = userDB.createUser(this);
 		if (success && (null != notification))
 		{
-			notification.sendUserLoginCredentials(this, rawPassword);
+			try {
+				notification.sendUserLoginCredentials(this, rawPassword);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		}
 		return success;
 	}

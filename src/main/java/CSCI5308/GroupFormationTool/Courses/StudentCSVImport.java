@@ -48,20 +48,18 @@ public class StudentCSVImport
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
 				user.setEmail(email);
-				try {
-					if (user.createUser(userDB, passwordEncryption, new UserNotification()))
-					{
-						successResults.add("Created: " + userDetails);
-						userDB.loadUserByBannerID(bannerID, user);
-					}
-					else
-					{
-						failureResults.add("Unable to save this user to DB: " + userDetails);
-						return;
-					}
-				} catch (MessagingException e) {
-					e.printStackTrace();
+
+				if (user.createUser(userDB, passwordEncryption, new UserNotification()))
+				{
+					successResults.add("Created: " + userDetails);
+					userDB.loadUserByBannerID(bannerID, user);
 				}
+				else
+				{
+					failureResults.add("Unable to save this user to DB: " + userDetails);
+					return;
+				}
+
 			}
 			if (course.enrollUserInCourse(Role.STUDENT, user))
 			{
