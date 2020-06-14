@@ -14,5 +14,4 @@ $EMAIL_PASSWORD = "Csci5308@test"
 $EMAIL_STARTTLS = "true"
 $EMAIL_AUTH = "true"
 $EMAIL_CONTENT_TYPE="text/html"
-$EMAIL_CONTENT_TYPE="text/html"
 ```
