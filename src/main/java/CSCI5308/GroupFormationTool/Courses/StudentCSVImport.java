@@ -7,6 +7,8 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
 
+import javax.mail.MessagingException;
+
 public class StudentCSVImport
 {
 	private List<String> successResults;
@@ -46,15 +48,19 @@ public class StudentCSVImport
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
 				user.setEmail(email);
-				if (user.createUser(userDB, passwordEncryption, null))
-				{
-					successResults.add("Created: " + userDetails);
-					userDB.loadUserByBannerID(bannerID, user);
-				}
-				else
-				{
-					failureResults.add("Unable to save this user to DB: " + userDetails);
-					return;
+				try {
+					if (user.createUser(userDB, passwordEncryption, new UserNotification()))
+					{
+						successResults.add("Created: " + userDetails);
+						userDB.loadUserByBannerID(bannerID, user);
+					}
+					else
+					{
+						failureResults.add("Unable to save this user to DB: " + userDetails);
+						return;
+					}
+				} catch (MessagingException e) {
+					e.printStackTrace();
 				}
 			}
 			if (course.enrollUserInCourse(Role.STUDENT, user))

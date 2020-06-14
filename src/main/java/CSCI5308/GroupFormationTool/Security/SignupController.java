@@ -9,6 +9,8 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
 
+import javax.mail.MessagingException;
+
 @Controller
 public class SignupController
 {
@@ -32,8 +34,7 @@ public class SignupController
    	@RequestParam(name = PASSWORD_CONFIRMATION) String passwordConfirm,
    	@RequestParam(name = FIRST_NAME) String firstName,
    	@RequestParam(name = LAST_NAME) String lastName,
-   	@RequestParam(name = EMAIL) String email)
-	{
+   	@RequestParam(name = EMAIL) String email) throws MessagingException {
 		boolean success = false;
 		if (User.isBannerIDValid(bannerID) &&
 			 User.isEmailValid(email) &&
@@ -49,7 +50,7 @@ public class SignupController
 			u.setEmail(email);
 			IUserPersistence userDB = SystemConfig.instance().getUserDB();
 			IPasswordEncryption passwordEncryption = SystemConfig.instance().getPasswordEncryption();
-			success = u.createUser(userDB, passwordEncryption, null);
+			success = u.createUser(userDB, passwordEncryption, new UserNotification());
 		}
 		ModelAndView m;
 		if (success)

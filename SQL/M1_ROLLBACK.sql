@@ -25,4 +25,18 @@ DROP TABLE Role;
 
 DROP TABLE UserContactInfo;
 
+DROP TABLE History_password;
+
+DROP TABLE Question_in_set;
+
+DROP TABLE Question_set;
+
+DROP TABLE Numeric_question;
+
+DROP TABLE Free_text_question;
+
+DROP TABLE Multiple_question;
+
+DROP TABLE Question;
+
 DROP TABLE User;

@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
 
+import javax.mail.MessagingException;
+
 public class User
 {
 	// This regex comes from here:
@@ -128,8 +130,7 @@ public class User
 	public boolean createUser(
 		IUserPersistence userDB,
 		IPasswordEncryption passwordEncryption,
-		IUserNotifications notification)
-	{
+		IUserNotifications notification) throws MessagingException {
 		String rawPassword = password;
 		this.password = passwordEncryption.encryptPassword(this.password);
 		boolean success = userDB.createUser(this);
