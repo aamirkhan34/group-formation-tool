@@ -4,7 +4,7 @@ Copyright 2020
 # Environment Variable setting
 Since we are required to set variables into system environment, I record the names and values of environment variables. 
 ```bash
-$DEV =  "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_1_DEVINT?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8"
+$DB =  "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_1_DEVINT?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8"
 $USER = "CSCI5308_1_DEVINT_USER"
 $PASSWORD = "CSCI5308_1_DEVINT_1161"
 $EMAIL_HOST = "smtp.gmail.com"
