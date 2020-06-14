@@ -1,5 +1,7 @@
 package CSCI5308.GroupFormationTool;
 
+import CSCI5308.GroupFormationTool.Email.DefaultEmailConfiguration;
+import CSCI5308.GroupFormationTool.Email.IEmailConfiguration;
 import CSCI5308.GroupFormationTool.Security.*;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Database.*;
@@ -23,9 +25,11 @@ public class SystemConfig
 	private IDatabaseConfiguration databaseConfiguration;
 	private ICoursePersistence courseDB;
 	private ICourseUserRelationshipPersistence courseUserRelationshipDB;
-	
+	private IEmailConfiguration emailConfiguration;
+
 	// This private constructor ensures that no class other than System can allocate
 	// the System object. The compiler would prevent it.
+
 	private SystemConfig()
 	{
 		// The default instantiations are the choices that would be used in the
@@ -36,9 +40,10 @@ public class SystemConfig
 		databaseConfiguration = new DefaultDatabaseConfiguration();
 		courseDB = new CourseDB();
 		courseUserRelationshipDB = new CourseUserRelationshipDB();
+		emailConfiguration = new DefaultEmailConfiguration();
 	}
-	
 	// This is the way the rest of the application gets access to the System object.
+
 	public static SystemConfig instance()
 	{
 		// Using lazy initialization, this is the one and only place that the System
@@ -49,42 +54,49 @@ public class SystemConfig
 		}
 		return uniqueInstance;
 	}
-	
 	public IPasswordEncryption getPasswordEncryption()
 	{
 		return passwordEncryption;
 	}
-	
+
 	public void setPasswordEncryption(IPasswordEncryption passwordEncryption)
 	{
 		this.passwordEncryption = passwordEncryption;
 	}
-	
+
 	public IUserPersistence getUserDB()
 	{
 		return userDB;
 	}
-	
+
 	public void setUserDB(IUserPersistence userDB)
 	{
 		this.userDB = userDB;
 	}
-	
+
 	public IDatabaseConfiguration getDatabaseConfiguration()
 	{
 		return databaseConfiguration;
 	}
-	
+
 	public void setDatabaseConfiguration(IDatabaseConfiguration databaseConfiguration)
 	{
 		this.databaseConfiguration = databaseConfiguration;
 	}
-	
+
+	public IEmailConfiguration getEmailConfiguration() {
+		return emailConfiguration;
+	}
+
+	public void setEmailConfiguration(IEmailConfiguration emailConfiguration) {
+		this.emailConfiguration = emailConfiguration;
+	}
+
 	public void setCourseDB(ICoursePersistence courseDB)
 	{
 		this.courseDB = courseDB;
 	}
-	
+
 	public ICoursePersistence getCourseDB()
 	{
 		return courseDB;
