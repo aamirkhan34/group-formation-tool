@@ -9,19 +9,16 @@ public class DefaultDatabaseConfiguration implements IDatabaseConfiguration
 
 	public String getDatabaseUserName()
 	{
-    	System.out.println(USER);
 		return USER;
 	}
 
 	public String getDatabasePassword()
 	{
-		System.out.println(PASSWORD);
 		return PASSWORD;
 	}
 
 	public String getDatabaseURL()
 	{
-		System.out.println(URL);
 		return URL;
 	}
 }
