@@ -9,8 +9,6 @@ public class PasswordLengthChecker implements IPasswordLengthChecker{
         IPasswordConstraintConfiguration config = SystemConfig.instance().getPasswordConstraintConfiguration();
         maxLength = Integer.valueOf(config.getPasswordMax());
         minLength = Integer.valueOf(config.getPasswordMin());
-        System.out.println(maxLength);
-        System.out.println(minLength);
 
     }
     @Override
