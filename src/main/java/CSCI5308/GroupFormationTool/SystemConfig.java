@@ -6,6 +6,8 @@ import CSCI5308.GroupFormationTool.Security.*;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Database.*;
 import CSCI5308.GroupFormationTool.Courses.*;
+import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordConstraintConfiguration;
+import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordConstraintConfiguration;
 
 /*
  * This is a singleton, we will learn about these when we learn design patterns.
@@ -19,8 +21,9 @@ import CSCI5308.GroupFormationTool.Courses.*;
 public class SystemConfig
 {
 	private static SystemConfig uniqueInstance = null;
-	
+
 	private IPasswordEncryption passwordEncryption;
+	private IPasswordConstraintConfiguration passwordConstraintConfiguration;
 	private IUserPersistence userDB;
 	private IDatabaseConfiguration databaseConfiguration;
 	private ICoursePersistence courseDB;
@@ -35,6 +38,7 @@ public class SystemConfig
 		// The default instantiations are the choices that would be used in the
 		// production application. These choices can all be overridden by test
 		// setup logic when necessary.
+		passwordConstraintConfiguration = new DefaultPasswordConstraintConfiguration();
 		passwordEncryption = new BCryptPasswordEncryption();
 		userDB = new UserDB();
 		databaseConfiguration = new DefaultDatabaseConfiguration();
@@ -62,6 +66,14 @@ public class SystemConfig
 	public void setPasswordEncryption(IPasswordEncryption passwordEncryption)
 	{
 		this.passwordEncryption = passwordEncryption;
+	}
+
+	public IPasswordConstraintConfiguration getPasswordConstraintConfiguration() {
+		return passwordConstraintConfiguration;
+	}
+
+	public void setPasswordConstraintConfiguration(IPasswordConstraintConfiguration passwordConstraintConfiguration) {
+		this.passwordConstraintConfiguration = passwordConstraintConfiguration;
 	}
 
 	public IUserPersistence getUserDB()
