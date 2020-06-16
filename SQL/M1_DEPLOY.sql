@@ -18,28 +18,38 @@ CREATE TABLE History_password(
 
 );
 
-CREATE TABLE Question_type(
+CREATE TABLE QuestionType(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    type_name VARCHAR
-(50)
+    questionTypeName VARCHAR
+(45)
 );
 
 CREATE TABLE Question(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    owner_id BIGINT NOT NULL,
+    instructorID BIGINT NOT NULL,
     type_id INT NOT NULL,
     title VARCHAR
 (75),
-    context VARCHAR
+    questionText VARCHAR
 (100),
-    public TINYINT,
+    createdOn DATE,
     FOREIGN KEY
-(owner_id) REFERENCES User
+(instructorID) REFERENCES User
 (id),
     FOREIGN KEY
-(type_id) REFERENCES Question_type
+(type_id) REFERENCES QuestionType
 (id)
 );
+
+CREATE TABLE QuestionOptions(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    questionID BIGINT,
+    displayText VARCHAR (100),
+    optionNumber INT,
+        FOREIGN KEY
+(questionID) REFERENCES Question
+(id)
+)
 
 CREATE TABLE Numeric_question(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -58,7 +68,6 @@ CREATE TABLE Free_text_question(
 (question_id) REFERENCES Question
 (id)
 );
-
 CREATE TABLE Multiple_question(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     question_id BIGINT NOT NULL,
