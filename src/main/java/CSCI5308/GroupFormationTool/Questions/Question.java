@@ -69,4 +69,12 @@ public class Question {
     public void setMultipleChoiceOption(ArrayList<MultipleChoiceOption> multipleChoiceOption) {
         this.multipleChoiceOption = multipleChoiceOption;
     }
+
+    public boolean createQuestion(IQuestionPersistence questionDB) {
+        return questionDB.createQuestion(this);
+    }
+    public boolean deleteQuestion(IQuestionPersistence questionDB) {
+
+        return questionDB.deleteQuestionById(this.id);
+    }
 }
