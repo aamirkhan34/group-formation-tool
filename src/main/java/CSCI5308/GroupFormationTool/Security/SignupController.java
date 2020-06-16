@@ -1,5 +1,6 @@
 package CSCI5308.GroupFormationTool.Security;
 
+import CSCI5308.GroupFormationTool.passwordConstraint.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,14 @@ public class SignupController
 	private final String FIRST_NAME = "firstName";
 	private final String LAST_NAME = "lastName";
 	private final String EMAIL = "email";
+	private final String ERROR = "errorMessage";
 	
 	@GetMapping("/signup")
 	public String displaySignup(Model model)
 	{
+		IPasswordConstraintConfiguration config = new DefaultPasswordConstraintConfiguration();
+		IPasswordLengthChecker lengthChecker = new PasswordLengthChecker();
+		IPasswordTypeLengthChecker typeLengthChecker = new PasswordTypeLengthChecker();
 		return "signup";
 	}
 	
@@ -35,12 +40,50 @@ public class SignupController
    	@RequestParam(name = FIRST_NAME) String firstName,
    	@RequestParam(name = LAST_NAME) String lastName,
    	@RequestParam(name = EMAIL) String email) throws MessagingException {
+
+		StringBuffer errorInformation = new StringBuffer("");
+		boolean passwordFormat = true;
+		IPasswordConstraintConfiguration config = new DefaultPasswordConstraintConfiguration();
+		IPasswordLengthChecker lengthChecker = new PasswordLengthChecker();
+		IPasswordTypeLengthChecker typeLengthChecker = new PasswordTypeLengthChecker();
+		if (!lengthChecker.checkMinLength(password)){
+			passwordFormat = false;
+			errorInformation.append("The password should not be shorter than ");
+			errorInformation.append(config.getPasswordMin());
+			errorInformation.append("<br/> \n");
+		} else if (!lengthChecker.checkMaxLength(password)){
+			passwordFormat = false;
+			errorInformation.append("The password should not be longer than than ");
+			errorInformation.append(config.getPasswordMin());
+			errorInformation.append("<br/> \n");
+		}
+		if (!typeLengthChecker.checkLowerLength(password)){
+			passwordFormat = false;
+			errorInformation.append("The number of lower case characters should not be fewer than than ");
+			errorInformation.append(config.getPasswordLowerMin());
+			errorInformation.append("<br/> \n");
+		}
+		if (!typeLengthChecker.checkUpperLength(password)){
+			passwordFormat = false;
+			errorInformation.append("The number of upper case characters should not be fewer than than ");
+			errorInformation.append(config.getPasswordUpperMin());
+			errorInformation.append("<br/> \n");
+		}
+		if (!typeLengthChecker.checkSymbolLength(password)){
+			passwordFormat = false;
+			errorInformation.append("The number of special characters should not be fewer than than ");
+			errorInformation.append(config.getPasswordUpperMin());
+			errorInformation.append("<br/> \n");
+		}
+
+
 		boolean success = false;
 		if (User.isBannerIDValid(bannerID) &&
 			 User.isEmailValid(email) &&
 			 User.isFirstNameValid(firstName) &&
 			 User.isLastNameValid(lastName) &&
-			 password.equals(passwordConfirm))
+			 password.equals(passwordConfirm)&&
+			passwordFormat)
 		{
 			User u = new User();
 			u.setBannerID(bannerID);
@@ -62,7 +105,8 @@ public class SignupController
 		{
 			// Something wrong with the input data.
 			m = new ModelAndView("signup");
-			m.addObject("errorMessage", "Invalid data, please check your values.");
+			errorInformation.append("Invalid data, please check your values.");
+			m.addObject(ERROR, errorInformation.toString());
 		}
 		return m;
 	}
