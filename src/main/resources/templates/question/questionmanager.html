@@ -16,10 +16,11 @@
             <form th:action="@{/logout}" method="post">
                 <input type="submit" value="Sign Out"/>
             </form>
-        </div>
+
         <div class="w3-container">
             <h2>Basic Question Information</h2>
-            <form th:action="@{/question/questionanswer}" th:object="${question}" method="get">
+
+            <form th:action="@{/question/questionanswer}" th:object="${question}" method="post">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" th:field="*{title}" style="width: 40%" required> <br>
                 <label for="question">Question:</label>
@@ -34,6 +35,7 @@
                 </select><br>
                 <input type="submit" value="next">
             </form>
+        </div>
         </div>
 </div>
 </body>

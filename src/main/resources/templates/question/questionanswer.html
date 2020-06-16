@@ -10,7 +10,9 @@
     <title>CSCI5308 - Group Formation Tool</title>
 </head>
 <body>
+
 <div class="w3-container">
+
     <div sec:authorize="isAuthenticated()">
         <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
         <form th:action="@{/logout}" method="post">
@@ -18,6 +20,8 @@
         </form>
     </div>
     <div class="w3-container">
+        <p> <b>Qution entered is</b></p>
+        <p th:text="${question.title}"></p>
         <h2>Answers</h2>
         <form action="/">
             <table>
@@ -31,7 +35,7 @@
                     </td>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="optiontable">
                 <tr>
                     <td><input type="text" required></td>
                     <td><input type="number" required></td>
@@ -39,10 +43,19 @@
                 </tbody>
             </table>
             <br>
-
-            <button> More answers</button>
             <pre></pre>
+            <button type="button" onclick="myFunction()">more answers</button>
             <input type="submit" value="save">
+            <script>
+                function myFunction() {
+                    var table = document.getElementById("optiontable");
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0)
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = "<input type=\"text\" required>"
+                    cell2.innerHTML = "<input type=\"number\" required>";
+                }
+            </script>
         </form>
     </div>
 </div>
