@@ -10,23 +10,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PasswordTypeLengthCheckerTest {
     private IPasswordTypeLengthChecker checker;
+    StringBuffer sb = new StringBuffer("");
     @BeforeEach
     public void initialize(){
         checker = new PasswordTypeLengthCheckerMock();
     }
     @Test
     public void testCheckLowerLength(){
-        assertTrue(checker.checkLowerLength("abc"));
-        assertFalse(checker.checkLowerLength("ABC"));
+        assertTrue(checker.checkLowerLength("abc",sb));
+        assertFalse(checker.checkLowerLength("ABC",sb));
     }
     @Test
     public void testCheckUpperLength(){
-        assertFalse(checker.checkUpperLength("abc"));
-        assertTrue(checker.checkUpperLength("ABC"));
+        assertFalse(checker.checkUpperLength("abc",sb));
+        assertTrue(checker.checkUpperLength("ABC",sb));
     }
     @Test
     public void testCheckSymbolLength(){
-        assertTrue(checker.checkSymbolLength("a@bc"));
-        assertFalse(checker.checkSymbolLength("ABC"));
+        assertTrue(checker.checkSymbolLength("a@bc",sb));
+        assertFalse(checker.checkSymbolLength("ABC",sb));
     }
 }

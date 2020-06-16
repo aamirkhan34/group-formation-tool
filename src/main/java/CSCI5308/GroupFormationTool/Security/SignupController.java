@@ -42,48 +42,23 @@ public class SignupController
    	@RequestParam(name = EMAIL) String email) throws MessagingException {
 
 		StringBuffer errorInformation = new StringBuffer("");
-		boolean passwordFormat = true;
-		IPasswordConstraintConfiguration config = new DefaultPasswordConstraintConfiguration();
 		IPasswordLengthChecker lengthChecker = new PasswordLengthChecker();
 		IPasswordTypeLengthChecker typeLengthChecker = new PasswordTypeLengthChecker();
-		if (!lengthChecker.checkMinLength(password)){
-			passwordFormat = false;
-			errorInformation.append("The password should not be shorter than ");
-			errorInformation.append(config.getPasswordMin());
-			errorInformation.append("<br/> \n");
-		} else if (!lengthChecker.checkMaxLength(password)){
-			passwordFormat = false;
-			errorInformation.append("The password should not be longer than than ");
-			errorInformation.append(config.getPasswordMin());
-			errorInformation.append("<br/> \n");
-		}
-		if (!typeLengthChecker.checkLowerLength(password)){
-			passwordFormat = false;
-			errorInformation.append("The number of lower case characters should not be fewer than than ");
-			errorInformation.append(config.getPasswordLowerMin());
-			errorInformation.append("<br/> \n");
-		}
-		if (!typeLengthChecker.checkUpperLength(password)){
-			passwordFormat = false;
-			errorInformation.append("The number of upper case characters should not be fewer than than ");
-			errorInformation.append(config.getPasswordUpperMin());
-			errorInformation.append("<br/> \n");
-		}
-		if (!typeLengthChecker.checkSymbolLength(password)){
-			passwordFormat = false;
-			errorInformation.append("The number of special characters should not be fewer than than ");
-			errorInformation.append(config.getPasswordUpperMin());
-			errorInformation.append("<br/> \n");
-		}
+		boolean passwordFormat = (lengthChecker.checkMinLength(password,errorInformation));
+		passwordFormat = (lengthChecker.checkMaxLength(password,errorInformation)) && passwordFormat;
+		passwordFormat = (typeLengthChecker.checkLowerLength(password,errorInformation)) && passwordFormat;
+		passwordFormat = (typeLengthChecker.checkUpperLength(password,errorInformation)) && passwordFormat;
+		passwordFormat = (typeLengthChecker.checkSymbolLength(password,errorInformation)) && passwordFormat;
 
 
+		System.out.println(errorInformation.toString());
 		boolean success = false;
 		if (User.isBannerIDValid(bannerID) &&
-			 User.isEmailValid(email) &&
-			 User.isFirstNameValid(firstName) &&
-			 User.isLastNameValid(lastName) &&
-			 password.equals(passwordConfirm)&&
-			passwordFormat)
+				User.isEmailValid(email) &&
+				User.isFirstNameValid(firstName) &&
+				User.isLastNameValid(lastName) &&
+				password.equals(passwordConfirm)&&
+				passwordFormat)
 		{
 			User u = new User();
 			u.setBannerID(bannerID);
