@@ -4,16 +4,6 @@
         xmlns:th="https://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<!--    <style>-->
-<!--        input {-->
-<!--            width: 70%;-->
-<!--        }-->
-<!--    </style>-->
-<!--    <script type="text/javascript">-->
-<!--        $(function () {-->
-<!--            alert($("#question_type option:selected").text());-->
-<!--        })</script> -->
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -29,13 +19,13 @@
         </div>
         <div class="w3-container">
             <h2>Basic Question Information</h2>
-            <form action="/">
+            <form th:action="@{/question/questionanswer}" th:object="${question}" method="get">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title" style="width: 40%" required> <br>
+                <input type="text" id="title" name="title" th:field="*{title}" style="width: 40%" required> <br>
                 <label for="question">Question:</label>
-                <input type="text" id="question" name="question" style="width: 40%" required><br>
+                <input type="text" id="question"th:field="*{text}" name="question" style="width: 40%" required><br>
                 <label for="questiontype">Choose a car:</label>
-                <select name="questiontype" id="questiontype" required>
+                <select name="questiontype" id="questiontype" th:field="*{type}" required>
                     <option value="" selected disabled>Select question type</option>
                     <option th:value="1">Numeric</option>
                     <option th:value="2">Multiple choice - choose one</option>
