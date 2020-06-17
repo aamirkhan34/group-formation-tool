@@ -90,4 +90,8 @@ public class Question {
     public List<Question> getAllQuestionTypes(IQuestionPersistence questionDB){
         return  questionDB.loadAllQuestionTypes();
     }
+
+    public List<Question> loadQuestionById(IQuestionPersistence questionDB){
+        return  questionDB.loadAllQuestionsByInstructor(2);
+    }
 }

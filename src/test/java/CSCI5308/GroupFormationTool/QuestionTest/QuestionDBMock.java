@@ -13,7 +13,7 @@ public class QuestionDBMock implements IQuestionPersistence {
     }
 
     @Override
-    public void loadQuestionById(long questionId) {
+    public void loadQuestionByUserId(long questionId) {
 
     }
 

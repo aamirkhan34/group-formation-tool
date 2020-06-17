@@ -8,20 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>CSCI5308 - Group Formation Tool</title>
-    <script>
-        $(document).ready(function() {
-            $("#questiontype").change(function() {
-                var questionType = $("#questiontype").val();
-                if(questionType ==1 || questionType==4){
-                    console.log("cs");
-                    $("#submitButton").val("Submit");
-                }
-                else{
-                    $("#submitButton").val("Next");
-                }
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="w3-container">
@@ -32,9 +18,34 @@
         </form>
 
         <div class="w3-container">
+            <pre>
+
+            </pre>
             <a th:href="@{/question/questionmanager}"> Create Questions </a>
             <pre></pre>
             <h2>List of question</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Question Title</th>
+                    <th>Question text</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        sample title
+                    </td>
+                    <td>
+                        sample text
+                    </td>
+                    <td>
+                        <a> View </a>
+                        <a> Delete </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

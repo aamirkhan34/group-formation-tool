@@ -91,6 +91,10 @@ public class QuestionController {
     @GetMapping("/question/questionmanagement")
     public String questionManagement()
     {
+        IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+        User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+        Question q = new Question();
+        q.loadQuestionById(questionDB);
         return "/question/questionmanagement";
     }
 }

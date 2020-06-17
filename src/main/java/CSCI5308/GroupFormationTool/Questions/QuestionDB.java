@@ -14,12 +14,33 @@ import java.util.Date;
 public class QuestionDB implements IQuestionPersistence {
     @Override
     public List<Question> loadAllQuestionsByInstructor(long instructorId) {
+        CallStoredProcedure proc = null;
+        List<Question> questionList = new ArrayList<Question>();
+        try {
+            proc = new CallStoredProcedure("spFindQuestionsByUserID(?)");
+            proc.setParameter(1, 2);
+            ResultSet results = proc.executeWithResults();
+            if (null != results) {
+                while (results.next()) {
+                    System.out.println(results.getInt(1));
+                }
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
         return null;
+
     }
 
     @Override
     public void loadQuestionById(long questionId) {
-
+        CallStoredProcedure proc = null;
     }
 
     @Override
