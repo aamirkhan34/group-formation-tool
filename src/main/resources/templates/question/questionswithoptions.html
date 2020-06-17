@@ -9,16 +9,23 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>CSCI5308 - Group Formation Tool</title>
 </head>
-<body>
-
-<div class="w3-container">
+<body class="bodyGridContainer">
+<header class="bodyGridRow headerGridContainer">
+    <h1>CSCI5308 Group Formation Tool</h1>
+</header>
+<div class="container">
     <div sec:authorize="isAuthenticated()">
         <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
-    </div>
-    <div class="w3-container">
+        <pre>
+
+        </pre>
+    <form th:action="@{/question/questionmanager}">
+        <input type="submit" value="Back"/>
+    </form>
+    <div class="container">
         <p> <b>Question entered is</b></p>
         <form th:action="@{/question/createQuestionmultiple}" method="post">
                 <input type="text" style="visibility: hidden" name="questiontext" th:value="*{question.text}"></input>
@@ -47,8 +54,13 @@
                 </tbody>
             </table>
             <br>
-            <pre></pre>
+            <pre>
+
+            </pre>
             <button type="button" onclick="myFunction()">more answers</button>
+            <pre>
+
+            </pre>
             <input type="submit" value="save">
             <script>
                 function myFunction() {
@@ -61,6 +73,7 @@
                 }
             </script>
         </form>
+    </div>
     </div>
 </div>
 </body>
