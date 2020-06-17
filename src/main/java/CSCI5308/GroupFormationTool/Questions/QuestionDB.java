@@ -1,5 +1,6 @@
 package CSCI5308.GroupFormationTool.Questions;
 
+import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 
@@ -18,11 +19,20 @@ public class QuestionDB implements IQuestionPersistence {
         List<Question> questionList = new ArrayList<Question>();
         try {
             proc = new CallStoredProcedure("spFindQuestionsByUserID(?)");
-            proc.setParameter(1, 2);
+            proc.setParameter(1, instructorId);
             ResultSet results = proc.executeWithResults();
             if (null != results) {
                 while (results.next()) {
-                    System.out.println(results.getInt(1));
+                    User user = new User();
+                    Question question = new Question();
+                    question.setId(results.getInt(1));
+                    user.setID(results.getLong(2));
+                    question.setInstructor(user);
+                    question.setType(results.getString(3));
+                    question.setTitle(results.getString(4));
+                    question.setText(results.getString(5));
+                    question.setCreatedOn(results.getDate(6));
+                    questionList.add(question);
                 }
             }
         }
@@ -34,8 +44,7 @@ public class QuestionDB implements IQuestionPersistence {
                 proc.cleanup();
             }
         }
-        return null;
-
+        return questionList;
     }
 
     @Override

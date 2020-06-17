@@ -89,12 +89,14 @@ public class QuestionController {
         return "redirect:/question/questionmanager";
     }
     @GetMapping("/question/questionmanagement")
-    public String questionManagement()
+    public String questionManagement(Model model)
     {
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
         Question q = new Question();
-        q.loadQuestionById(questionDB);
+        q.setInstructor(user);
+        List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
+        model.addAttribute("questionlist", questionList);
         return "/question/questionmanagement";
     }
 }

@@ -91,7 +91,7 @@ public class Question {
         return  questionDB.loadAllQuestionTypes();
     }
 
-    public List<Question> loadQuestionById(IQuestionPersistence questionDB){
-        return  questionDB.loadAllQuestionsByInstructor(2);
+    public List<Question> loadAllQuestionsByInstructor(IQuestionPersistence questionDB){
+        return  questionDB.loadAllQuestionsByInstructor(this.getInstructor().getID());
     }
 }
