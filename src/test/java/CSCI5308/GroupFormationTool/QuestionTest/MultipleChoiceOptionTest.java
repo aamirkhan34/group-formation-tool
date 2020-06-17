@@ -5,35 +5,36 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
 public class MultipleChoiceOptionTest {
+
     @Test
     public void getDisplayTextTest() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
-        assertEquals(multipleChoiceOption.getDisplayText(), "");
-        multipleChoiceOption.setDisplayText("Question text");
-        assertEquals(multipleChoiceOption.getDisplayText(), "Question text");
+        assertTrue(multipleChoiceOption.getDisplayText().isEmpty());
+        multipleChoiceOption.setDisplayText("test");
+        assertTrue(multipleChoiceOption.getDisplayText().equals("test"));
     }
 
     @Test
-    public void setDisplayTextTest(String displayText) {
+    public void setDisplayTextTest() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
-        multipleChoiceOption.setDisplayText("Display text test");
-        assertEquals(multipleChoiceOption.getDisplayText(), "Display text test");
+        multipleChoiceOption.setDisplayText("Display text");
+        assertTrue(multipleChoiceOption.getDisplayText().equals("Display text"));
     }
 
     @Test
     public void getOptionNumberTest() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         multipleChoiceOption.setOptionNumber(1000);
-        assertEquals(multipleChoiceOption.getOptionNumber(), 1000);
+        assertEquals(1000, multipleChoiceOption.getOptionNumber());
     }
 
     @Test
-    public void setOptionNumberTest(int optionNumber) {
+    public void setOptionNumberTest() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         multipleChoiceOption.setOptionNumber(1234);
-        assertEquals(multipleChoiceOption.getOptionNumber(), 1234);
+        assertEquals(1234, multipleChoiceOption.getOptionNumber());
     }
 }

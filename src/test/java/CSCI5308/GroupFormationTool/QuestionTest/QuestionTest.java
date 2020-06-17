@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @SuppressWarnings("deprecation")
@@ -17,11 +17,11 @@ public class QuestionTest {
     public void getIdTest() {
         Question question = new Question();
         question.setId(123);
-        assertEquals(question.getId(), 123);
+        assertEquals(123, question.getId());
     }
 
     @Test
-    public void setIdTest(long id) {
+    public void setIdTest() {
         Question question = new Question();
         question.setId(1234);
         assertEquals(question.getId(), 1234);
@@ -31,42 +31,42 @@ public class QuestionTest {
     public void getTitleTest() {
         Question question = new Question();
         question.setTitle("Question title getter test");
-        assertEquals(question.getTitle(), "Question title getter test");
+        assertEquals("Question title getter test", question.getTitle());
     }
 
     @Test
-    public void setTitleTest(String title) {
+    public void setTitleTest() {
         Question question = new Question();
         question.setType("Question title setter test");
-        assertEquals(question.getType(), "Question title setter test");
+        assertEquals("Question title setter test",question.getType());
     }
 
     @Test
     public void getTextTest() {
         Question question = new Question();
         question.setText("Question text getter test");
-        assertEquals(question.getText(), "Question text getter test");
+        assertEquals("Question text getter test", question.getText());
     }
 
     @Test
-    public void setTextTest(String text) {
+    public void setTextTest() {
         Question question = new Question();
         question.setText("Question text setter test");
-        assertEquals(question.getText(), "Question text setter test");
+        assertEquals("Question text setter test", question.getText());
     }
 
     @Test
     public void getTypeTest() {
         Question question = new Question();
         question.setType("Question type getter test");
-        assertEquals(question.getType(), "Question type getter test");
+        assertEquals("Question type getter test", question.getType());
     }
 
     @Test
-    public void setTypeTest(String type) {
+    public void setTypeTest() {
         Question question = new Question();
         question.setType("Question type setter test");
-        assertEquals(question.getType(), "Question type setter test");
+        assertEquals("Question type setter test",question.getType());
     }
 
     @Test
@@ -79,21 +79,13 @@ public class QuestionTest {
     }
 
     @Test
-    public void setInstructorTest(User instructor) {
+    public void setInstructorTest() {
         Question question = new Question();
         User u = new User();
         u.setId(100);
         question.setInstructor(u);
-        assertEquals(question.getInstructor().getId(), 100);
+        assertEquals(100, question.getInstructor().getId());
     }
-
-    //public void getCreatedOnTest() {
-
-    //}
-
-    //public void setCreatedOnTest(Date createdOn) {
-
-    //}
 
     @Test
     public void getMultipleChoiceOptionTest() {
@@ -117,11 +109,11 @@ public class QuestionTest {
         choices.add(choiceQue3);
 
         question.setMultipleChoiceOption(choices);
-        assertEquals(question.getMultipleChoiceOption(), choices);
+        assertEquals(choices, question.getMultipleChoiceOption());
     }
 
     @Test
-    public void setMultipleChoiceOptionTest(ArrayList<MultipleChoiceOption> multipleChoiceOption) {
+    public void setMultipleChoiceOptionTest() {
         Question question = new Question();
         ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
 
@@ -142,6 +134,6 @@ public class QuestionTest {
         choices.add(choiceQue3);
 
         question.setMultipleChoiceOption(choices);
-        assertEquals(question.getMultipleChoiceOption(), choices);
+        assertEquals(choices, question.getMultipleChoiceOption());
     }
 }

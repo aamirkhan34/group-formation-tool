@@ -4,11 +4,22 @@ import CSCI5308.GroupFormationTool.AccessControl.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Question {
     private long id;
     private String title;
     private String text;
+
+    public int getTypeID() {
+        return typeID;
+    }
+
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
+    }
+
+    private int typeID;
     private String type;
     private User instructor;
     private Date createdOn;
@@ -76,5 +87,8 @@ public class Question {
     public boolean deleteQuestion(IQuestionPersistence questionDB) {
 
         return questionDB.deleteQuestionById(this.id);
+    }
+    public List<Question> getAllQuestionTypes(IQuestionPersistence questionDB){
+        return  questionDB.loadAllQuestionTypes();
     }
 }

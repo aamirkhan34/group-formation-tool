@@ -39,15 +39,19 @@
                 <label for="question">Question:</label>
                 <input type="text" id="question"th:field="*{text}" name="question" style="width: 40%" required><br>
                 <label for="questiontype">Type:</label>
-                <select name="questiontype" id="questiontype" th:field="*{type}" required>
-                    <option value="0" selected>Select question type</option>
-                    <option th:value="1">Numeric</option>
-                    <option th:value="2">Multiple choice - choose one</option>
-                    <option th:value="3">Multiple choice - choose multiple</option>
-                    <option th:value="4">Free text</option>
-                </select><br>
+                <br>
+                    <select name="questiontype" id="questiontype" th:field="*{typeID}"/>
+                    <option value="0">--Select Instructor--
+                    <option th:each="question : ${questionList}"
+                            th:value="${question.typeID}"
+                            th:text="${question.type}">
+                    </option>
+                    </select>
+                    <br>
                 <input type="submit" id="submitButton" value="next">
             </form>
+
+
         </div>
         </div>
 </div>

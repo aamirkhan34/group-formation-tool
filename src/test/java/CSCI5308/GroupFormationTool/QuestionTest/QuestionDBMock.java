@@ -25,4 +25,9 @@ public class QuestionDBMock implements IQuestionPersistence {
     public boolean deleteQuestionById(long questionId) {
         return false;
     }
+
+    @Override
+    public List<Question> loadAllQuestionTypes() {
+        return null;
+    }
 }

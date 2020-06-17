@@ -7,4 +7,5 @@ public interface IQuestionPersistence {
     public void loadQuestionById(long questionId);
     public boolean createQuestion(Question question);
     public boolean deleteQuestionById(long questionId);
+    public List<Question> loadAllQuestionTypes();
 }
