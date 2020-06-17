@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <html
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="https://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:pth="http://www.w3.org/1999/html">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -15,7 +15,6 @@ pageEncoding="UTF-8"%>
 <body>
 
 <div class="w3-container">
-
     <div sec:authorize="isAuthenticated()">
         <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
         <form th:action="@{/logout}" method="post">
@@ -23,10 +22,11 @@ pageEncoding="UTF-8"%>
         </form>
     </div>
     <div class="w3-container">
-        <p> <b>Qution entered is</b></p>
-        <p th:text="${question.title}"></p>
-        <h2>Answers</h2>
-        <form th:action="@{/question/createQuestion}" method="post">
+        <p> <b>Question entered is</b></p>
+        <form th:action="@{/question/createQuestionmultiple}" method="post">
+                <input type="text" style="visibility: hidden" name="questiontext" th:value="*{question.text}"></input>
+                <input type="text" style="visibility: hidden" name="questiontitle" th:value="*{question.title}"></input>
+                <input type="hidden" name="questiontypeid" th:value="*{question.typeID}"></input>
             <table>
                 <thead>
                 <tr>

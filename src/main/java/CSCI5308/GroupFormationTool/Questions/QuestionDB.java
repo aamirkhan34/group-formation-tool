@@ -5,6 +5,7 @@ import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +35,20 @@ public class QuestionDB implements IQuestionPersistence {
                 proc.registerOutputParameterLong(5);
                 proc.execute();
                 return true;
+
             } else if (question.getTypeID() == 2 || question.getTypeID() == 3) {
-                proc = new CallStoredProcedure("spCreateQuestionWithOptions(?, ?, ?, ?,?)");
+                proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?,?)");
                 proc.setParameter(1, question.getTitle());
                 proc.setParameter(2, question.getText());
                 proc.setParameter(3, question.getInstructor().getID());
                 proc.setParameter(4, question.getTypeID());
                 proc.registerOutputParameterLong(5);
-                ResultSet results = proc.executeWithResults();
+                int ds = proc.executeUpdate();
+                System.out.println(ds);
                 long id = -1;
-                while (results.next()) {
-                    id = results.getLong(1);
-                }
+//                while (results.next()) {
+//                    id = results.getLong(1);
+//                }
                 createMultipleQuestionOptions(id, question.getMultipleChoiceOption());
                 return true;
             }

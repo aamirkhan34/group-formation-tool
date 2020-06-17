@@ -34,6 +34,8 @@ public class QuestionController {
                                  @RequestParam(name = "optionNumber", required = false) ArrayList<Integer> optionNumber) {
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+        model.addAttribute("question", question);
+        System.out.println(question.getText());
         Question q = new Question();
         q.setTitle(question.getTitle());
         q.setText(question.getText());
@@ -46,41 +48,55 @@ public class QuestionController {
         } else {
             if (optionNumber == null || displaytext ==null) {
                 attr.addFlashAttribute("question", question);
+                model.addAttribute("question", question);
                 return "redirect:/question/questionoptions";
             } else {
-                ArrayList<MultipleChoiceOption> multipleChoices = new ArrayList<MultipleChoiceOption>();
-                for (int i = 0; i < displaytext.size(); i++) {
-                    if (optionNumber.get(i) != null && !displaytext.get(i).isEmpty()) {
-                        MultipleChoiceOption choice = new MultipleChoiceOption();
-                        choice.setDisplayText(displaytext.get(i));
-                        choice.setOptionNumber(optionNumber.get(i));
-                        multipleChoices.add(choice);
-                    }
-                }
-                q.setMultipleChoiceOption(multipleChoices);
-                q.createQuestion(questionDB);
                 return "redirect:/question/questionmanager";
             }
         }
     }
 
     @RequestMapping(value = "/question/questionoptions", method = RequestMethod.GET)
-    public String displayQuestion(Question question, Model model) {
+    public String displayQuestion(@ModelAttribute Question question, Model model, RedirectAttributes attr) {
         List<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
+        attr.addFlashAttribute("question", question);
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         model.addAttribute("multipleChoiceOption", multipleChoiceOption);
         model.addAttribute("multipleChoiceOptionList", multipleChoiceOptionList);
         return "/question/questionswithoptions";
     }
 
-    /*
-    @RequestMapping(value = "/question/createquestion", method = RequestMethod.POST)
-    public String saveQuestion(Question question, Model model) {
-        MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
-        List<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
-        //System.out.println(displaytext);
-        model.addAttribute("multipleChoiceOption", multipleChoiceOption);
-        model.addAttribute("multipleChoiceOptionList", multipleChoiceOptionList);
-        return "/course/instructoradmin";
-    }*/
+    @RequestMapping(value = "/question/createQuestionmultiple", method = RequestMethod.POST)
+    public String createQuestionmultiple(@ModelAttribute Question question, Model model,
+                                         RedirectAttributes attr,
+                                         @RequestParam(name = "questiontitle", required = false) String questiontitle,
+                                         @RequestParam(name = "questiontypeid", required = false) int questiontypeid,
+                                         @RequestParam(name = "questiontext", required = false) String questiontext,
+                                         @RequestParam(name = "displayText", required = false) ArrayList<String> displaytext,
+                                         @RequestParam(name = "optionNumber", required = false) ArrayList<Integer> optionNumber){
+
+        IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+        User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+        System.out.println(questiontypeid);
+        Question q = new Question();
+        q.setTitle(questiontitle);
+        q.setText(questiontext);
+        q.setTypeID(questiontypeid);
+        System.out.println(user.getBannerID());
+        q.setInstructor(user);
+        ArrayList<MultipleChoiceOption> multipleChoices = new ArrayList<MultipleChoiceOption>();
+        for (int i = 0; i < displaytext.size(); i++) {
+            if (optionNumber.get(i) != null && !displaytext.get(i).isEmpty()) {
+                MultipleChoiceOption choice = new MultipleChoiceOption();
+                choice.setDisplayText(displaytext.get(i));
+                choice.setOptionNumber(optionNumber.get(i));
+                multipleChoices.add(choice);
+                System.out.println(choice.getDisplayText());
+            }
+        }
+        q.setMultipleChoiceOption(multipleChoices);
+        q.createQuestion(questionDB);
+        return "redirect:/question/questionmanager";
+    }
+
 }
