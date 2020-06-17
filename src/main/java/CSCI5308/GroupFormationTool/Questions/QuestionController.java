@@ -2,19 +2,14 @@ package CSCI5308.GroupFormationTool.Questions;
 
 import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Courses.Course;
-import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
 import CSCI5308.GroupFormationTool.SystemConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class QuestionController {
@@ -24,7 +19,7 @@ public class QuestionController {
         List<Question> questionTypeList = questionDB.loadAllQuestionTypes();
         model.addAttribute("questionTypeList", questionTypeList);
         model.addAttribute("question", new Question());
-        return "/question/questionmanager";
+        return "question/createquestion";
     }
 
     @RequestMapping(path = "/question/createQuestion", method = RequestMethod.POST)
@@ -35,7 +30,6 @@ public class QuestionController {
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
         model.addAttribute("question", question);
-        System.out.println(question.getText());
         Question q = new Question();
         q.setTitle(question.getTitle());
         q.setText(question.getText());
@@ -76,12 +70,10 @@ public class QuestionController {
 
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
-        System.out.println(questiontypeid);
         Question q = new Question();
         q.setTitle(questiontitle);
         q.setText(questiontext);
         q.setTypeID(questiontypeid);
-        System.out.println(user.getBannerID());
         q.setInstructor(user);
         ArrayList<MultipleChoiceOption> multipleChoices = new ArrayList<MultipleChoiceOption>();
         for (int i = 0; i < displaytext.size(); i++) {
@@ -90,12 +82,15 @@ public class QuestionController {
                 choice.setDisplayText(displaytext.get(i));
                 choice.setOptionNumber(optionNumber.get(i));
                 multipleChoices.add(choice);
-                System.out.println(choice.getDisplayText());
             }
         }
         q.setMultipleChoiceOption(multipleChoices);
         q.createQuestion(questionDB);
         return "redirect:/question/questionmanager";
     }
-
+    @GetMapping("/question/questionmanagement")
+    public String questionManagement()
+    {
+        return "/question/questionmanagement";
+    }
 }

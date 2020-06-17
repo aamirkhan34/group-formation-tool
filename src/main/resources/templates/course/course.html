@@ -19,7 +19,8 @@
 		<div th:if="${instructor} or ${ta}">
 			<br/>
 			<a th:href="@{/course/instructoradmin(id=${course.id})}">Course Administration</a>
-			<a th:href="@{/question/questionmanager}"> Create Questions </a>
+			<pre></pre>
+			<a th:href="@{/question/questionmanagement}"> Question Manager page </a>
 		</div>
 	</body>
 </html>
