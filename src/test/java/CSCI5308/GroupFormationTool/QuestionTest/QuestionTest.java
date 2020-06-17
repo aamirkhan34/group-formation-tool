@@ -1,10 +1,16 @@
 package CSCI5308.GroupFormationTool.QuestionTest;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Courses.Course;
+import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
+import CSCI5308.GroupFormationTool.CoursesTest.CourseDBMock;
+import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 
@@ -13,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @SuppressWarnings("deprecation")
 public class QuestionTest {
+   /* private static IQuestionPersistence questionDBMock;
+    @BeforeAll
+    static void setUpBeforeClass() {
+        questionDBMock = new QuestionDBMock();
+    }*/
     @Test
     public void getIdTest() {
         Question question = new Question();
@@ -24,7 +35,7 @@ public class QuestionTest {
     public void setIdTest() {
         Question question = new Question();
         question.setId(1234);
-        assertEquals(question.getId(), 1234);
+        assertEquals(1234,question.getId());
     }
 
     @Test
@@ -135,5 +146,34 @@ public class QuestionTest {
 
         question.setMultipleChoiceOption(choices);
         assertEquals(choices, question.getMultipleChoiceOption());
+    }
+
+    @Test
+    public void createQuestion() {
+        IQuestionPersistence queDB = new QuestionDBMock();
+
+        Question question = new Question();
+        question.setTitle("Test Question");
+        question.setText("How many credits you have taken?");
+        question.setTypeID(1);
+
+        User user = new User();
+        user.setID(1);
+        user.setBannerID("B00847415");
+        user.setPassword("Pass@123");
+        user.setFirstName("Pratz");
+        user.setLastName("B");
+        user.setEmail("pr676280@dal.ca");
+        question.setInstructor(user);
+
+        queDB.createQuestion(question);
+        Assert.isTrue(question.getId() == 0);
+        Assert.isTrue(question.getTitle().equals("Test Question"));
+        Assert.isTrue(question.getText().equals("How many credits you have taken?"));
+        Assert.isTrue(question.getInstructor().getBannerID().equals("B00847415"));
+        Assert.isTrue(question.getInstructor().getFirstName().equals("Pratz"));
+        Assert.isTrue(question.getInstructor().getLastName().equals("B"));
+        Assert.isTrue(question.getInstructor().getEmail().equals("pr676280@dal.ca"));
+        //assertEquals(question.createQuestion(questionDBMock), true);
     }
 }

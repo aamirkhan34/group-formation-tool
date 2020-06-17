@@ -41,8 +41,8 @@
                 <label for="questiontype">Type:</label>
                 <br>
                     <select name="questiontype" id="questiontype" th:field="*{typeID}"/>
-                    <option value="0">--Select Instructor--
-                    <option th:each="question : ${questionList}"
+                <option value="0">--Select Question Type--</option>
+                    <option th:each="question : ${questionTypeList}"
                             th:value="${question.typeID}"
                             th:text="${question.type}">
                     </option>

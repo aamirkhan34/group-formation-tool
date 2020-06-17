@@ -23,25 +23,33 @@ public class QuestionDB implements IQuestionPersistence{
 
     @Override
     public boolean createQuestion(Question question) {
-
-        LocalDate date = java.time.LocalDate.now();
         CallStoredProcedure proc = null;
-        if(question.getType().equals('4')){
             try {
-
-                proc = new CallStoredProcedure("spCreateUser(?, ?, ?, ?, ?, ?)");
-                proc.setParameter(1, "");
-                proc.setParameter(2, question.getInstructor().getID());
-                proc.setParameter(3, question.getType());
-                proc.setParameter(4, question.getTitle());
-                proc.setParameter(5, question.getText());
-                proc.setParameter(6, question.getText());
-                //                proc.setParameter(6, date);
-                proc.execute();
+                if (question.getTypeID() == 1 || question.getTypeID() == 4) {
+                    proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?,?)");
+                    proc.setParameter(1, question.getTitle());
+                    proc.setParameter(2, question.getText());
+                    proc.setParameter(3, question.getInstructor().getID());
+                    proc.setParameter(4, question.getTypeID());
+                    proc.registerOutputParameterLong(5);
+                    proc.execute();
+                    return true;
+                } else if(question.getTypeID() == 2 || question.getTypeID() == 3){
+                    proc = new CallStoredProcedure("spCreateQuestionWithOptions(?, ?, ?, ?,?)");
+                    proc.setParameter(1, question.getTitle());
+                    proc.setParameter(2, question.getText());
+                    proc.setParameter(3, question.getInstructor().getID());
+                    proc.setParameter(4, question.getTypeID());
+                    proc.registerOutputParameterLong(5);
+                    proc.execute();
+                    // have to fecth id from db
+                    return  true;
+                }
             }
             catch (SQLException e)
             {
-                // Logging needed.
+                e.printStackTrace();
+                return false;
             }
             finally
             {
@@ -49,10 +57,8 @@ public class QuestionDB implements IQuestionPersistence{
                 {
                     proc.cleanup();
                 }
-            }
         }
         return false;
-
     }
 
     @Override

@@ -10,6 +10,11 @@ public class Question {
     private long id;
     private String title;
     private String text;
+    private int typeID;
+    private String type;
+    private User instructor;
+    private Date createdOn;
+    private ArrayList<MultipleChoiceOption> multipleChoiceOption;
 
     public int getTypeID() {
         return typeID;
@@ -18,12 +23,6 @@ public class Question {
     public void setTypeID(int typeID) {
         this.typeID = typeID;
     }
-
-    private int typeID;
-    private String type;
-    private User instructor;
-    private Date createdOn;
-    private ArrayList<MultipleChoiceOption> multipleChoiceOption;
 
     public long getId() {
         return id;

@@ -1,5 +1,6 @@
 package CSCI5308.GroupFormationTool.QuestionTest;
 
+import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
 
@@ -18,7 +19,20 @@ public class QuestionDBMock implements IQuestionPersistence {
 
     @Override
     public boolean createQuestion(Question question) {
-        return false;
+        User user = new User();
+        user.setID(1);
+        user.setBannerID("B00847415");
+        user.setPassword("Pass@123");
+        user.setFirstName("Pratz");
+        user.setLastName("B");
+        user.setEmail("pr676280@dal.ca");
+
+        question.setId(0);
+        question.setTypeID(1);
+        question.setInstructor(user);
+        question.setTitle("Test Question");
+        question.setText("How many credits you have taken?");
+        return true;
     }
 
     @Override
