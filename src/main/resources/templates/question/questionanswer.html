@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
         <p> <b>Qution entered is</b></p>
         <p th:text="${question.title}"></p>
         <h2>Answers</h2>
-        <form th:action="@{/question/createquestion}">
+        <form th:action="@{/question/createquestion}" method="post">
             <table>
                 <thead>
                 <tr>
@@ -40,7 +40,7 @@ pageEncoding="UTF-8"%>
                 </thead>
                 <tbody id="optiontable">
                 <tr>
-                    <td><input type="text" required></td>
+                    <td><input type="text" name="displayText" required></td>
                     <td><input type="number" required></td>
                 </tr>
                 </tbody>
@@ -55,7 +55,7 @@ pageEncoding="UTF-8"%>
                     var row = table.insertRow(-1);
                     var cell1 = row.insertCell(0)
                     var cell2 = row.insertCell(1);
-                    cell1.innerHTML = "<input type=\"text\" required>"
+                    cell1.innerHTML = "<input type=\"text\" name=\"displayText\" required>"
                     cell2.innerHTML = "<input type=\"number\" required>";
                 }
             </script>

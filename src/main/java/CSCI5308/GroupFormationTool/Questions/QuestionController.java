@@ -57,9 +57,10 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/question/createquestion", method = RequestMethod.POST)
-    public String saveQuestion(Question question, Model model){
+    public String saveQuestion(Question question, Model model, @RequestParam (name ="displayText") ArrayList<String> displaytext){
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         List<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
+        System.out.println(displaytext);
         model.addAttribute("multipleChoiceOption", multipleChoiceOption);
         model.addAttribute("multipleChoiceOptionList", multipleChoiceOptionList);
         return "/course/instructoradmin";
