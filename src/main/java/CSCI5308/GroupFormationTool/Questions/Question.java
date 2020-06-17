@@ -83,10 +83,12 @@ public class Question {
     public boolean createQuestion(IQuestionPersistence questionDB) {
         return questionDB.createQuestion(this);
     }
+
     public boolean deleteQuestion(IQuestionPersistence questionDB) {
 
         return questionDB.deleteQuestionById(this.id);
     }
+
     public List<Question> getAllQuestionTypes(IQuestionPersistence questionDB){
         return  questionDB.loadAllQuestionTypes();
     }
@@ -94,4 +96,5 @@ public class Question {
     public List<Question> loadAllQuestionsByInstructor(IQuestionPersistence questionDB){
         return  questionDB.loadAllQuestionsByInstructor(this.getInstructor().getID());
     }
+
 }
