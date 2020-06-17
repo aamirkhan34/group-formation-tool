@@ -41,7 +41,6 @@ public class QuestionController {
         q.setText(question.getText());
         q.setTypeID(question.getTypeID());
         q.setInstructor(user);
-        //q.setMultipleChoice(que.getMultipleChoiceOption());
         if (q.getTypeID() == 1 || q.getTypeID() == 4) {
             q.createQuestion(questionDB);
             return "redirect:/question/questionmanager";

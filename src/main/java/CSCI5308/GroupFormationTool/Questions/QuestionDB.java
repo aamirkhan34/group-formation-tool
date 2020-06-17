@@ -27,12 +27,11 @@ public class QuestionDB implements IQuestionPersistence {
         CallStoredProcedure proc = null;
         try {
             if (question.getTypeID() == 1 || question.getTypeID() == 4) {
-                proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?,?)");
+                proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?)");
                 proc.setParameter(1, question.getTitle());
                 proc.setParameter(2, question.getText());
                 proc.setParameter(3, question.getInstructor().getID());
                 proc.setParameter(4, question.getTypeID());
-                proc.registerOutputParameterLong(5);
                 proc.execute();
                 return true;
 
