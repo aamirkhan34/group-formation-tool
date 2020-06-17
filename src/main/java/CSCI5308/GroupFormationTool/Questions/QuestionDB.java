@@ -37,19 +37,18 @@ public class QuestionDB implements IQuestionPersistence {
                 return true;
 
             } else if (question.getTypeID() == 2 || question.getTypeID() == 3) {
-                proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?,?)");
+                proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?)");
                 proc.setParameter(1, question.getTitle());
                 proc.setParameter(2, question.getText());
                 proc.setParameter(3, question.getInstructor().getID());
                 proc.setParameter(4, question.getTypeID());
-                proc.registerOutputParameterLong(5);
-                int ds = proc.executeUpdate();
-                System.out.println(ds);
-                long id = -1;
-//                while (results.next()) {
-//                    id = results.getLong(1);
-//                }
-                createMultipleQuestionOptions(id, question.getMultipleChoiceOption());
+                ResultSet resultSet = proc.executeWithResults();
+                int questionIdfromDB = 1;
+                while (resultSet.next()) {
+                    questionIdfromDB = resultSet.getInt(1);
+                }
+                System.out.println(questionIdfromDB);
+                createMultipleQuestionOptions(questionIdfromDB, question.getMultipleChoiceOption());
                 return true;
             }
         } catch (SQLException e) {

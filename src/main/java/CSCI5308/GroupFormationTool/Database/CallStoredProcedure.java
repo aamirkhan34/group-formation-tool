@@ -85,6 +85,8 @@ public class CallStoredProcedure
 
 	public int executeUpdate() throws SQLException
 	{
-		return statement.executeUpdate();
+		int st = statement.executeUpdate();
+		System.out.println(st);
+		return st;
 	}
 }
