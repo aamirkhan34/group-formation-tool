@@ -44,7 +44,7 @@ public class QuestionController {
             q.createQuestion(questionDB);
             return "redirect:/question/questionmanager";
         } else {
-            if (optionNumber.isEmpty() || displaytext.isEmpty()) {
+            if (optionNumber == null || displaytext ==null) {
                 attr.addFlashAttribute("question", question);
                 return "redirect:/question/questionoptions";
             } else {
