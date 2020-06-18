@@ -26,7 +26,7 @@ public class QuestionController {
 	    List<Question> questionTypeList = q.getAllQuestionTypes(questionDB);
 	    model.addAttribute("questionTypeList", questionTypeList);
 	    model.addAttribute("question", new Question());
-	    return "question/createquestion";
+	    return "createquestion";
 	}
 
 	@RequestMapping(path = "/question/createQuestion", method = RequestMethod.POST)
@@ -62,7 +62,7 @@ public class QuestionController {
 		MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
 		model.addAttribute("multipleChoiceOption", multipleChoiceOption);
 		model.addAttribute("multipleChoiceOptionList", multipleChoiceOptionList);
-		return "/question/questionswithoptions";
+		return "questionswithoptions";
 	}
 
 	@RequestMapping(value = "/question/createQuestionmultiple", method = RequestMethod.POST)
@@ -102,7 +102,7 @@ public class QuestionController {
 		q.setInstructor(user);
 		List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
 		model.addAttribute("questionlist", questionList);
-		return "/question/questionmanagement";
+		return "questionmanagement";
 	}
 
 	@GetMapping("/question/questiondelete/{questionId}")
@@ -124,7 +124,7 @@ public class QuestionController {
 		q.setInstructor(user);
 		List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
 		model.addAttribute("questionlist", questionList);
-		return "/question/questionmanagement";
+		return "questionmanagement";
 	}
 
 	@PostMapping("/question/questionsort")
@@ -153,13 +153,13 @@ public class QuestionController {
 
 		model.addAttribute("questionlist", sortedQuestionList);
 		
-		return "/question/questionmanagement";
+		return "questionmanagement";
 	}
 
     @GetMapping("/question/viewquestion")
     public ModelAndView viewCourse(@RequestParam(name = ID) long id, Model model)
     {
-        ModelAndView modelAndView = new ModelAndView("/question/viewquestion");
+        ModelAndView modelAndView = new ModelAndView("viewquestion");
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         Question question = questionDB.loadQuestionById(id);
         ArrayList<MultipleChoiceOption> choices = new ArrayList<>();
