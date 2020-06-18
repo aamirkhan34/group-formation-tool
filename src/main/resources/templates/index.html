@@ -28,11 +28,12 @@
 	
 		<main class="bodyGridRow mainGridContainer">
 			<aside class="mainGridRow welcomeInfoBox">
-				<h2>Welcome to the CSCI5308 Group Formation Tool!!</h2>
+				<h2>Welcome to the CSCI5308 Group 1 Demo</h2>
 			</aside>
 			<div class="mainGridRow" sec:authorize="isAuthenticated()">
 				<!-- Display list of courses. -->
 				<!-- Learned how to do this here: https://www.baeldung.com/thymeleaf-list -->
+				<h3>GROUP1:</h3>
 				<h4>Available courses:</h4>
 				<table>
 					<tr th:each="course : ${courses}">
