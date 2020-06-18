@@ -1,19 +1,19 @@
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS spCreateUser $$
+DROP PROCEDURE IF EXISTS spCreateQuestion $$
 
-CREATE PROCEDURE spCreateQuestion (
-	IN owner_id BIGINT,
-    IN type_id INT,
-    IN title VARCHAR(75),
-    IN context VARCHAR(100),
-    IN public TINYINT,
-    OUT id BIGINT
+CREATE PROCEDURE spCreateQuestion(
+	IN title VARCHAR(200),
+    IN questionText VARCHAR(500),
+    IN instructorID bigInt(20),
+    IN type_id int(11)
 )
 BEGIN
-	INSERT INTO Question(owner_id, type_id,title,context,public)
-    VALUES (owner_id, type_id,title,context,public);
-	SET @questionID = LAST_INSERT_ID();
+	DECLARE qID bigint(11);
+	INSERT INTO Question(instructorID,type_id,title,questionText,createdON)
+    VALUES (instructorID,type_id,title,questionText,CURRENT_DATE);
+	SET qid = LAST_INSERT_ID();
+    SELECT Q.id from Question Q WHERE Q.id = qID;
 END $$
 
 DELIMITER ;

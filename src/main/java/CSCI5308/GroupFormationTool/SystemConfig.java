@@ -2,6 +2,8 @@ package CSCI5308.GroupFormationTool;
 
 import CSCI5308.GroupFormationTool.Email.DefaultEmailConfiguration;
 import CSCI5308.GroupFormationTool.Email.IEmailConfiguration;
+import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
+import CSCI5308.GroupFormationTool.Questions.QuestionDB;
 import CSCI5308.GroupFormationTool.Security.*;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Database.*;
@@ -29,7 +31,7 @@ public class SystemConfig
 	private ICoursePersistence courseDB;
 	private ICourseUserRelationshipPersistence courseUserRelationshipDB;
 	private IEmailConfiguration emailConfiguration;
-
+	private IQuestionPersistence questionDB;
 	// This private constructor ensures that no class other than System can allocate
 	// the System object. The compiler would prevent it.
 
@@ -45,6 +47,7 @@ public class SystemConfig
 		courseDB = new CourseDB();
 		courseUserRelationshipDB = new CourseUserRelationshipDB();
 		emailConfiguration = new DefaultEmailConfiguration();
+		questionDB = new QuestionDB();
 	}
 	// This is the way the rest of the application gets access to the System object.
 
@@ -122,5 +125,13 @@ public class SystemConfig
 	public ICourseUserRelationshipPersistence getCourseUserRelationshipDB()
 	{
 		return courseUserRelationshipDB;
+	}
+
+	public IQuestionPersistence getQuestionDB() {
+		return questionDB;
+	}
+
+	public void setQuestionDB(IQuestionPersistence questionDB) {
+		this.questionDB = questionDB;
 	}
 }

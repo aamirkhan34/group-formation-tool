@@ -82,4 +82,11 @@ public class CallStoredProcedure
 	{
 		statement.execute();
 	}
+
+	public int executeUpdate() throws SQLException
+	{
+		int st = statement.executeUpdate();
+		System.out.println(st);
+		return st;
+	}
 }
