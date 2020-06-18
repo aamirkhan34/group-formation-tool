@@ -12,19 +12,19 @@ public class PasswordTypeLengthCheckerMock implements IPasswordTypeLengthChecker
 
 
     @Override
-    public boolean checkLowerLength(String password) {
+    public boolean checkLowerLength(String password,StringBuffer sb) {
         Integer lowerSize = password.chars().filter(value -> (value>'a'&&value<'z')).toArray().length;
         return lowerSize>=1;
     }
 
     @Override
-    public boolean checkUpperLength(String password) {
+    public boolean checkUpperLength(String password,StringBuffer sb) {
         Integer upperSize = password.chars().filter(value -> (value>'A'&&value<'Z')).toArray().length;
         return upperSize>=1;
     }
 
     @Override
-    public boolean checkSymbolLength(String password) {
+    public boolean checkSymbolLength(String password,StringBuffer sb) {
         password = password.replaceAll("[a-zA-Z0-9\\s+]","");
         return password.length()>=1;
     }

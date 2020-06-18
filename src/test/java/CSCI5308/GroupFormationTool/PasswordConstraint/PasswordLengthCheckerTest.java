@@ -9,7 +9,8 @@ public class PasswordLengthCheckerTest {
     @Test
     public void testCheckLength(){
         IPasswordLengthChecker checker = new PasswordLengthCheckerMock();
-        assertTrue(checker.checkMinLength("1234567"));
-        assertTrue(checker.checkMaxLength("1234567"));
+        StringBuffer sb = new StringBuffer("");
+        assertTrue(checker.checkMinLength("1234567",sb));
+        assertTrue(checker.checkMaxLength("1234567",sb));
     }
 }
