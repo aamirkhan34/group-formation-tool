@@ -1,16 +1,11 @@
 package CSCI5308.GroupFormationTool.Questions;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 public class QuestionDB implements IQuestionPersistence {
     @Override
@@ -48,8 +43,62 @@ public class QuestionDB implements IQuestionPersistence {
     }
 
     @Override
-    public void loadQuestionById(long questionId) {
+    public Question loadQuestionById(long questionId) {
+        ArrayList<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
         CallStoredProcedure proc = null;
+        Question question = new Question();
+        try {
+            proc = new CallStoredProcedure("spLoadQuestionById(?)");
+            proc.setParameter(1,questionId);
+            ResultSet resultSet = proc.executeWithResults();
+            while (resultSet.next())
+            {
+                int type = resultSet.getInt(3);
+
+                if (type == 2 || type == 3)
+                {
+                    multipleChoiceOptionList =  loadMultipleChoiceOptions(questionId);
+                    question.setMultipleChoiceOption(multipleChoiceOptionList);
+                }
+                question.setTypeID(resultSet.getInt(3));
+                question.setTitle(resultSet.getString(4));
+                question.setText(resultSet.getString(5));
+                question.setCreatedOn(resultSet.getDate(6));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
+        return question;
+    }
+
+    public ArrayList<MultipleChoiceOption> loadMultipleChoiceOptions(long questionId){
+        ArrayList<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
+        CallStoredProcedure proc = null;
+        try {
+            proc = new CallStoredProcedure("spLoadQuestionOptionsById(?)");
+            proc.setParameter(1, questionId);
+            ResultSet resultSet = proc.executeWithResults();
+            while (resultSet.next()){
+                MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
+                multipleChoiceOption.setDisplayText(resultSet.getString(3));
+                multipleChoiceOption.setOptionNumber(resultSet.getInt(4));
+                multipleChoiceOptionList.add(multipleChoiceOption);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
+        return multipleChoiceOptionList;
     }
 
     @Override

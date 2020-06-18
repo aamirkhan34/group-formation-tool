@@ -97,4 +97,8 @@ public class Question {
         return  questionDB.loadAllQuestionsByInstructor(this.getInstructor().getID());
     }
 
+    public Question loadQuestionById(IQuestionPersistence questionDB){
+        return questionDB.loadQuestionById(this.getId());
+    }
+
 }

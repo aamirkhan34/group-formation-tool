@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="question : ${questionlist}">
-                    <td><a th:text="${question.title}" th:href="@{/question/questiondetails(id=${question.id})}"></a></td>
+                    <td><a th:text="${question.title}" th:href="@{/question/viewquestion(id=${question.id})}"></a></td>
                     <td><a th:text="${question.createdOn}"></a></td>
                     <td><a th:href="@{/question/questiondelete(id=${question.id})}"> Delete </a></td>
                 </tr>

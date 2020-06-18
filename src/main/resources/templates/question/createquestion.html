@@ -14,7 +14,7 @@
                 var questionType = $("#questiontype").val();
                 if(questionType ==1 || questionType==4){
                     console.log("cs");
-                    $("#submitButton").val("Submit");
+                    $("#submitButton").val("Save");
                 }
                 else{
                     $("#submitButton").val("Next");
@@ -50,7 +50,7 @@
                 <label for="question">Question:</label>
                 <input type="text" id="question"th:field="*{text}" name="question" style="width: 40%" required><br>
                 <label for="questiontype">Type:</label>
-                    <select name="questiontype" id="questiontype" th:field="*{typeID}"/>
+                <select name="questiontype" id="questiontype" th:field="*{typeID}"/>
                 <option value="0">--Select Question Type--</option>
                     <option th:each="question : ${questionTypeList}"
                             th:value="${question.typeID}"
