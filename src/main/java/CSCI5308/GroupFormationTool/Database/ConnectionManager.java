@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import CSCI5308.GroupFormationTool.SystemConfig;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 // Singleton for retrieving connections.
 public class ConnectionManager
@@ -14,7 +15,9 @@ public class ConnectionManager
 	private String dbURL;
 	private String dbUserName;
 	private String dbPassword;
-	
+	private static final String IGNORE_TIME_ZONE = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+
+
 	public ConnectionManager()
 	{
 		IDatabaseConfiguration config = SystemConfig.instance().getDatabaseConfiguration();
@@ -34,6 +37,6 @@ public class ConnectionManager
 	
 	public Connection getDBConnection() throws SQLException
 	{
-		return DriverManager.getConnection(dbURL, dbUserName, dbPassword);
+		return DriverManager.getConnection(dbURL + IGNORE_TIME_ZONE, dbUserName, dbPassword);
 	}
 }
