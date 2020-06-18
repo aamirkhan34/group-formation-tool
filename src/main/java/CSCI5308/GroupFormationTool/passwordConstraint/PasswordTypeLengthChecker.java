@@ -14,7 +14,7 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
     }
     @Override
     public boolean checkLowerLength(String password,StringBuffer sb) {
-        Integer lowerSize = password.chars().filter(value -> (value>'a'&&value<'z')).toArray().length;
+        Integer lowerSize = password.chars().filter(value -> (value>='a'&&value<='z')).toArray().length;
         if (lowerSize>=minLowerLength){
             return true;
         }else {
@@ -27,7 +27,7 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
 
     @Override
     public boolean checkUpperLength(String password,StringBuffer sb) {
-        Integer upperSize = password.chars().filter(value -> (value>'A'&&value<'Z')).toArray().length;
+        Integer upperSize = password.chars().filter(value -> (value>='A'&&value<='Z')).toArray().length;
         if (upperSize>=minUpperLength){
             return true;
         }else {
