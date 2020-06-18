@@ -22,7 +22,9 @@
 		<div th:if="${instructor} or ${ta}">
 			<br/>
 			<a th:href="@{/course/instructoradmin(id=${course.id})}">Course Administration</a>
+		</div>
 			<pre></pre>
+		<div th:if="${instructor}">
 			<a th:href="@{/question/questionmanagement}"> Question Manager page </a>
 		</div>
 	</body>
