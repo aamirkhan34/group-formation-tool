@@ -26,7 +26,6 @@
         <input type="submit" value="Back"/>
     </form>
     <div class="container">
-        <p> <b>Question entered is</b></p>
         <form th:action="@{/question/createQuestionmultiple}" method="post">
                 <input type="text" style="visibility: hidden" name="questiontext" th:value="*{question.text}"></input>
                 <input type="text" style="visibility: hidden" name="questiontitle" th:value="*{question.title}"></input>

@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDB implements IQuestionPersistence {
+	private static final int NUMERIC_TYPE_ID = 1;
+	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
+	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
+	private static final int FREE_TEXT_TYPE_ID = 4;
+
 	@Override
 	public List<Question> loadAllQuestionsByInstructor(long instructorId) {
 		CallStoredProcedure proc = null;
@@ -53,7 +58,7 @@ public class QuestionDB implements IQuestionPersistence {
             {
                 int type = resultSet.getInt(3);
 
-                if (type == 2 || type == 3)
+                if (type ==MULTI_CHOICE_MULTI_ONE_TYPE_ID || type == MULTI_CHOICE_MULTI_MULTI_TYPE_ID)
                 {
                     multipleChoiceOptionList =  loadMultipleChoiceOptions(questionId);
                     question.setMultipleChoiceOption(multipleChoiceOptionList);
@@ -103,7 +108,7 @@ public class QuestionDB implements IQuestionPersistence {
 	public boolean createQuestion(Question question) {
 		CallStoredProcedure proc = null;
 		try {
-			if (question.getTypeID() == 1 || question.getTypeID() == 4) {
+			if (question.getTypeID() == NUMERIC_TYPE_ID || question.getTypeID() == FREE_TEXT_TYPE_ID) {
 				proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?)");
 				proc.setParameter(1, question.getTitle());
 				proc.setParameter(2, question.getText());
@@ -112,7 +117,7 @@ public class QuestionDB implements IQuestionPersistence {
 				proc.execute();
 				return true;
 
-			} else if (question.getTypeID() == 2 || question.getTypeID() == 3) {
+			} else if (question.getTypeID() == MULTI_CHOICE_MULTI_ONE_TYPE_ID || question.getTypeID() == MULTI_CHOICE_MULTI_MULTI_TYPE_ID) {
 				proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?)");
 				proc.setParameter(1, question.getTitle());
 				proc.setParameter(2, question.getText());

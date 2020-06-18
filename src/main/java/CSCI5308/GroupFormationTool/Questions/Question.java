@@ -80,6 +80,7 @@ public class Question {
         this.multipleChoiceOption = multipleChoiceOption;
     }
 
+
     public boolean createQuestion(IQuestionPersistence questionDB) {
         return questionDB.createQuestion(this);
     }

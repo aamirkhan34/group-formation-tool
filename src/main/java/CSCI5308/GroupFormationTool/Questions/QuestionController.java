@@ -16,7 +16,12 @@ import java.util.List;
 public class QuestionController {
 
 	private static final String ID = "id";
-	
+
+	private static final int NUMERIC_TYPE_ID = 1;
+	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
+	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
+	private static final int FREE_TEXT_TYPE_ID = 4;
+
 	@RequestMapping("/question/questionmanager")
 	public String createQuestion(Model model) {
 	    IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
@@ -163,18 +168,18 @@ public class QuestionController {
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         Question question = questionDB.loadQuestionById(id);
         ArrayList<MultipleChoiceOption> choices = new ArrayList<>();
-        if(question.getTypeID() == 2 || question.getTypeID() == 3){
+        if(question.getTypeID() == MULTI_CHOICE_MULTI_ONE_TYPE_ID || question.getTypeID() == MULTI_CHOICE_MULTI_MULTI_TYPE_ID){
             choices = question.getMultipleChoiceOption();
             for (MultipleChoiceOption option: choices) {
                 modelAndView.addObject("choices", choices);
             }
         }
         boolean isNumeric = false;
-        if(question.getTypeID() == 1){
+        if(question.getTypeID() == NUMERIC_TYPE_ID){
             modelAndView.addObject("isNumeric", true);
         }
         boolean isFreeText = false;
-        if(question.getTypeID() == 4){
+        if(question.getTypeID() == FREE_TEXT_TYPE_ID){
             modelAndView.addObject("isFreeText",true);
         }
 
