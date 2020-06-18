@@ -7,7 +7,6 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
 
-import javax.mail.MessagingException;
 
 public class StudentCSVImport
 {

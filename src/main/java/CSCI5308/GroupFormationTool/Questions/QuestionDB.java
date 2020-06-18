@@ -76,7 +76,7 @@ public class QuestionDB implements IQuestionPersistence {
         return question;
     }
 
-    public ArrayList<MultipleChoiceOption> loadMultipleChoiceOptions(long questionId){
+    private ArrayList<MultipleChoiceOption> loadMultipleChoiceOptions(long questionId){
         ArrayList<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
         CallStoredProcedure proc = null;
         try {

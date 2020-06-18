@@ -1,6 +1,6 @@
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS spLoadQuestionById $$
+DROP procedure IF EXISTS spLoadQuestionById $$
 
 CREATE PROCEDURE spLoadQuestionById (
 	IN qid BIGINT

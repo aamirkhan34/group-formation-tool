@@ -1,9 +1,8 @@
-USE `CSCI5308_1_DEVINT`;
-DROP procedure IF EXISTS `spDeleteQuestion`;
+DROP procedure IF EXISTS spDeleteQuestion;
 
 DELIMITER $$
-USE `CSCI5308_1_DEVINT`$$
-CREATE DEFINER=`CSCI5308_1_DEVINT_USER`@`%` PROCEDURE `spDeleteQuestion`(
+
+CREATE spDeleteQuestion(
 	IN id BIGINT
 )
 BEGIN

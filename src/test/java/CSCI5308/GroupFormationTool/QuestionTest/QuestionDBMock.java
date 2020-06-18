@@ -48,23 +48,25 @@ public class QuestionDBMock implements IQuestionPersistence {
         question.setTypeID(2);
         question.setInstructor(user);
 
-        ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
-        MultipleChoiceOption choiceQue1 = new MultipleChoiceOption();
-        MultipleChoiceOption choiceQue2 = new MultipleChoiceOption();
-
-        choiceQue1.setDisplayText("Option 1");
-        choiceQue1.setOptionNumber(1);
-        choices.add(choiceQue1);
-
-        choiceQue2.setDisplayText("Option 2");
-        choiceQue2.setOptionNumber(2);
-        choices.add(choiceQue2);
-
-        question.setMultipleChoiceOption(choices);
+        question.setMultipleChoiceOption(loadMultipleChoiceOptions(1));
 
         return question;
     }
 
+    private ArrayList<MultipleChoiceOption> loadMultipleChoiceOptions(long questionId) {
+
+        ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
+        MultipleChoiceOption choiceQue1 = new MultipleChoiceOption();
+        MultipleChoiceOption choiceQue2 = new MultipleChoiceOption();
+        choiceQue1.setDisplayText("Option 1");
+        choiceQue1.setOptionNumber(1);
+        choices.add(choiceQue1);
+        choiceQue2.setDisplayText("Option 2");
+        choiceQue2.setOptionNumber(2);
+        choices.add(choiceQue2);
+
+        return choices;
+    }
 
     @Override
     public boolean createQuestion(Question question) {
@@ -81,14 +83,28 @@ public class QuestionDBMock implements IQuestionPersistence {
         question.setInstructor(user);
         question.setTitle("Test Question");
         question.setText("How many credits you have taken?");
+
+        ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
+        MultipleChoiceOption choiceQue1 = new MultipleChoiceOption();
+        MultipleChoiceOption choiceQue2 = new MultipleChoiceOption();
+        choiceQue1.setDisplayText("Option 1");
+        choiceQue1.setOptionNumber(1);
+        choices.add(choiceQue1);
+        choiceQue2.setDisplayText("Option 1");
+        choiceQue2.setOptionNumber(1);
+        choices.add(choiceQue2);
+        createMultipleQuestionOptions(1,choices);
+
+        return true;
+    }
+
+    private boolean createMultipleQuestionOptions(long id, ArrayList<MultipleChoiceOption> options){
         return true;
     }
 
     @Override
     public boolean deleteQuestionById(long questionId) {
-
         return false;
-
     }
 
     @Override
