@@ -138,9 +138,9 @@ public class QuestionController {
 			sortedQuestionList = sq.sortAscendingByTitle(questionList);
 		} else if (sortOption.equals("titleDes")) {
 			sortedQuestionList = sq.sortDescendingByTitle(questionList);
-		} else if (sortOption.equals("NewToOld")) {
+		} else if (sortOption.equals("newToOld")) {
 			sortedQuestionList = sq.sortNewestToOldest(questionList);
-		} else if (sortOption.equals("OldToNew")) {
+		} else if (sortOption.equals("oldToNew")) {
 			sortedQuestionList = sq.sortOldestToNewest(questionList);
 		}
 
