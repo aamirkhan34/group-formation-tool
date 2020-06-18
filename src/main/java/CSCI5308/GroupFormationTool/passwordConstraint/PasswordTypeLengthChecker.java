@@ -18,8 +18,9 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
         if (lowerSize>=minLowerLength){
             return true;
         }else {
-            sb.append("The number of lower case characters should not be fewer than than ");
+            sb.append("The number of lower case characters should not be fewer than ");
             sb.append(minLowerLength);
+            sb.append(".");
             sb.append("<br/> \n");
             return false;
         }
@@ -31,8 +32,9 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
         if (upperSize>=minUpperLength){
             return true;
         }else {
-            sb.append("The number of upper case characters should not be fewer than than ");
+            sb.append("The number of upper case characters should not be fewer than ");
             sb.append(minUpperLength);
+            sb.append(".");
             sb.append("<br/> \n");
             return false;
         }
@@ -44,8 +46,9 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
         if (password.length()>=minSymbolLength){
             return true;
         }else {
-            sb.append("The number of special characters should not be fewer than than ");
+            sb.append("The number of special characters should not be fewer than ");
             sb.append(minSymbolLength);
+            sb.append(".");
             sb.append("<br/> \n");
             return false;
         }

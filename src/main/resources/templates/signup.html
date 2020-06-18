@@ -23,12 +23,12 @@
 		</div>
 		<div class="mainGridCentreCard">
 			<form class="regnLoginGridContainer" th:action="@{/signup}" method="post">
-				<label class="regnLoginGridLeftCol" for="sBannerInput">Banner ID:</label><input id="sBannerInput" class="regnLoginGridRightCol" type="text" name="username"/>
-				<label class="regnLoginGridLeftCol" for="sPswdInput">Password:</label><input id="sPswdInput" class="regnLoginGridRightCol" type="password"  name="password"  />
-				<label class="regnLoginGridLeftCol" for="sPswdConfirmInput">Password (Confirmation):</label><input id="sPswdConfirmInput" class="regnLoginGridRightCol" type="password" name="passwordConfirmation"/>
-				<label class="regnLoginGridLeftCol" for="sFNameInput">First Name:</label><input id="sFNameInput" class="regnLoginGridRightCol" type="text" name="firstName"/>
-				<label class="regnLoginGridLeftCol" for="sLNameInput">Last Name:</label><input id="sLNameInput" class="regnLoginGridRightCol" type="text" name="lastName"/>
-				<label class="regnLoginGridLeftCol" for="sEmailInput">Email:</label><input id="sEmailInput" class="regnLoginGridRightCol" type="text" name="email"/>
+				<label class="regnLoginGridLeftCol" for="sBannerInput">Banner ID:</label><input id="sBannerInput" class="regnLoginGridRightCol" type="text" required name="username"/>
+				<label class="regnLoginGridLeftCol" for="sPswdInput">Password:</label><input id="sPswdInput" class="regnLoginGridRightCol" type="password" required name="password"  />
+				<label class="regnLoginGridLeftCol" for="sPswdConfirmInput">Password (Confirmation):</label><input id="sPswdConfirmInput" class="regnLoginGridRightCol" required type="password" name="passwordConfirmation"/>
+				<label class="regnLoginGridLeftCol" for="sFNameInput">First Name:</label><input id="sFNameInput" class="regnLoginGridRightCol" type="text" required name="firstName"/>
+				<label class="regnLoginGridLeftCol" for="sLNameInput">Last Name:</label><input id="sLNameInput" class="regnLoginGridRightCol" type="text" required name="lastName"/>
+				<label class="regnLoginGridLeftCol" for="sEmailInput">Email:</label><input id="sEmailInput" class="regnLoginGridRightCol" type="email" required name="email"/>
 				<input class="regnLoginGridRightCol" type="submit" value="Create Account"/>
 			</form>
 		</div>

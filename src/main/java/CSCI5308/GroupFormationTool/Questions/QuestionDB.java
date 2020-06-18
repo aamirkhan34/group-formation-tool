@@ -125,7 +125,6 @@ public class QuestionDB implements IQuestionPersistence {
                 while (resultSet.next()) {
                     questionIdfromDB = resultSet.getInt(1);
                 }
-                System.out.println(questionIdfromDB);
                 createMultipleQuestionOptions(questionIdfromDB, question.getMultipleChoiceOption());
                 return true;
             }

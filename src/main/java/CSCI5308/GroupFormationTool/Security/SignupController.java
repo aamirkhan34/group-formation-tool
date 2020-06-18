@@ -50,7 +50,6 @@ public class SignupController
 		passwordFormat = (typeLengthChecker.checkSymbolLength(password,errorInformation)) && passwordFormat;
 
 
-		System.out.println(errorInformation.toString());
 		boolean success = false;
 		if (User.isBannerIDValid(bannerID) &&
 				User.isEmailValid(email) &&

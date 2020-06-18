@@ -16,8 +16,9 @@ public class PasswordLengthChecker implements IPasswordLengthChecker{
         if (maxLength>= password.length()){
             return true ;
         }else {
-            sb.append("The password should not be longer than than ");
+            sb.append("The password should not be longer than ");
             sb.append(maxLength);
+            sb.append(" characters.");
             sb.append("<br/> \n");
             return false;
         }
@@ -30,6 +31,7 @@ public class PasswordLengthChecker implements IPasswordLengthChecker{
         }else {
             sb.append("The password should not be shorter than ");
             sb.append(minLength);
+            sb.append(" characters.");
             sb.append("<br/> \n");
             return false;
         }
