@@ -75,7 +75,6 @@ table, th, td {
 								th:href="@{/question/questiondetails(id=${question.id})}"></a></td>
 							<td><a th:text="${question.createdOn}"></a></td>
 							<td>
-								<!-- <a th:href="@{/question/questiondelete(id=${question.id})}"> Delete </a> -->
 								<form method="GET"
 									th:action="@{/question/questiondelete/{questionId}(questionId=${question.id})}"
 									onsubmit="return confirm('Do you really want to delete this question? All responses entered by students will also be deleted.');">
