@@ -1,5 +1,6 @@
 package CSCI5308.GroupFormationTool.QuestionTest;
 
+import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
@@ -149,7 +150,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void createQuestion() {
+    public void createQuestionTest() {
         IQuestionPersistence queDB = new QuestionDBMock();
 
         Question question = new Question();
@@ -176,4 +177,35 @@ public class QuestionTest {
         Assert.isTrue(question.getInstructor().getEmail().equals("pr676280@dal.ca"));
         //assertEquals(question.createQuestion(questionDBMock), true);
     }
+    
+    @Test
+	public void deleteQuestionTest() {
+    	// Create a question
+    	IQuestionPersistence queDB = new QuestionDBMock();
+
+        Question question = new Question();
+        question.setTitle("Test Question");
+        question.setText("How many credits you have taken?");
+        question.setTypeID(1);
+
+        User user = new User();
+        user.setID(1);
+        user.setBannerID("B00847415");
+        user.setPassword("Pass@123");
+        user.setFirstName("Pratz");
+        user.setLastName("B");
+        user.setEmail("pr676280@dal.ca");
+        question.setInstructor(user);
+
+        queDB.createQuestion(question);
+        
+        // Delete created question
+		boolean status = queDB.deleteQuestion(question);
+
+        // Test 1: Must set title to an empty string
+        Assert.isTrue(question.getTitle().equals(""));
+        
+        // Test 2: Returned status must not be false
+		Assert.isTrue(status);
+	}
 }

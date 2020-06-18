@@ -1,6 +1,7 @@
 package CSCI5308.GroupFormationTool.QuestionTest;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
 
@@ -13,8 +14,7 @@ public class QuestionDBMock implements IQuestionPersistence {
     }
 
     @Override
-    public void loadQuestionByUserId(long questionId) {
-
+    public void loadQuestionById(long questionId) {
     }
 
     @Override
@@ -34,10 +34,12 @@ public class QuestionDBMock implements IQuestionPersistence {
         question.setText("How many credits you have taken?");
         return true;
     }
-
+    
     @Override
-    public boolean deleteQuestionById(long questionId) {
-        return false;
+    public boolean deleteQuestion(Question question) {
+    	question.setTitle("");
+    	question.setText("");
+        return true;
     }
 
     @Override

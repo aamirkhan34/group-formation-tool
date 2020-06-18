@@ -86,7 +86,7 @@ public class Question {
 
     public boolean deleteQuestion(IQuestionPersistence questionDB) {
 
-        return questionDB.deleteQuestionById(this.id);
+        return questionDB.deleteQuestion(this);
     }
 
     public List<Question> getAllQuestionTypes(IQuestionPersistence questionDB){
