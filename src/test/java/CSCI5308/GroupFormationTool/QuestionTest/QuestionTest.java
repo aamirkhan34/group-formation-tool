@@ -13,18 +13,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
+import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @SuppressWarnings("deprecation")
 public class QuestionTest {
-   /* private static IQuestionPersistence questionDBMock;
-    @BeforeAll
-    static void setUpBeforeClass() {
-        questionDBMock = new QuestionDBMock();
-    }*/
+
     @Test
     public void getIdTest() {
         Question question = new Question();
@@ -58,6 +59,12 @@ public class QuestionTest {
         Question question = new Question();
         question.setText("Question text getter test");
         assertEquals("Question text getter test", question.getText());
+    }
+    @Test
+    public void gettypeIDtest(){
+        Question question = new Question();
+        question.setTypeID(123);
+        assertEquals(123, question.getTypeID());
     }
 
     @Test
@@ -98,6 +105,7 @@ public class QuestionTest {
         question.setInstructor(u);
         assertEquals(100, question.getInstructor().getId());
     }
+
 
     @Test
     public void getMultipleChoiceOptionTest() {
@@ -175,7 +183,46 @@ public class QuestionTest {
         Assert.isTrue(question.getInstructor().getFirstName().equals("Pratz"));
         Assert.isTrue(question.getInstructor().getLastName().equals("B"));
         Assert.isTrue(question.getInstructor().getEmail().equals("pr676280@dal.ca"));
-        //assertEquals(question.createQuestion(questionDBMock), true);
+    }
+
+
+    @Test
+    public void loadAllQuestionTypes()
+    {
+        IQuestionPersistence queDB = new QuestionDBMock();
+        List<Question> questionList  = queDB.loadAllQuestionTypes();
+        for (Question questionin: questionList) {
+            assertNotNull(questionin);
+        }
+
+    }
+
+    @Test
+    public void loadAllQuestionsByInstructor()
+    {
+        IQuestionPersistence queDB = new QuestionDBMock();
+        List<Question> questions  = queDB.loadAllQuestionsByInstructor(1);
+        for (Question questionin: questions) {
+            assertNotNull(questionin);
+        }
+    }
+
+    @Test
+    public void loadQuestionById(){
+        IQuestionPersistence queDB = new QuestionDBMock();
+
+        Question question = queDB.loadQuestionById(1);
+        ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
+
+        assertEquals(1, question.getInstructor().getID());
+        assertEquals("title",question.getTitle());
+        assertEquals("text",question.getText());
+        assertEquals(1, question.getId());
+        assertEquals(2, question.getTypeID());
+        choices = question.getMultipleChoiceOption();
+        for (MultipleChoiceOption mul: choices) {
+            assertNotNull(mul);
+        }
     }
     
     @Test

@@ -52,13 +52,13 @@ table, th, td {
 				<pre></pre>
 				<h2>List of questions</h2>
 				<form method="POST" th:action="@{/question/questionsort}">
-					<label for="sort">Sort</label> 
-					<select id="sort" name="sort" onchange="this.form.submit()">
+					<label for="sort">Sort</label> <select id="sort" name="sort"
+						onchange="this.form.submit()">
 						<option value="">Select an option</option>
 						<option value="titleDes">Title(Descending)</option>
-					  	<option value="titleAsc">Title(Ascending)</option>
-					  	<option value="newToOld">Newest to Oldest</option>
-					  	<option value="oldToNew">Oldest to Newest</option>
+						<option value="titleAsc">Title(Ascending)</option>
+						<option value="newToOld">Newest to Oldest</option>
+						<option value="oldToNew">Oldest to Newest</option>
 					</select>
 				</form>
 				<table>
@@ -72,7 +72,7 @@ table, th, td {
 					<tbody>
 						<tr th:each="question : ${questionlist}">
 							<td><a th:text="${question.title}"
-								th:href="@{/question/questiondetails(id=${question.id})}"></a></td>
+								th:href="@{/question/viewquestion(id=${question.id})}"></a></td>
 							<td><a th:text="${question.createdOn}"></a></td>
 							<td>
 								<form method="GET"
@@ -86,8 +86,6 @@ table, th, td {
 					</tbody>
 				</table>
 				<pre>
-
-
             </pre>
 			</div>
 		</div>

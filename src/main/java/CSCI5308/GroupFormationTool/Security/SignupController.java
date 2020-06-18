@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.*;
-import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
 
 import javax.mail.MessagingException;
 
@@ -51,7 +50,6 @@ public class SignupController
 		passwordFormat = (typeLengthChecker.checkSymbolLength(password,errorInformation)) && passwordFormat;
 
 
-		System.out.println(errorInformation.toString());
 		boolean success = false;
 		if (User.isBannerIDValid(bannerID) &&
 				User.isEmailValid(email) &&

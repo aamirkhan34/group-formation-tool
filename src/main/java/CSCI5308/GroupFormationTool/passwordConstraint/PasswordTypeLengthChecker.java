@@ -14,12 +14,13 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
     }
     @Override
     public boolean checkLowerLength(String password,StringBuffer sb) {
-        Integer lowerSize = password.chars().filter(value -> (value>'a'&&value<'z')).toArray().length;
+        Integer lowerSize = password.chars().filter(value -> (value>='a'&&value<='z')).toArray().length;
         if (lowerSize>=minLowerLength){
             return true;
         }else {
-            sb.append("The number of lower case characters should not be fewer than than ");
+            sb.append("The number of lower case characters should not be fewer than ");
             sb.append(minLowerLength);
+            sb.append(".");
             sb.append("<br/> \n");
             return false;
         }
@@ -27,12 +28,13 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
 
     @Override
     public boolean checkUpperLength(String password,StringBuffer sb) {
-        Integer upperSize = password.chars().filter(value -> (value>'A'&&value<'Z')).toArray().length;
+        Integer upperSize = password.chars().filter(value -> (value>='A'&&value<='Z')).toArray().length;
         if (upperSize>=minUpperLength){
             return true;
         }else {
-            sb.append("The number of upper case characters should not be fewer than than ");
+            sb.append("The number of upper case characters should not be fewer than ");
             sb.append(minUpperLength);
+            sb.append(".");
             sb.append("<br/> \n");
             return false;
         }
@@ -44,8 +46,9 @@ public class PasswordTypeLengthChecker implements IPasswordTypeLengthChecker {
         if (password.length()>=minSymbolLength){
             return true;
         }else {
-            sb.append("The number of special characters should not be fewer than than ");
+            sb.append("The number of special characters should not be fewer than ");
             sb.append(minSymbolLength);
+            sb.append(".");
             sb.append("<br/> \n");
             return false;
         }

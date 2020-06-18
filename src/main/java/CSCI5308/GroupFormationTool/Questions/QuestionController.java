@@ -6,6 +6,7 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -13,13 +14,19 @@ import java.util.List;
 
 @Controller
 public class QuestionController {
+
+	private static final String ID = "id";
+	
 	@RequestMapping("/question/questionmanager")
 	public String createQuestion(Model model) {
-		IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
-		List<Question> questionTypeList = questionDB.loadAllQuestionTypes();
-		model.addAttribute("questionTypeList", questionTypeList);
-		model.addAttribute("question", new Question());
-		return "question/createquestion";
+	    IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+	    User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+	    Question q = new Question();
+	    q.setInstructor(user);
+	    List<Question> questionTypeList = q.getAllQuestionTypes(questionDB);
+	    model.addAttribute("questionTypeList", questionTypeList);
+	    model.addAttribute("question", new Question());
+	    return "question/createquestion";
 	}
 
 	@RequestMapping(path = "/question/createQuestion", method = RequestMethod.POST)
@@ -145,7 +152,35 @@ public class QuestionController {
 		}
 
 		model.addAttribute("questionlist", sortedQuestionList);
-
+		
 		return "/question/questionmanagement";
 	}
+
+    @GetMapping("/question/viewquestion")
+    public ModelAndView viewCourse(@RequestParam(name = ID) long id, Model model)
+    {
+        ModelAndView modelAndView = new ModelAndView("/question/viewquestion");
+        IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+        Question question = questionDB.loadQuestionById(id);
+        ArrayList<MultipleChoiceOption> choices = new ArrayList<>();
+        if(question.getTypeID() == 2 || question.getTypeID() == 3){
+            choices = question.getMultipleChoiceOption();
+            for (MultipleChoiceOption option: choices) {
+                modelAndView.addObject("choices", choices);
+            }
+        }
+        boolean isNumeric = false;
+        if(question.getTypeID() == 1){
+            modelAndView.addObject("isNumeric", true);
+        }
+        boolean isFreeText = false;
+        if(question.getTypeID() == 4){
+            modelAndView.addObject("isFreeText",true);
+        }
+
+        modelAndView.addObject("questiontype", question.getTypeID());
+        modelAndView.addObject("question", question);
+        return modelAndView;
+    }
+
 }

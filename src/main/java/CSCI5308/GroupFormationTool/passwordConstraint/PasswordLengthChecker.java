@@ -13,11 +13,12 @@ public class PasswordLengthChecker implements IPasswordLengthChecker{
     }
     @Override
     public boolean checkMaxLength(String password,StringBuffer sb) {
-        if (maxLength> password.length()){
+        if (maxLength>= password.length()){
             return true ;
         }else {
-            sb.append("The password should not be longer than than ");
+            sb.append("The password should not be longer than ");
             sb.append(maxLength);
+            sb.append(" characters.");
             sb.append("<br/> \n");
             return false;
         }
@@ -25,11 +26,12 @@ public class PasswordLengthChecker implements IPasswordLengthChecker{
 
     @Override
     public boolean checkMinLength(String password,StringBuffer sb) {
-        if (minLength<password.length()){
+        if (minLength<=password.length()){
             return true;
         }else {
             sb.append("The password should not be shorter than ");
             sb.append(minLength);
+            sb.append(" characters.");
             sb.append("<br/> \n");
             return false;
         }
