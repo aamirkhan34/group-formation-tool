@@ -120,4 +120,32 @@ public class QuestionController {
 		return "/question/questionmanagement";
 	}
 
+	@PostMapping("/question/questionsort")
+	public String sortQuestions(Model model, @RequestBody String body) {
+		IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+		Question q = new Question();
+		q.setInstructor(user);
+		List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
+
+		// Sort
+		String sortOption = body.split("sort=")[1];
+		ISortQuestions sq = new SortQuestions();
+
+		List<Question> sortedQuestionList = questionList;
+
+		if (sortOption.equals("titleAsc")) {
+			sortedQuestionList = sq.sortAscendingByTitle(questionList);
+		} else if (sortOption.equals("titleDes")) {
+			sortedQuestionList = sq.sortDescendingByTitle(questionList);
+		} else if (sortOption.equals("NewToOld")) {
+			sortedQuestionList = sq.sortNewestToOldest(questionList);
+		} else if (sortOption.equals("OldToNew")) {
+			sortedQuestionList = sq.sortOldestToNewest(questionList);
+		}
+
+		model.addAttribute("questionlist", sortedQuestionList);
+
+		return "/question/questionmanagement";
+	}
 }

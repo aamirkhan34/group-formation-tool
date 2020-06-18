@@ -47,9 +47,20 @@ table, th, td {
             </pre>
 				<a th:href="@{/question/questionmanager}"> Create Questions </a>
 				<pre></pre>
-				<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"/></div>
+				<div th:if="${message}" th:text="${message}"
+					th:class="${'alert ' + alertClass}" /></div>
 				<pre></pre>
-				<h2>List of question</h2>
+				<h2>List of questions</h2>
+				<form method="POST" th:action="@{/question/questionsort}">
+					<label for="sort">Sort</label> 
+					<select id="sort" name="sort" onchange="this.form.submit()">
+						<option value="">Select an option</option>
+						<option value="titleDes">Title(Descending)</option>
+					  	<option value="titleAsc">Title(Ascending)</option>
+					  	<option value="NewToOld">Newest to Oldest</option>
+					  	<option value="OldToNew">Oldest to Newest</option>
+					</select>
+				</form>
 				<table>
 					<thead>
 						<tr>
