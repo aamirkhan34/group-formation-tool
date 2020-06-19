@@ -6,4 +6,5 @@ public interface IPasswordConstraintConfiguration {
     public String getPasswordUpperMin();
     public String getPasswordLowerMin();
     public String getPasswordSymbolMin();
+    public String getBannedRe();
 }

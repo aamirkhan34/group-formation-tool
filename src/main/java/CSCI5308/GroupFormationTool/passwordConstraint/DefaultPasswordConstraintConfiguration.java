@@ -6,6 +6,7 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
     private final static String PASS_UPPER_MIN = System.getenv("PASS_UPPER_MIN");
     private final static String PASS_LOWER_MIN = System.getenv("PASS_LOWER_MIN");
     private final static String PASS_SYMBOL_MIN = System.getenv("PASS_SYMBOL_MIN");
+    private final static String BANNED_RE = System.getenv("BANNED_RE");
 
     @Override
     public String getPasswordMin() {
@@ -30,5 +31,10 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
     @Override
     public String getPasswordSymbolMin() {
         return PASS_SYMBOL_MIN;
+    }
+
+    @Override
+    public String getBannedRe() {
+        return BANNED_RE;
     }
 }
