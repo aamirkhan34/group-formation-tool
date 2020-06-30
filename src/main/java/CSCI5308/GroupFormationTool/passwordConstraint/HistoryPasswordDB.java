@@ -2,9 +2,11 @@ package CSCI5308.GroupFormationTool.passwordConstraint;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryPasswordDB implements IHistoryPasswordDB {
@@ -15,29 +17,23 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
         {
             proc = new CallStoredProcedure("spLoadPasswords(?,?)");
             proc.setParameter(1, user.getID());
+            proc.setParameter(2, length);
             ResultSet results = proc.executeWithResults();
             if (null != results)
             {
                 while (results.next())
                 {
-                    long userID = results.getLong(1);
-                    String bannerID = results.getString(2);
+                    long id = results.getLong(1);
+                    long userID = results.getLong(2);
                     String password = results.getString(3);
-                    String firstName = results.getString(4);
-                    String lastName = results.getString(5);
-                    String email = results.getString(6);
-                    user.setID(userID);
-                    user.setBannerID(bannerID);
-                    user.setPassword(password);
-                    user.setFirstName(firstName);
-                    user.setLastName(lastName);
-                    user.setEmail(email);
+                    String modifyDate = results.getString(4);
+                    passwords.add(password);
                 }
             }
         }
         catch (SQLException e)
         {
-            // Logging needed.
+            e.printStackTrace();
         }
         finally
         {
@@ -51,7 +47,14 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
 
     @Override
     public boolean checkDuplicatedPassword(User user, String password) {
-        return false;
+        boolean duplicated = false;
+        List<String > passwords = new ArrayList<>();
+        loadHistoryPasswordWithLimit(user,passwords,SystemConfig.instance().getPasswordHistoryConstraintConfiguration().getHistoryPasswordMaximum());
+        for (String historyPassword:passwords
+             ) {
+            duplicated = duplicated || SystemConfig.instance().getPasswordEncryption().matches(password,historyPassword);
+        }
+        return duplicated;
     }
 
     @Override
