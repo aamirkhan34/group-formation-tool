@@ -35,7 +35,8 @@ public class SignupController
    	@RequestParam(name = PASSWORD_CONFIRMATION) String passwordConfirm,
    	@RequestParam(name = FIRST_NAME) String firstName,
    	@RequestParam(name = LAST_NAME) String lastName,
-   	@RequestParam(name = EMAIL) String email) throws MessagingException {
+   	@RequestParam(name = EMAIL) String email) throws MessagingException
+	{
 
 		StringBuffer errorInformation = new StringBuffer("");
 		IPasswordLengthChecker lengthChecker = new PasswordLengthChecker();
