@@ -4,9 +4,12 @@ import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 import CSCI5308.GroupFormationTool.SystemConfig;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HistoryPasswordDB implements IHistoryPasswordDB {
@@ -44,21 +47,32 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
         }
 
     }
-
     @Override
-    public boolean checkDuplicatedPassword(User user, String password) {
-        boolean duplicated = false;
-        List<String > passwords = new ArrayList<>();
-        loadHistoryPasswordWithLimit(user,passwords,SystemConfig.instance().getPasswordHistoryConstraintConfiguration().getHistoryPasswordMaximum());
-        for (String historyPassword:passwords
-             ) {
-            duplicated = duplicated || SystemConfig.instance().getPasswordEncryption().matches(password,historyPassword);
+    public boolean addNewHistoryPassword(User user) {
+        CallStoredProcedure proc = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Integer insertedID = 0;
+        try
+        {
+            proc = new CallStoredProcedure("spCreateHistoryPassword(?,?,?,?)");
+            proc.setParameter(1, user.getID());
+            proc.setParameter(2, user.getPassword());
+            proc.setParameter(3, sdf.format(new Date()));
+            proc.registerOutputParameterLong(4);
+            proc.execute();
         }
-        return duplicated;
-    }
-
-    @Override
-    public void addNewHistoryPassword(User user) {
-
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            if (null != proc)
+            {
+                proc.cleanup();
+            }
+        }
+        return true;
     }
 }

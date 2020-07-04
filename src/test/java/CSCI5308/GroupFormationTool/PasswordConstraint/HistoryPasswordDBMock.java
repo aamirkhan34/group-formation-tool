@@ -1,6 +1,7 @@
 package CSCI5308.GroupFormationTool.PasswordConstraint;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.passwordConstraint.IHistoryPasswordDB;
 
 import java.util.ArrayList;
@@ -10,30 +11,27 @@ import java.util.Map;
 
 public class HistoryPasswordDBMock implements IHistoryPasswordDB {
     private Map<Long, List<String >> mockDB = null;
-    private final static Integer SAMPLE_PASSWORD_LIMIT = 3;
 
 
+    public HistoryPasswordDBMock() {
+        this.mockDB = new HashMap<>();
+    }
 
     @Override
     public void loadHistoryPasswordWithLimit(User user, List<String > passwords, Integer length) {
-        mockDB = new HashMap<>();
-        passwords = new ArrayList<>();
-        mockDB.put(user.getID(),passwords);
+        List<String > lastPasswords = mockDB.get(user.getID());
+        passwords.addAll(lastPasswords.subList(lastPasswords.size()-length,lastPasswords.size()));
+        passwords.forEach(pwd->{
+            System.out.println(pwd);
+        });
     }
 
     @Override
-    public boolean checkDuplicatedPassword(User user , String password) {
+    public boolean addNewHistoryPassword(User user) {
         if (!mockDB.containsKey(user.getID())){
-            loadHistoryPasswordWithLimit(user, new ArrayList<>(),SAMPLE_PASSWORD_LIMIT);
+            mockDB.put(user.getID(),new ArrayList<>());
         }
-        return mockDB.get(user.getID()).contains(password);
-    }
-
-    @Override
-    public void addNewHistoryPassword(User user) {
-        if (mockDB.get(user.getID()).size()>=SAMPLE_PASSWORD_LIMIT){
-            mockDB.get(user.getID()).remove(0);
-        }
-        mockDB.get(user.getID()).add(user.getPassword());
+        mockDB.get(user.getID()).add(SystemConfig.instance().getPasswordEncryption().encryptPassword(user.getPassword()));
+        return true;
     }
 }
