@@ -9,6 +9,7 @@ import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Database.*;
 import CSCI5308.GroupFormationTool.Courses.*;
 import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordConstraintConfiguration;
+import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordHistoryConstraintConfiguration;
 import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordConstraintConfiguration;
 import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordHistoryConstraintConfiguration;
 
@@ -50,6 +51,7 @@ public class SystemConfig
 		courseUserRelationshipDB = new CourseUserRelationshipDB();
 		emailConfiguration = new DefaultEmailConfiguration();
 		questionDB = new QuestionDB();
+		passwordHistoryConstraintConfiguration = new DefaultPasswordHistoryConstraintConfiguration();
 	}
 	// This is the way the rest of the application gets access to the System object.
 
