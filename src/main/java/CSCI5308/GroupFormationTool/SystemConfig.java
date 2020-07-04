@@ -10,6 +10,7 @@ import CSCI5308.GroupFormationTool.Database.*;
 import CSCI5308.GroupFormationTool.Courses.*;
 import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordConstraintConfiguration;
 import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordConstraintConfiguration;
+import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordHistoryConstraintConfiguration;
 
 /*
  * This is a singleton, we will learn about these when we learn design patterns.
@@ -32,6 +33,7 @@ public class SystemConfig
 	private ICourseUserRelationshipPersistence courseUserRelationshipDB;
 	private IEmailConfiguration emailConfiguration;
 	private IQuestionPersistence questionDB;
+	private IPasswordHistoryConstraintConfiguration passwordHistoryConstraintConfiguration;
 	// This private constructor ensures that no class other than System can allocate
 	// the System object. The compiler would prevent it.
 
@@ -51,6 +53,7 @@ public class SystemConfig
 	}
 	// This is the way the rest of the application gets access to the System object.
 
+
 	public static SystemConfig instance()
 	{
 		// Using lazy initialization, this is the one and only place that the System
@@ -60,6 +63,16 @@ public class SystemConfig
 			uniqueInstance = new SystemConfig();
 		}
 		return uniqueInstance;
+	}
+
+	public IPasswordHistoryConstraintConfiguration getPasswordHistoryConstraintConfiguration()
+	{
+		return passwordHistoryConstraintConfiguration;
+	}
+
+	public void setPasswordHistoryConstraintConfiguration(IPasswordHistoryConstraintConfiguration passwordHistoryConstraintConfiguration)
+	{
+		this.passwordHistoryConstraintConfiguration = passwordHistoryConstraintConfiguration;
 	}
 	public IPasswordEncryption getPasswordEncryption()
 	{
@@ -71,11 +84,13 @@ public class SystemConfig
 		this.passwordEncryption = passwordEncryption;
 	}
 
-	public IPasswordConstraintConfiguration getPasswordConstraintConfiguration() {
+	public IPasswordConstraintConfiguration getPasswordConstraintConfiguration()
+	{
 		return passwordConstraintConfiguration;
 	}
 
-	public void setPasswordConstraintConfiguration(IPasswordConstraintConfiguration passwordConstraintConfiguration) {
+	public void setPasswordConstraintConfiguration(IPasswordConstraintConfiguration passwordConstraintConfiguration)
+	{
 		this.passwordConstraintConfiguration = passwordConstraintConfiguration;
 	}
 
@@ -99,11 +114,13 @@ public class SystemConfig
 		this.databaseConfiguration = databaseConfiguration;
 	}
 
-	public IEmailConfiguration getEmailConfiguration() {
+	public IEmailConfiguration getEmailConfiguration()
+	{
 		return emailConfiguration;
 	}
 
-	public void setEmailConfiguration(IEmailConfiguration emailConfiguration) {
+	public void setEmailConfiguration(IEmailConfiguration emailConfiguration)
+	{
 		this.emailConfiguration = emailConfiguration;
 	}
 
@@ -127,11 +144,13 @@ public class SystemConfig
 		return courseUserRelationshipDB;
 	}
 
-	public IQuestionPersistence getQuestionDB() {
+	public IQuestionPersistence getQuestionDB()
+	{
 		return questionDB;
 	}
 
-	public void setQuestionDB(IQuestionPersistence questionDB) {
+	public void setQuestionDB(IQuestionPersistence questionDB)
+	{
 		this.questionDB = questionDB;
 	}
 }

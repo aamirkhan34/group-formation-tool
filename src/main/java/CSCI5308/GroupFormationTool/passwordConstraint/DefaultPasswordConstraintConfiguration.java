@@ -8,6 +8,7 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
     private final static String PASS_SYMBOL_MIN = System.getenv("PASS_SYMBOL_MIN");
     private final static String BANNED_RE = System.getenv("BANNED_RE");
 
+
     @Override
     public String getPasswordMin() {
         return PASS_MIN;
