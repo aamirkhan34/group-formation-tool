@@ -2,10 +2,10 @@ package CSCI5308.GroupFormationTool.passwordConstraint;
 
 import CSCI5308.GroupFormationTool.SystemConfig;
 
-public class PasswordLengthChecker implements IPasswordLengthChecker{
+public class PasswordOverallLengthChecker implements IPasswordLengthChecker{
     private Integer maxLength;
     private Integer minLength;
-    public PasswordLengthChecker(){
+    public PasswordOverallLengthChecker(){
         IPasswordConstraintConfiguration config = SystemConfig.instance().getPasswordConstraintConfiguration();
         maxLength = Integer.valueOf(config.getPasswordMax());
         minLength = Integer.valueOf(config.getPasswordMin());

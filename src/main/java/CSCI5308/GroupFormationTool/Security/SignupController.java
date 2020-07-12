@@ -39,15 +39,15 @@ public class SignupController
 	{
 
 		StringBuffer errorInformation = new StringBuffer("");
-		IPasswordLengthChecker lengthChecker = new PasswordLengthChecker();
+		IPasswordLengthChecker lengthChecker = new PasswordOverallLengthChecker();
 		IPasswordTypeLengthChecker typeLengthChecker = new PasswordTypeLengthChecker();
-		IPasswordBannedChecker bannedChecker = new PasswordBannedChecker();
+		IPasswordChecker bannedChecker = new PasswordSubstringChecker();
 		boolean passwordFormat = (lengthChecker.checkMinLength(password,errorInformation));
 		passwordFormat = (lengthChecker.checkMaxLength(password,errorInformation)) && passwordFormat;
 		passwordFormat = (typeLengthChecker.checkLowerLength(password,errorInformation)) && passwordFormat;
 		passwordFormat = (typeLengthChecker.checkUpperLength(password,errorInformation)) && passwordFormat;
 		passwordFormat = (typeLengthChecker.checkSymbolLength(password,errorInformation)) && passwordFormat;
-		passwordFormat = (bannedChecker.checkSubstring(password,errorInformation)) && passwordFormat;
+		passwordFormat = (bannedChecker.check(password,errorInformation)) && passwordFormat;
 
 
 		boolean success = false;

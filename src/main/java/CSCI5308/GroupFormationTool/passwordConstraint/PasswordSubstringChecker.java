@@ -2,14 +2,14 @@ package CSCI5308.GroupFormationTool.passwordConstraint;
 
 import CSCI5308.GroupFormationTool.SystemConfig;
 
-public class PasswordBannedChecker  implements IPasswordBannedChecker {
+public class PasswordSubstringChecker implements IPasswordChecker {
     private String bannedRe;
-    public PasswordBannedChecker(){
+    public PasswordSubstringChecker(){
         IPasswordConstraintConfiguration config = SystemConfig.instance().getPasswordConstraintConfiguration();
         bannedRe = config.getBannedRe();
     }
     @Override
-    public boolean checkSubstring(String password,StringBuffer sb) {
+    public boolean check(String password, StringBuffer sb) {
         String temp = password.replaceAll(bannedRe," ");
         if (temp.equals(password)){
             return true;
