@@ -52,4 +52,15 @@ public class SurveyController {
         s.createSurvey(questionDB);
         return "createsurvey";
     }
+
+    @GetMapping("/survey/publishsurvey")
+    public String publishSurvey(@RequestParam(name = ID) long courseID) {
+        ISurveyPersistence questionDB = SystemConfig.instance().getSurveyDB();
+        User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+        Survey s = new Survey();
+        s.setCourseID(courseID);
+        s.setPublished(true);
+        s.publishSurvey(questionDB);
+        return "createsurvey";
+    }
 }

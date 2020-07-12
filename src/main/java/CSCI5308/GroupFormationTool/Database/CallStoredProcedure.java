@@ -63,7 +63,12 @@ public class CallStoredProcedure
 	{
 		statement.setLong(paramIndex, value);
 	}
-	
+
+	public void setParameter(int paramIndex, boolean value) throws SQLException
+	{
+		statement.setBoolean(paramIndex, value);
+	}
+
 	public void registerOutputParameterLong(int paramIndex) throws SQLException
 	{
 		statement.registerOutParameter(paramIndex, java.sql.Types.BIGINT);
