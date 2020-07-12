@@ -32,6 +32,29 @@ public class SurveyDB implements ISurveyPersistence {
         }
     }
 
+    @Override
+    public boolean publishSurvey(Survey survey) {
+        CallStoredProcedure proc = null;
+        try {
+            proc = new CallStoredProcedure("spPublishSurvey(?)");
+            proc.setParameter(1, survey.getCourseID());
+            ResultSet resultSet = proc.executeWithResults();
+            int surveyIdfromDB = 0;
+            while (resultSet.next()) {
+                surveyIdfromDB = resultSet.getInt(1);
+            }
+//fetch questions from DB and dispaly for student
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
+    }
+
     private boolean createSurveyQuestions(int surveyIdfromDB, ArrayList<Question> surveyQuestionList) {
         CallStoredProcedure proc = null;
         try {

@@ -11,6 +11,8 @@ public class Survey {
     private long courseID;
     private User instructor;
     private ArrayList<Question> surveyQuestionList;
+    private boolean isPublished;
+
     public long getId() {
         return id;
     }
@@ -43,7 +45,19 @@ public class Survey {
         this.surveyQuestionList = surveyQuestionList;
     }
 
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(boolean published) {
+        isPublished = published;
+    }
+
     public boolean createSurvey(ISurveyPersistence surveyDB) {
         return surveyDB.createSurvey(this);
+    }
+
+    public boolean publishSurvey(ISurveyPersistence surveyDB) {
+        return surveyDB.publishSurvey(this);
     }
 }
