@@ -3,7 +3,7 @@ package CSCI5308.GroupFormationTool.passwordConstraint;
 import CSCI5308.GroupFormationTool.SystemConfig;
 
 public enum PasswordReg {
-    LOWER("![a-z]","lower class"),UPPER("![A-Z]","upper class"),NONE(null,null),SPECIAL("[a-zA-Z0-9\\s+]","special characters");
+    LOWER("[^a-z]","lower class"),UPPER("[^A-Z]","upper class"),NONE(null,null),SPECIAL("[a-zA-Z0-9\\s+]","special characters");
     private final String format;
     private final String info;
     private PasswordReg(String reg, String info){
