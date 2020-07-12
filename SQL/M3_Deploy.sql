@@ -1,7 +1,7 @@
 CREATE TABLE Survey(  
    id BIGINT PRIMARY KEY AUTO_INCREMENT,   
    courseID BIGINT NOT NULL,   
-   instructoreID bigint NOT NULL,   
+   instructorID bigint NOT NULL,   
    isPublished bit default 0, 
    FOREIGN KEY(courseID) REFERENCES Course(id),   
    FOREIGN KEY(instructoreID) REFERENCES User(id)
@@ -9,9 +9,9 @@ CREATE TABLE Survey(
 
 CREATE TABLE SurveyQuestions(  
   surveyID bigint,
-  QuestionID bigint,
+  questionID bigint,
    FOREIGN KEY(surveyID) REFERENCES Survey(id)
    ON DELETE CASCADE,
-   FOREIGN KEY(QuestionID) REFERENCES Question(id)
+   FOREIGN KEY(questionID) REFERENCES Question(id)
       ON DELETE CASCADE
    );

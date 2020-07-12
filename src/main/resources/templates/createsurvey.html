@@ -45,6 +45,8 @@ table, th, td {
         </form>
 
         <pre></pre>
+        <form th:action="@{/survey/createsurvey}" method="post">
+            <input type="hidden" name="id" th:value="${courseid}"></input>
         <h2>List of questions</h2>
         <table>
             <thead>
@@ -58,7 +60,7 @@ table, th, td {
             </thead>
             <tbody>
             <tr th:each="question : ${questionlist}">
-                <td><input type="checkbox" name="myBooleanVariable"/></td>
+                <td><input type="checkbox" name="questionid"  th:value="${question.id}"/></td>
                 <td><a th:text="${question.title}"
                        th:href="@{/question/viewquestion(id=${question.id})}"></a></td>
                 <td><a th:text="${question.text}"></a></td>
@@ -69,6 +71,12 @@ table, th, td {
         </table>
         <pre>
             </pre>
+            <br>
+            <pre>
+
+                </pre>
+            <input type="submit" id="submitButton" value="Add Questions to Survey">
+        </form>
     </div>
 </div>
 </div>
