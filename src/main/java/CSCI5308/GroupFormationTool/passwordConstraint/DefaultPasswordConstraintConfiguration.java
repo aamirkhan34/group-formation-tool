@@ -10,32 +10,43 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
 
 
     @Override
-    public String getPasswordMin() {
-        return PASS_MIN;
+    public Integer getPasswordMin() {
+        return covertAndCatchingException(PASS_MIN);
     }
 
     @Override
-    public String getPasswordMax() {
-        return PASS_MAX;
+    public Integer getPasswordMax() {
+        return covertAndCatchingException(PASS_MAX);
     }
 
     @Override
-    public String getPasswordUpperMin() {
-        return PASS_UPPER_MIN;
+    public Integer getPasswordUpperMin() {
+        return covertAndCatchingException(PASS_UPPER_MIN);
     }
 
     @Override
-    public String getPasswordLowerMin() {
-        return PASS_LOWER_MIN;
+    public Integer getPasswordLowerMin() {
+        return covertAndCatchingException(PASS_LOWER_MIN);
     }
 
     @Override
-    public String getPasswordSymbolMin() {
-        return PASS_SYMBOL_MIN;
+    public Integer getPasswordSymbolMin() {
+        return covertAndCatchingException(PASS_SYMBOL_MIN);
     }
 
     @Override
     public String getBannedRe() {
         return BANNED_RE;
+    }
+
+    private Integer covertAndCatchingException(String numberConfig){
+        Integer config = null;
+        try{
+            config = Integer.valueOf(numberConfig);
+        }catch (NumberFormatException e){
+            //TODO LOGGER NEEDED
+            e.printStackTrace();
+        }
+        return config;
     }
 }

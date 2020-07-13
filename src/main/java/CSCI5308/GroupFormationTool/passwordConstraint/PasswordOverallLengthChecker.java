@@ -7,8 +7,13 @@ public class PasswordOverallLengthChecker implements IPasswordLengthChecker{
     private Integer minLength;
     public PasswordOverallLengthChecker(){
         IPasswordConstraintConfiguration config = SystemConfig.instance().getPasswordConstraintConfiguration();
-        maxLength = Integer.valueOf(config.getPasswordMax());
-        minLength = Integer.valueOf(config.getPasswordMin());
+        try{
+            maxLength = config.getPasswordMax();
+            minLength = config.getPasswordMin();
+        }catch (NumberFormatException e){
+            // TODO Add Fix Logger
+            e.printStackTrace();
+        }
     }
     @Override
     public boolean checkMaxLength(String password,StringBuffer sb) {

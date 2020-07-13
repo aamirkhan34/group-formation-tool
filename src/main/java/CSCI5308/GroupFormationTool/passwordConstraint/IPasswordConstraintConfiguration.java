@@ -1,10 +1,10 @@
 package CSCI5308.GroupFormationTool.passwordConstraint;
 
 public interface IPasswordConstraintConfiguration {
-    public String getPasswordMin();
-    public String getPasswordMax();
-    public String getPasswordUpperMin();
-    public String getPasswordLowerMin();
-    public String getPasswordSymbolMin();
+    public Integer getPasswordMin();
+    public Integer getPasswordMax();
+    public Integer getPasswordUpperMin();
+    public Integer getPasswordLowerMin();
+    public Integer getPasswordSymbolMin();
     public String getBannedRe();
 }

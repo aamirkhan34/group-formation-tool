@@ -22,7 +22,6 @@ public class PasswordTypeLengthCheckerTest {
         builder.setReg(PasswordReg.LOWER);
         builder.setMiniLength(1);
         checker = builder.getResult();
-        System.out.println("---------------");
         assertTrue(checker.check("abc",sb));
         assertFalse(checker.check("ABC",sb));
     }
@@ -32,7 +31,6 @@ public class PasswordTypeLengthCheckerTest {
         builder.setReg(PasswordReg.UPPER);
         builder.setMiniLength(1);
         checker = builder.getResult();
-        System.out.println("---------------");
         assertFalse(checker.check("abc",sb));
         assertTrue(checker.check("ABC",sb));
     }
@@ -42,7 +40,6 @@ public class PasswordTypeLengthCheckerTest {
         builder.setReg(PasswordReg.SPECIAL);
         builder.setMiniLength(1);
         checker = builder.getResult();
-        System.out.println("---------------");
         assertTrue(checker.check("a@bc",sb));
         assertFalse(checker.check("ABC",sb));
     }

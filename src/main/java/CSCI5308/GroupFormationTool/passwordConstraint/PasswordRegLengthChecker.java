@@ -21,9 +21,6 @@ public class PasswordRegLengthChecker implements IPasswordChecker{
             sb.append(info);
             sb.append(":");
             password = password.replaceAll(reg,"");
-            System.out.println("==============");
-            System.out.println(password);
-            System.out.println(reg);
         }
         if (isMin()&&(password.length()<miniLength)){
             result = false;
