@@ -2,7 +2,10 @@ package CSCI5308.GroupFormationTool.Survey;
 
 import CSCI5308.GroupFormationTool.Questions.Question;
 
+import java.util.List;
+
 public interface ISurveyPersistence {
     public boolean createSurvey(Survey survey);
     public boolean publishSurvey(Survey survey);
+    public List<Question> loadSurveyQuestions(Long id);
 }
