@@ -1,7 +1,13 @@
 package CSCI5308.GroupFormationTool.Courses;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
+import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
+import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.Response;
+import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,20 +19,43 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 public class CourseController
 {
 	private static final String ID = "id";
-	
+	private static final int NUMERIC_TYPE_ID = 1;
+	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
+	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
+	private static final int FREE_TEXT_TYPE_ID = 4;
+
 	@GetMapping("/course/course")
 	public String course(Model model, @RequestParam(name = ID) long courseID)
 	{
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
+		Response responses = new Response();
+		model.addAttribute("published", false);
+		model.addAttribute("notPublished", true);
+		List<Question> surveyQuestions = new ArrayList<>();
+		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
+		if (null != surveyQuestions){
+			model.addAttribute("responses", responses);
+			model.addAttribute("published", true);
+			model.addAttribute("notPublished", false);
+			ArrayList<MultipleChoiceOption> choices = new ArrayList<>();
+			for (Question question : surveyQuestions) {
+				if (question.getTypeID() == MULTI_CHOICE_MULTI_ONE_TYPE_ID || question.getTypeID() == MULTI_CHOICE_MULTI_MULTI_TYPE_ID) {
+					choices = question.getMultipleChoiceOption();
+					for (MultipleChoiceOption option : choices) {
+						model.addAttribute("choices", choices);
+						question.setMultipleChoiceOption(choices);
+					}
+				}
+			}
+			model.addAttribute("questionlist", surveyQuestions);
+		}
 		Course course = new Course();
 		courseDB.loadCourseByID(courseID, course);
 		model.addAttribute("course", course);
-		// This is likely something I would repeat elsewhere, I should come up with a generic solution
-		// for this in milestone 2.
 		List<Role> userRoles = course.getAllRolesForCurrentUserInCourse();
 		if (null == userRoles)
 		{
-			// Default is user is a guest.
 			model.addAttribute("instructor", false);
 			model.addAttribute("ta", false);
 			model.addAttribute("student", false);

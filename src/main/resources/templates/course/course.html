@@ -6,11 +6,14 @@
 >
 	<head>
 		<title>CSCI5308 - Group Formation Tool</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</head>
 	<body class="bodyGridContainer">
 	<header class="bodyGridRow headerGridContainer">
 		<h1>CSCI5308 Group Formation Tool</h1>
 	</header>
+	<div class="container">
+
 
 	  	<div sec:authorize="isAuthenticated()">
 	       <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
@@ -34,6 +37,52 @@
 	<div th:if="${instructor}or ${ta}">
 		</br>
 		<a th:href="@{/survey/publishsurvey(id=${course.id})}"> Publish Survey </a>
+	</div>
+		<div class="container">
+			<div th:if="${student}">
+				<a th:if="${published}"> Please fill the survey</a>
+				<a th:if="${notPublished}"> Survey is not yet published. Please visit later</a>
+				<table>
+					<tbody class="container">
+					<form th:action="@{/survey/submitresponse}" method="post">
+						<input type="hidden" name="id" th:value="${course.id}"></input>
+						<div th:each="question : ${questionlist}">
+							<tr class="container">
+								<div th:name="${responses}">
+								<td> <input type="hidden" th:value="${question.id}" th:field="${responses.question.id}" /></td>
+								<td th:text="*{question.text}"> </td>
+								<td th:if="*{question.typeID == 1}"> <input type="number" th:name="${responses.singleresponse}"/> </td>
+									<td th:if="*{question.typeID == 4}"> <textarea th:name="${responses.singleresponse}"> </textarea> </td>
+<!--								<td th:if="*{question.typeID == 2}"> th:name="${responses.singleresponse} -->
+<!--									<div class="form-group" name="responses">-->
+<!--										<label for="questiontype">Select one</label>-->
+<!--										<select name="questiontype" id="questiontype" />-->
+<!--										<option value="0">&#45;&#45;Select Question Type&#45;&#45;</option>-->
+<!--										<option th:each="choice : ${question.getMultipleChoiceOption()}"-->
+<!--												th:value="${choice.optionNumber}" th:field="${responses.response}"-->
+<!--												th:text="${choice.displayText}">-->
+<!--										</option>-->
+<!--										</select>-->
+<!--									</div>-->
+<!--								</td>-->
+<!--								<td th:if="*{question.typeID == 3}">-->
+<!--										<div class="form-group" th:each="choice : ${question.getMultipleChoiceOption()}">-->
+<!--											<label class="container">-->
+<!--												<input type="checkbox" th:value="${choice.optionNumber}">-->
+<!--												<span class="checkmark" th:text="${choice.displayText}" ></span>-->
+<!--											</label>-->
+<!--										</div>-->
+<!--								</td>-->
+								</div>
+							</tr>
+
+						</div>
+					<input th:if="${published}" type="submit" value="Submit survey"/>
+					</form>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 	</body>
 </html>

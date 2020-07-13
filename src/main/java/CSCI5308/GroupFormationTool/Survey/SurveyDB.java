@@ -1,11 +1,16 @@
 package CSCI5308.GroupFormationTool.Survey;
 
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Questions.QuestionDB;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SurveyDB implements ISurveyPersistence {
     @Override
@@ -43,11 +48,66 @@ public class SurveyDB implements ISurveyPersistence {
             while (resultSet.next()) {
                 surveyIdfromDB = resultSet.getInt(1);
             }
-//fetch questions from DB and dispaly for student
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
+    }
+
+    @Override
+    public List<Question> loadSurveyQuestions(Long id) {
+        CallStoredProcedure proc = null;
+        System.out.println(isSurveyPublished(id));
+            try {
+                if(isSurveyPublished(id) != 0) {
+                    List<Question> surveyQuestions = new ArrayList<Question>();
+                    List<Long> questionIDs = null;
+                    IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+                    int surveyID = isSurveyPublished(id);
+                    proc = new CallStoredProcedure("spLoadSurveyQuestionsByCourseId(?)");
+                    proc.setParameter(1, surveyID);
+                    ResultSet resultSet = proc.executeWithResults();
+                    while (resultSet.next()) {
+                        int questionID = resultSet.getInt(1);
+                        Question question = new Question();
+                        question = questionDB.loadQuestionById(questionID);
+                        surveyQuestions.add(question);
+                    }
+                    return surveyQuestions;
+                }
+                else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                if (null != proc) {
+                    proc.cleanup();
+                }
+            }
+        return null;
+    }
+
+    public int isSurveyPublished(Long courseID){
+        CallStoredProcedure proc = null;
+        int surveyID = 0;
+        try {
+            proc = new CallStoredProcedure("spIsSurveyPublished(?)");
+            proc.setParameter(1, courseID);
+            ResultSet resultSet = proc.executeWithResults();
+            while (resultSet.next()) {
+                surveyID = resultSet.getInt(1);
+            }
+            return surveyID;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return surveyID;
         } finally {
             if (null != proc) {
                 proc.cleanup();
