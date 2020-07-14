@@ -179,6 +179,14 @@ CREATE TABLE  GroupMember(
     FOREIGN KEY (userID) REFERENCES User(id)
 );
 
+CREATE TABLE Log(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    class VARCHAR(125) NOT NULL,
+    method VARCHAR(125) NOT NULL,
+    level VARCHAR(75) NOT NULL,
+    message VARCHAR(200) NOT NULL
+);
+
 INSERT INTO Role
     (role)
 VALUES
