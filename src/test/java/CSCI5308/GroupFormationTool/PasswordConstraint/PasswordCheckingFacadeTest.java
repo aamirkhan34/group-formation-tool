@@ -17,7 +17,6 @@ class PasswordCheckingFacadeTest {
         IPasswordConstraintConfiguration config = SystemConfig.instance().getPasswordConstraintConfiguration();
         assertTrue(checker.check("A@bcqrew",sb));
         if (null != config.getPasswordUpperMin() ||
-        null != config.getBannedRe()||
         null != config.getPasswordLowerMin()||
         null != config.getPasswordMax()||
         null != config.getPasswordMin()||
