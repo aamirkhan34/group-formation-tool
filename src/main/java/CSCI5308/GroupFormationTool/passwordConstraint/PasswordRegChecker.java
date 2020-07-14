@@ -17,7 +17,12 @@ public class PasswordRegChecker implements IPasswordChecker {
         }else {
             sb.append("Format: ");
             sb.append(info);
-            sb.append(reg.replace("|",","));
+            try{
+                sb.append(reg.replace("|",","));
+            }catch (NullPointerException e){
+                //TODO add logging
+                e.printStackTrace();
+            }
             sb.append(".<br/> \n");
             return false;
         }
