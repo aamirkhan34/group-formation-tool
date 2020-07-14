@@ -8,4 +8,5 @@ public interface ISurveyPersistence {
     public boolean createSurvey(Survey survey);
     public boolean publishSurvey(Survey survey);
     public List<Question> loadSurveyQuestions(Long id);
+    public int isSurveyPublished(Long courseID);
 }

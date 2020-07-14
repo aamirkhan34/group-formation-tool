@@ -34,6 +34,7 @@ public class CourseController
 		model.addAttribute("notPublished", true);
 		List<Question> surveyQuestions = new ArrayList<>();
 		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
+
 		if (null != surveyQuestions){
 			model.addAttribute("responses", responses);
 			model.addAttribute("published", true);

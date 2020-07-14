@@ -60,16 +60,15 @@ public class SurveyDB implements ISurveyPersistence {
     }
 
     @Override
-    public List<Question> loadSurveyQuestions(Long id) {
+    public List<Question> loadSurveyQuestions(Long courseId) {
         CallStoredProcedure proc = null;
-        System.out.println(isSurveyPublished(id));
             try {
-                if(isSurveyPublished(id) != 0) {
+                if(isSurveyPublished(courseId) != 0) {
                     List<Question> surveyQuestions = new ArrayList<Question>();
                     List<Long> questionIDs = null;
                     IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
-                    int surveyID = isSurveyPublished(id);
-                    proc = new CallStoredProcedure("spLoadSurveyQuestionsByCourseId(?)");
+                    int surveyID = isSurveyPublished(courseId);
+                    proc = new CallStoredProcedure("spLoadSurveyQuestionsBySurveyId(?)");
                     proc.setParameter(1, surveyID);
                     ResultSet resultSet = proc.executeWithResults();
                     while (resultSet.next()) {
@@ -93,6 +92,7 @@ public class SurveyDB implements ISurveyPersistence {
         return null;
     }
 
+    @Override
     public int isSurveyPublished(Long courseID){
         CallStoredProcedure proc = null;
         int surveyID = 0;

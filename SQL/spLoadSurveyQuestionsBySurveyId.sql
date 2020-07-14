@@ -1,9 +1,9 @@
 DELIMITER $$
 
-DROP procedure IF EXISTS spLoadSurveyQuestionsByCourseId;
+DROP procedure IF EXISTS spLoadSurveyQuestionsBySurveyId;
 
 
-CREATE PROCEDURE spLoadSurveyQuestionsByCourseId (
+CREATE PROCEDURE spLoadSurveyQuestionsBySurveyId (
 IN id BIGINT
 )
 BEGIN

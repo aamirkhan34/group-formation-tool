@@ -42,45 +42,49 @@
 			<div th:if="${student}">
 				<a th:if="${published}"> Please fill the survey</a>
 				<a th:if="${notPublished}"> Survey is not yet published. Please visit later</a>
+				<form th:action="@{/survey/submitresponse}" method="post">
+					<div th:each="question : ${questionlist}">
+						<input type="hidden" name="questionID" th:value="${question.id}">
+					</div>
+
 				<table>
-					<tbody class="container">
-					<form th:action="@{/survey/submitresponse}" method="post">
+					<tbody>
 						<input type="hidden" name="id" th:value="${course.id}"></input>
 						<div th:each="question : ${questionlist}">
-							<tr class="container">
-								<div th:name="${responses}">
-								<td> <input type="hidden" th:value="${question.id}" th:field="${responses.question.id}" /></td>
-								<td th:text="*{question.text}"> </td>
-								<td th:if="*{question.typeID == 1}"> <input type="number" th:name="${responses.singleresponse}"/> </td>
-									<td th:if="*{question.typeID == 4}"> <textarea th:name="${responses.singleresponse}"> </textarea> </td>
-<!--								<td th:if="*{question.typeID == 2}"> th:name="${responses.singleresponse} -->
-<!--									<div class="form-group" name="responses">-->
-<!--										<label for="questiontype">Select one</label>-->
-<!--										<select name="questiontype" id="questiontype" />-->
-<!--										<option value="0">&#45;&#45;Select Question Type&#45;&#45;</option>-->
-<!--										<option th:each="choice : ${question.getMultipleChoiceOption()}"-->
-<!--												th:value="${choice.optionNumber}" th:field="${responses.response}"-->
-<!--												th:text="${choice.displayText}">-->
-<!--										</option>-->
-<!--										</select>-->
-<!--									</div>-->
-<!--								</td>-->
-<!--								<td th:if="*{question.typeID == 3}">-->
-<!--										<div class="form-group" th:each="choice : ${question.getMultipleChoiceOption()}">-->
-<!--											<label class="container">-->
-<!--												<input type="checkbox" th:value="${choice.optionNumber}">-->
-<!--												<span class="checkmark" th:text="${choice.displayText}" ></span>-->
-<!--											</label>-->
-<!--										</div>-->
-<!--								</td>-->
-								</div>
+							<tr>
+								<td><div th:text="*{question.text}"> </div></td>
+								<td>
+									<div class="container">
+									<div> <input type="hidden" th:value="*{question.id}"/></div>
+										<div th:if="*{question.typeID == 1}"> <input type="number" required th:name="${'result'+question.id}"/> </div>
+										<div th:if="*{question.typeID == 4}"> <textarea required th:name="${'result'+question.id}"> </textarea> </div>
+									<div th:if="*{question.typeID == 2}">
+										<div class="form-group" name="responses">
+											<label for="questiontype">Select one</label>
+											<select id="questiontype" required th:name="${'option2' + question.id}" />
+											<option value="0">--Select Question Type--</option>
+											<option th:each="choice : ${question.getMultipleChoiceOption()}" th:value="${choice.optionNumber}" th:field="${responses.response}"
+													th:text="${choice.displayText}">
+											</option>
+											</select>
+										</div>
+									</div>
+									<div th:if="*{question.typeID == 3}">
+											<div class="form-group" th:each="choice : ${question.getMultipleChoiceOption()}">
+												<label class="container">
+													<input type="checkbox" th:value="${choice.optionNumber}" th:name="${'result'+ question.id + choice.optionNumber}">
+													<span class="checkmark" th:text="${choice.displayText}" ></span>
+												</label>
+											</div>
+									</div>
+									</div>
+								</td>
 							</tr>
-
 						</div>
 					<input th:if="${published}" type="submit" value="Submit survey"/>
-					</form>
 					</tbody>
 				</table>
+				</form>
 			</div>
 		</div>
 	</div>
