@@ -1,3 +1,4 @@
+use CSCI5308_1_DEVINT;
 CREATE TABLE Survey(  
    id BIGINT PRIMARY KEY AUTO_INCREMENT,   
    courseID BIGINT NOT NULL,   
@@ -14,4 +15,24 @@ CREATE TABLE SurveyQuestions(
    ON DELETE CASCADE,
    FOREIGN KEY(questionID) REFERENCES Question(id)
       ON DELETE CASCADE
+   );
+   
+CREATE TABLE SurveyResponse(  
+  id bigint PRIMARY KEY AUTO_INCREMENT,   
+ surveyID bigint,
+  questionID bigint,
+  studentID bigint,
+   FOREIGN KEY(surveyID) REFERENCES Survey(id)
+   ON DELETE CASCADE,
+   FOREIGN KEY(questionID) REFERENCES Question(id)
+      ON DELETE CASCADE,
+        FOREIGN KEY(studentID) REFERENCES User(id)
+         ON DELETE CASCADE
+   );
+
+CREATE TABLE SurveyResponseAnswers(  
+  responseID bigint,
+  answer varchar(1000),
+   FOREIGN KEY(responseID) REFERENCES SurveyResponse(id)
+   ON DELETE CASCADE
    );
