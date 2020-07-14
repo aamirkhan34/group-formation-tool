@@ -26,22 +26,25 @@ public class PasswordCheckingFacade implements IPasswordChecker{
         lengthBuilder.setReg(PasswordReg.NONE);
         checker = lengthBuilder.getResult();
         result  = (checker.check(password,sb)) && result;
-        System.out.println(sb.toString());
+
         lengthBuilder.reset();
         lengthBuilder.setReg(PasswordReg.LOWER);
         lengthBuilder.setMiniLength(config.getPasswordLowerMin());
         checker = lengthBuilder.getResult();
         result  = (checker.check(password,sb)) && result;
+
         lengthBuilder.reset();
         lengthBuilder.setReg(PasswordReg.UPPER);
         lengthBuilder.setMiniLength(config.getPasswordUpperMin());
         checker = lengthBuilder.getResult();
         result  = (checker.check(password,sb)) && result;
+
         lengthBuilder.reset();
         lengthBuilder.setReg(PasswordReg.SPECIAL);
         lengthBuilder.setMiniLength(config.getPasswordSymbolMin());
         checker = lengthBuilder.getResult();
         result  = (checker.check(password,sb)) && result;
+
         regBuilder.setReg(PasswordReg.BANNED);
         checker = regBuilder.getResult();
         result  = (checker.check(password,sb)) && result;
