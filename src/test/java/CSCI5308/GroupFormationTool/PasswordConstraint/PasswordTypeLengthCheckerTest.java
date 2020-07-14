@@ -1,6 +1,6 @@
 package CSCI5308.GroupFormationTool.PasswordConstraint;
 
-import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordTypeLengthChecker;
+import CSCI5308.GroupFormationTool.passwordConstraint.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,25 +9,38 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PasswordTypeLengthCheckerTest {
-    private IPasswordTypeLengthChecker checker;
+    private IPasswordRegLengthCheckerBuilder builder;
+    private IPasswordChecker checker;
     StringBuffer sb = new StringBuffer("");
     @BeforeEach
     public void initialize(){
-        checker = new PasswordTypeLengthCheckerMock();
+        builder = new PasswordRegRegLengthCheckerBuilder();
     }
     @Test
     public void testCheckLowerLength(){
-        assertTrue(checker.checkLowerLength("abc",sb));
-        assertFalse(checker.checkLowerLength("ABC",sb));
+        builder.reset();
+        builder.setReg(PasswordReg.LOWER);
+        builder.setMiniLength(1);
+        checker = builder.getResult();
+        assertTrue(checker.check("abc",sb));
+        assertFalse(checker.check("ABC",sb));
     }
     @Test
     public void testCheckUpperLength(){
-        assertFalse(checker.checkUpperLength("abc",sb));
-        assertTrue(checker.checkUpperLength("ABC",sb));
+        builder.reset();
+        builder.setReg(PasswordReg.UPPER);
+        builder.setMiniLength(1);
+        checker = builder.getResult();
+        assertFalse(checker.check("abc",sb));
+        assertTrue(checker.check("ABC",sb));
     }
     @Test
     public void testCheckSymbolLength(){
-        assertTrue(checker.checkSymbolLength("a@bc",sb));
-        assertFalse(checker.checkSymbolLength("ABC",sb));
+        builder.reset();
+        builder.setReg(PasswordReg.SPECIAL);
+        builder.setMiniLength(1);
+        checker = builder.getResult();
+        assertTrue(checker.check("a@bc",sb));
+        assertFalse(checker.check("ABC",sb));
     }
 }
