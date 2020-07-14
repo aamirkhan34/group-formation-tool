@@ -1,5 +1,6 @@
 package CSCI5308.GroupFormationTool.Survey;
 
+import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
@@ -113,6 +114,31 @@ public class SurveyDB implements ISurveyPersistence {
                 proc.cleanup();
             }
         }
+    }
+
+    @Override
+    public List<Question> loadSurveyQuestionsByCourseId(Long courseID) {
+        CallStoredProcedure proc = null;
+        List<Question> questionList = new ArrayList<Question>();
+        try {
+            proc = new CallStoredProcedure("spLoadSurveyQuestionsByCourseId(?)");
+            proc.setParameter(1, courseID);
+            ResultSet results = proc.executeWithResults();
+            if (null != results) {
+                while (results.next()) {
+                    Question question = new Question();
+                    question.setId(results.getInt(1));
+                    questionList.add(question);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
+        return questionList;
     }
 
     private boolean createSurveyQuestions(int surveyIdfromDB, ArrayList<Question> surveyQuestionList) {

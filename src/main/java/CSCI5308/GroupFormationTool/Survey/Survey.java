@@ -5,6 +5,7 @@ import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Survey {
     private long id;
@@ -59,5 +60,16 @@ public class Survey {
 
     public boolean publishSurvey(ISurveyPersistence surveyDB) {
         return surveyDB.publishSurvey(this);
+    }
+
+    public List<Question> getAllSurveyQuestions(List<Question> questionList, List<Question> questionsAddedToSurvey) {
+        for(Question queList:questionList){
+            for(Question q:questionsAddedToSurvey){
+                if(queList.getId() == q.getId()){
+                    queList.setQuestionAddedToSurvey(true);
+                }
+            }
+        }
+        return  questionList;
     }
 }

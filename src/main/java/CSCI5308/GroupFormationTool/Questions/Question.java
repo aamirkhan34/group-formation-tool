@@ -15,6 +15,7 @@ public class Question {
     private User instructor;
     private Date createdOn;
     private ArrayList<MultipleChoiceOption> multipleChoiceOption;
+    private boolean isQuestionAddedToSurvey;
 
     public int getTypeID() {
         return typeID;
@@ -102,4 +103,11 @@ public class Question {
         return questionDB.loadQuestionById(this.getId());
     }
 
+    public boolean isQuestionAddedToSurvey() {
+        return isQuestionAddedToSurvey;
+    }
+
+    public void setQuestionAddedToSurvey(boolean questionAddedToSurvey) {
+        isQuestionAddedToSurvey = questionAddedToSurvey;
+    }
 }

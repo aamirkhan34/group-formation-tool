@@ -23,12 +23,19 @@ public class SurveyController {
     public String surveyQuestions(Model model,@RequestParam(name = ID) long courseID)
     {
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+        ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
         Question q = new Question();
         q.setInstructor(user);
         List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
-        model.addAttribute("questionlist", questionList);
+        List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
+
+        Survey s = new Survey();
+        List<Question> surveyQuestions = s.getAllSurveyQuestions(questionList,questionsAddedToSurvey);
+        int isPublished = surveyDB.isSurveyPublished(courseID);
+        model.addAttribute("questionlist", surveyQuestions);
         model.addAttribute("courseid", courseID);
+        model.addAttribute("isPublished", isPublished);
         return "createsurvey";
     }
 
