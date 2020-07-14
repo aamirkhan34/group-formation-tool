@@ -42,3 +42,11 @@ DROP TABLE Question;
 DROP TABLE Question_type;
 
 DROP TABLE User;
+
+DROP TABLE Algorithm;
+
+DROP TABLE AlgorithmDefinition;
+
+DROP TABLE FormedGroup;
+
+DROP TABLE GroupMember;

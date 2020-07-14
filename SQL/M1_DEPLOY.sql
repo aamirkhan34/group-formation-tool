@@ -49,7 +49,7 @@ CREATE TABLE QuestionOptions(
         FOREIGN KEY
 (questionID) REFERENCES Question
 (id)
-)
+);
 
 CREATE TABLE Numeric_question(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -143,6 +143,39 @@ CREATE TABLE SystemRole
     roleID BIGINT NOT NULL,
     userID BIGINT NOT NULL,
     FOREIGN KEY (roleID) REFERENCES Role(id),
+    FOREIGN KEY (userID) REFERENCES User(id)
+);
+
+CREATE TABLE Algorithm(
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  courseID BIGINT NOT NULL,
+  createOn Date,
+  updateOn Date
+);
+
+CREATE TABLE AlgorithmDefinition(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    algorithmID BIGINT NOT NULL,
+    questionID BIGINT NOT NULL,
+    weight int not null,
+    similarityMeasure TINYINT,
+    FOREIGN KEY (algorithmID) REFERENCES Algorithm(id),
+    FOREIGN KEY (questionID) REFERENCES Question(id)
+);
+
+CREATE TABLE FormedGroup(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    courseID BIGINT NOT NULL,
+    createOn Date,
+    updateOn Date,
+    FOREIGN KEY (courseID) REFERENCES Course(id)
+);
+
+CREATE TABLE  GroupMember(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    groupID BIGINT NOT NULL,
+    userID  BIGINT NOT NULL,
+    FOREIGN KEY (groupID) REFERENCES FormedGroup(id),
     FOREIGN KEY (userID) REFERENCES User(id)
 );
 
