@@ -26,19 +26,46 @@ public class ResponseDB implements IResponsePersistence {
                 ResultSet resultSet = proc.executeWithResults();
                 if(r.getQuestion().getTypeID() == MULTI_CHOICE_MULTI_MULTI_TYPE_ID){
                     while (resultSet.next()){
-                        Long surveyIdFromDB = resultSet.getLong(1);
-                        System.out.println(surveyIdFromDB);
-                    }
-                    ArrayList<String> usr = r.getResponse();
-                    for (String str: usr
-                    ) {
-                        System.out.println(str);
+                        Long responseIdFromDB = resultSet.getLong(1);
+                        ArrayList<String> choiceResponses = r.getResponse();
+                        for (String choice: choiceResponses
+                        ) {
+                            proc = new CallStoredProcedure("spSaveSurveyResponseMultipleChoiceMultiple(?,?,?)");
+                            proc.setParameter(1, responseIdFromDB);
+                            proc.setParameter(2, choice);
+                            proc.setParameter(3,r.getQuestion().getTypeID());
+                            proc.execute();
+                        }
                     }
                 }
-                else {
+                if(r.getQuestion().getTypeID() == FREE_TEXT_TYPE_ID) {
                     while (resultSet.next()){
-                        Long surveyIdFromDB = resultSet.getLong(1);
-                        System.out.println(surveyIdFromDB);
+                        Long responseIdFromDB = resultSet.getLong(1);
+                        proc = new CallStoredProcedure("spSaveSurveyResponseFreeText(?,?,?)");
+                        proc.setParameter(1, responseIdFromDB);
+                        proc.setParameter(2,r.getSingleresponse());
+                        proc.setParameter(3,r.getQuestion().getTypeID());
+                        proc.execute();
+                    }
+                }
+                if(r.getQuestion().getTypeID() == MULTI_CHOICE_MULTI_ONE_TYPE_ID) {
+                    while (resultSet.next()){
+                        Long responseIdFromDB = resultSet.getLong(1);
+                        proc = new CallStoredProcedure("spSaveSurveyResponseMultipleChoiceSingle(?,?,?)");
+                        proc.setParameter(1, responseIdFromDB);
+                        proc.setParameter(2, r.getSingleresponse());
+                        proc.setParameter(3, r.getQuestion().getTypeID());
+                        proc.execute();
+                    }
+                }
+                if(r.getQuestion().getTypeID() == NUMERIC_TYPE_ID) {
+                    while (resultSet.next()){
+                        Long responseIdFromDB = resultSet.getLong(1);
+                        proc = new CallStoredProcedure("spSaveSurveyResponseNumeric(?,?,?)");
+                        proc.setParameter(1, responseIdFromDB);
+                        proc.setParameter(2, r.getSingleresponse());
+                        proc.setParameter(3, r.getQuestion().getTypeID());
+                        proc.execute();
                     }
                 }
             }
