@@ -30,9 +30,47 @@ CREATE TABLE SurveyResponse(
          ON DELETE CASCADE
    );
 
-CREATE TABLE SurveyResponseAnswers(  
+ 
+    CREATE TABLE SurveyResponseNumeric(  	
+    id bigint PRIMARY KEY AUTO_INCREMENT,   
   responseID bigint,
-  answer varchar(1000),
+  answer int,
+  questionTypeID int,
    FOREIGN KEY(responseID) REFERENCES SurveyResponse(id)
+   ON DELETE CASCADE,
+   FOREIGN KEY(questionTypeID) REFERENCES QuestionType(id)
+   ON DELETE CASCADE
+   );
+   
+   CREATE TABLE SurveyResponseMultipleChoiceSingle(  	
+    id bigint PRIMARY KEY AUTO_INCREMENT,   
+  responseID bigint,
+  answer int,
+  questionTypeID int,
+   FOREIGN KEY(responseID) REFERENCES SurveyResponse(id)
+   ON DELETE CASCADE,
+   FOREIGN KEY(questionTypeID) REFERENCES QuestionType(id)
+   ON DELETE CASCADE
+   );
+   
+   CREATE TABLE SurveyResponseMultipleChoiceMultiple(  	
+    id bigint PRIMARY KEY AUTO_INCREMENT,   
+  responseID bigint,
+  answer int,
+  questionTypeID int,
+   FOREIGN KEY(responseID) REFERENCES SurveyResponse(id)
+   ON DELETE CASCADE,
+   FOREIGN KEY(questionTypeID) REFERENCES QuestionType(id)
+   ON DELETE CASCADE
+   );
+   
+   CREATE TABLE SurveyResponseFreeText(  	
+    id bigint PRIMARY KEY AUTO_INCREMENT,   
+  responseID bigint,
+  answer varchar(2000),
+  questionTypeID int,
+   FOREIGN KEY(responseID) REFERENCES SurveyResponse(id)
+   ON DELETE CASCADE,
+   FOREIGN KEY(questionTypeID) REFERENCES QuestionType(id)
    ON DELETE CASCADE
    );
