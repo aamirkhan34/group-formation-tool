@@ -17,21 +17,22 @@ public class PasswordRegLengthChecker implements IPasswordChecker{
     public boolean check(String password, StringBuffer sb) {
         boolean result = true;
         if (isReg()){
-            sb.append("For ");
-            sb.append(info);
-            sb.append(":");
             password = password.replaceAll(reg,"");
         }
         if (isMin()&&(password.length()<miniLength)){
+            if (isReg()){
+                patchTag(sb);
+            }
             result = false;
             sb.append("The password should have more than ");
             sb.append(miniLength);
             sb.append(" characters.");
             sb.append("<br/> \n");
         }
-//        System.out.println(maxLength);
-//        System.out.println(password.length());
         if (isMax()&&(password.length()>maxLength)){
+            if (isReg()){
+                patchTag(sb);
+            }
             result = false;
             sb.append("The password should have fewer than ");
             sb.append(maxLength);
@@ -40,13 +41,18 @@ public class PasswordRegLengthChecker implements IPasswordChecker{
         }
         return result;
     }
-    public boolean isReg(){
+    private boolean isReg(){
         return null!=reg;
     }
-    public boolean isMin(){
+    private boolean isMin(){
         return null!=miniLength;
     }
-    public boolean isMax(){
+    private boolean isMax(){
         return null!=maxLength;
+    }
+    private void patchTag(StringBuffer sb){
+        sb.append("For ");
+        sb.append(info);
+        sb.append(":");
     }
 }

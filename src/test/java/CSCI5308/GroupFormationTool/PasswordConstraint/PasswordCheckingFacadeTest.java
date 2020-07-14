@@ -12,10 +12,11 @@ class PasswordCheckingFacadeTest {
     void check() {
         IPasswordChecker checker = new PasswordCheckingFacade();
         StringBuffer sb = new StringBuffer("");
-        assertTrue(checker.check("A@bc",sb));
+        assertTrue(checker.check("A@bcqrew",sb));
+        assertFalse(checker.check("a@bcqrew",sb));
+        assertFalse(checker.check("A@BCQWEG",sb));
         assertFalse(checker.check("a@bc",sb));
-        assertFalse(checker.check("A@BC",sb));
-        assertFalse(checker.check("a@",sb));
-        assertFalse(checker.check("A@abc",sb));
+        assertFalse(checker.check("A@abcdfef",sb));
+        assertFalse(checker.check("A@BCjoifreqoj94787943saf",sb));
     }
 }
