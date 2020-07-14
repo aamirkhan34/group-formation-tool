@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public interface IResponsePersistence {
     public boolean saveResponse(ArrayList<Response> responses, int surveyID);
-    public boolean saveResponseAnswers(Response response);
+    public boolean isResponseprovidedByStudent(Long studentId, Long courseID);
 }

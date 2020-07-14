@@ -3,9 +3,12 @@ package CSCI5308.GroupFormationTool.Courses;
 import java.util.ArrayList;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
+import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
 import CSCI5308.GroupFormationTool.Response.Response;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import org.springframework.stereotype.Controller;
@@ -29,11 +32,20 @@ public class CourseController
 	{
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
+		IResponsePersistence responseDB = SystemConfig.instance().getResponseDB();
+		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
 		Response responses = new Response();
 		model.addAttribute("published", false);
 		model.addAttribute("notPublished", true);
 		List<Question> surveyQuestions = new ArrayList<>();
 		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
+		Boolean isSurveyProvided = responseDB.isResponseprovidedByStudent(user.getID(),courseID);
+		if(isSurveyProvided){
+			model.addAttribute("issurveynotprovided", false);
+		}
+		else {
+			model.addAttribute("issurveynotprovided", true);
+		}
 
 		if (null != surveyQuestions){
 			model.addAttribute("responses", responses);

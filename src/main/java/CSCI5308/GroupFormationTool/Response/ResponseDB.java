@@ -83,13 +83,19 @@ public class ResponseDB implements IResponsePersistence {
     }
 
     @Override
-    public boolean saveResponseAnswers(Response response) {
+    public boolean isResponseprovidedByStudent(Long studentId, Long courseID) {
         CallStoredProcedure proc = null;
         try {
-            ArrayList<String> choices = response.getResponse();
-            proc = new CallStoredProcedure("spLoadQuestionOptionsById(?)");
-
-        } catch (SQLException e) {
+            proc = new CallStoredProcedure("spIsResponseprovidedByStudent(?,?)");
+            proc.setParameter(1,courseID);
+            proc.setParameter(2,studentId);
+            ResultSet resultSet = proc.executeWithResults();
+            while (resultSet.next()){
+                resultSet.getInt(1);
+                return true;
+            }
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return false;
         }

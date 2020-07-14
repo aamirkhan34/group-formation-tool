@@ -90,6 +90,8 @@ public class ResponseController {
             model.addAttribute("student", userRoles.contains(Role.STUDENT));
             model.addAttribute("guest", userRoles.isEmpty());
         }
+        List<Course> allCourses = courseDB.loadAllCourses();
+        model.addAttribute("courses", allCourses);
         return "index";
     }
 
