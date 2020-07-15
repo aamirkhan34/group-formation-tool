@@ -10,28 +10,28 @@ public class GroupFormationAlgorithm {
 	private long id;
 	private Course course;
 	private Date createdOn;
-	private boolean isChoiceSimilarity;
+	private int groupSize;
+	private ArrayList<Boolean> comparisonChoices;
 	private ArrayList<Question> questions;
 	private ArrayList<Double> weights;
 
-	public GroupFormationAlgorithm(long id, Course course, Date createdOn, boolean isChoiceSimilarity,
-			ArrayList<Question> questions, ArrayList<Double> weights) {
+	public GroupFormationAlgorithm(long id, Course course, Date createdOn, ArrayList<Boolean> comparisonChoices,
+			ArrayList<Question> questions, ArrayList<Double> weights, int groupSize) {
 		super();
 		this.id = id;
 		this.course = course;
 		this.createdOn = createdOn;
-		this.isChoiceSimilarity = isChoiceSimilarity;
+		this.groupSize = groupSize;
+		this.comparisonChoices = comparisonChoices;
 		this.questions = questions;
 		this.weights = weights;
 	}
 
 	@Override
 	public String toString() {
-		return "GroupFormationAlgorithm [id=" + id + ", course=" + course + ", createdOn=" + createdOn
-				+ ", isChoiceSimilarity=" + isChoiceSimilarity + ", questions=" + questions + ", weights=" + weights
-				+ "]";
+		return "GroupFormationAlgorithm [id=" + id + ", course=" + course + ", createdOn=" + createdOn + ", groupSize="
+				+ groupSize + ", comparisonChoices=" + comparisonChoices + ", questions=" + questions + ", weights="
+				+ weights + "]";
 	}
-	
-	
 
 }

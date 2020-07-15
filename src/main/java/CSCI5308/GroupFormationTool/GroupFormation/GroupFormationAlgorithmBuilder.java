@@ -10,7 +10,8 @@ public class GroupFormationAlgorithmBuilder {
 	private long id;
 	private Course course;
 	private Date createdOn;
-	private boolean isChoiceSimilarity;
+	private int groupSize;
+	private ArrayList<Boolean> comparisonChoices;
 	private ArrayList<Question> questions;
 	private ArrayList<Double> weights;
 
@@ -29,8 +30,8 @@ public class GroupFormationAlgorithmBuilder {
 		return this;
 	}
 
-	public GroupFormationAlgorithmBuilder setChoiceSimilarity(boolean isChoiceSimilarity) {
-		this.isChoiceSimilarity = isChoiceSimilarity;
+	public GroupFormationAlgorithmBuilder setComparisonChoices(ArrayList<Boolean> comparisonChoices) {
+		this.comparisonChoices = comparisonChoices;
 		return this;
 	}
 
@@ -43,8 +44,13 @@ public class GroupFormationAlgorithmBuilder {
 		this.weights = weights;
 		return this;
 	}
-
+	
+	public GroupFormationAlgorithmBuilder setGroupSize(int groupSize) {
+		this.groupSize = groupSize;
+		return this;
+	}
+	
 	public GroupFormationAlgorithm getGroupFormationAlgorithm() {
-		return new GroupFormationAlgorithm(id, course, createdOn, isChoiceSimilarity, questions, weights);
+		return new GroupFormationAlgorithm(id, course, createdOn, comparisonChoices, questions, weights, groupSize);
 	}
 }
