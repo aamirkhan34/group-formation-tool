@@ -82,5 +82,24 @@ public class SurveyController {
         return "index";
     }
 
+    @RequestMapping(value = "/survey/editsurvey")
+    public String editSurvey(Model model,@RequestParam(name = ID) long courseID,
+                               @RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs) {
+        IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+        ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
+        User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+        User instructor = surveyDB.findInstructorOfTA(courseID);
+        Question q = new Question();
+        q.setInstructor(instructor);
+        List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
+        List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
+        Survey s = new Survey();
+        List<Question> surveyQuestions = s.getAllSurveyQuestions(questionList,questionsAddedToSurvey);
+        int isPublished = surveyDB.isSurveyPublished(courseID);
+        model.addAttribute("questionlist", surveyQuestions);
+        model.addAttribute("courseid", courseID);
+        model.addAttribute("isPublished", isPublished);
+        return "createsurvey";
+    }
 
 }

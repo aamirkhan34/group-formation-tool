@@ -30,10 +30,14 @@
 		<div th:if="${instructor}">
 			<a th:href="@{/question/questionmanagement}"> Question Manager page </a>
 		</div>
-	<div th:if="${instructor}or ${ta}">
+	<div th:if="${instructor}">
 	</br>
-		<a th:href="@{/survey/createsurvey(id=${course.id})}"> Create Survey </a>
+		<a th:href="@{/survey/createsurvey(id=${course.id})}"> Create/Edit Survey </a>
 	</div>
+		<div th:if="${ta}">
+			</br>
+			<a th:href="@{/survey/editsurvey(id=${course.id})}"> Edit Survey </a>
+		</div>
 	<div th:if="${instructor}">
 		</br>
 		<a th:href="@{/survey/publishsurvey(id=${course.id})}"> Publish Survey </a>

@@ -141,6 +141,31 @@ public class SurveyDB implements ISurveyPersistence {
         return questionList;
     }
 
+    @Override
+    public User findInstructorOfTA(Long courseID) {
+        CallStoredProcedure proc = null;
+        int instructorId =0;
+        try {
+            proc = new CallStoredProcedure("spFindInstructorOfTA(?)");
+            proc.setParameter(1, courseID);
+            ResultSet results = proc.executeWithResults();
+            if (null != results) {
+                while (results.next()) {
+                    instructorId=results.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
+        User u = new User();
+        u.setID(instructorId);
+        return u;
+    }
+
     private boolean createSurveyQuestions(int surveyIdfromDB, ArrayList<Question> surveyQuestionList) {
         CallStoredProcedure proc = null;
         try {
