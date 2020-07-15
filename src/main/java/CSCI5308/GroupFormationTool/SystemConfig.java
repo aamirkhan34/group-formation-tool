@@ -4,10 +4,14 @@ import CSCI5308.GroupFormationTool.Email.DefaultEmailConfiguration;
 import CSCI5308.GroupFormationTool.Email.IEmailConfiguration;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.QuestionDB;
+import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
+import CSCI5308.GroupFormationTool.Response.ResponseDB;
 import CSCI5308.GroupFormationTool.Security.*;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Database.*;
 import CSCI5308.GroupFormationTool.Courses.*;
+import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
+import CSCI5308.GroupFormationTool.Survey.SurveyDB;
 import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordConstraintConfiguration;
 import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordHistoryConstraintConfiguration;
 import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordConstraintConfiguration;
@@ -35,8 +39,18 @@ public class SystemConfig
 	private IEmailConfiguration emailConfiguration;
 	private IQuestionPersistence questionDB;
 	private IPasswordHistoryConstraintConfiguration passwordHistoryConstraintConfiguration;
+	private ISurveyPersistence surveyDB;
+	private IResponsePersistence responseDB;
 	// This private constructor ensures that no class other than System can allocate
 	// the System object. The compiler would prevent it.
+
+	public IResponsePersistence getResponseDB() {
+		return responseDB;
+	}
+
+	public void setResponseDB(IResponsePersistence responseDB) {
+		this.responseDB = responseDB;
+	}
 
 	private SystemConfig()
 	{
@@ -52,6 +66,8 @@ public class SystemConfig
 		emailConfiguration = new DefaultEmailConfiguration();
 		questionDB = new QuestionDB();
 		passwordHistoryConstraintConfiguration = new DefaultPasswordHistoryConstraintConfiguration();
+		surveyDB = new SurveyDB();
+		responseDB = new ResponseDB();
 	}
 	// This is the way the rest of the application gets access to the System object.
 
@@ -154,5 +170,13 @@ public class SystemConfig
 	public void setQuestionDB(IQuestionPersistence questionDB)
 	{
 		this.questionDB = questionDB;
+	}
+
+	public ISurveyPersistence getSurveyDB() {
+		return surveyDB;
+	}
+
+	public void setSurveyDB(ISurveyPersistence surveyDB) {
+		this.surveyDB = surveyDB;
 	}
 }
