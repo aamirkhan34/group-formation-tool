@@ -183,8 +183,10 @@ CREATE TABLE Log(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     class VARCHAR(125) NOT NULL,
     method VARCHAR(125) NOT NULL,
+    createTime date,
     level VARCHAR(75) NOT NULL,
-    message VARCHAR(200) NOT NULL
+    message VARCHAR(200) NOT NULL,
+    possibleSolution VARCHAR(200)
 );
 
 INSERT INTO Role
