@@ -56,6 +56,7 @@ public class QuestionDB implements IQuestionPersistence {
             ResultSet resultSet = proc.executeWithResults();
             while (resultSet.next())
             {
+				question.setId(resultSet.getLong(1));
                 int type = resultSet.getInt(3);
 
                 if (type ==MULTI_CHOICE_MULTI_ONE_TYPE_ID || type == MULTI_CHOICE_MULTI_MULTI_TYPE_ID)

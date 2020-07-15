@@ -1,0 +1,8 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS spCreateAlgorithm $$
+
+CREATE PROCEDURE spCreateAlgorithm (
+)
+
+DELIMITER ;
