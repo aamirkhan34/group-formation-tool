@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class GroupTest {
+class ComparisonFactoryTest {
 
 	@Test
-	void testGroup() {
+	void testGetComparisonFactory() {
 		fail("Not yet implemented");
 	}
 

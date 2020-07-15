@@ -11,9 +11,4 @@ class GroupFormationAlgorithmTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	void testToString() {
-		fail("Not yet implemented");
-	}
-
 }

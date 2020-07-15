@@ -6,8 +6,26 @@ public class AverageEqualsMultipleChoiceDissimilarity implements IMultipleChoice
 
 	@Override
 	public double getScore(ArrayList<Integer> choices1, ArrayList<Integer> choices2) {
-		// TODO Auto-generated method stub
-		return 0.0;
+		double sum = 0.0;
+		ArrayList<Integer> longerList;
+		ArrayList<Integer> smallerList;
+		
+		if (choices1.size() > choices2.size()) {
+			longerList = choices1;
+			smallerList = choices2;
+		}
+		else {
+			longerList = choices2;
+			smallerList = choices1;
+		}
+		
+		for (Integer choice : longerList) {
+			if (smallerList.contains(choice) == false) {
+				sum += 1;
+			}
+		}
+		
+		return sum/longerList.size();
 	}
 
 }

@@ -22,7 +22,7 @@ class GroupFormationAlgorithmBuilderTest {
 	}
 
 	@Test
-	void testSetChoiceSimilarity() {
+	void testSetComparisonChoices() {
 		fail("Not yet implemented");
 	}
 
@@ -33,6 +33,11 @@ class GroupFormationAlgorithmBuilderTest {
 
 	@Test
 	void testSetWeights() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSetGroupSize() {
 		fail("Not yet implemented");
 	}
 

@@ -4,10 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class GroupTest {
+class GroupFormationControllerTest {
 
 	@Test
-	void testGroup() {
+	void testSurveyQuestions() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGenerateAlgo() {
 		fail("Not yet implemented");
 	}
 

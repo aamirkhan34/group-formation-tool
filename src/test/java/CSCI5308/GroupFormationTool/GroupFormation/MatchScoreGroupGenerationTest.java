@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class GroupTest {
+class MatchScoreGroupGenerationTest {
 
 	@Test
-	void testGroup() {
+	void testGenerateGroups() {
 		fail("Not yet implemented");
 	}
 
