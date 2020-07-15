@@ -14,7 +14,6 @@ public class GroupFormationAlgorithm {
 	private ArrayList<Boolean> comparisonChoices;
 	private ArrayList<Question> questions;
 	private ArrayList<Double> weights;
-	private ArrayList<Boolean> similarityChoices;
 
 	public GroupFormationAlgorithm(long id, Course course, Date createdOn, ArrayList<Boolean> comparisonChoices,
 			ArrayList<Question> questions, ArrayList<Double> weights, int groupSize) {
@@ -26,6 +25,34 @@ public class GroupFormationAlgorithm {
 		this.comparisonChoices = comparisonChoices;
 		this.questions = questions;
 		this.weights = weights;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public int getGroupSize() {
+		return groupSize;
+	}
+
+	public ArrayList<Boolean> getComparisonChoices() {
+		return comparisonChoices;
+	}
+
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
+
+	public ArrayList<Double> getWeights() {
+		return weights;
 	}
 
 	@Override

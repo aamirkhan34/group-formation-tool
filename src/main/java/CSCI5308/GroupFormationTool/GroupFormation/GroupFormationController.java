@@ -47,7 +47,7 @@ public class GroupFormationController {
     public String generateAlgo(Model model,@RequestParam(name = ID) long courseID,
                                @RequestParam(name="noOfQuestions") int noOfStudents,
                                @RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs,
-                               @RequestParam(name = "similarity", required = false) ArrayList<Integer> similarityChoices,
+                               @RequestParam(name = "similarity", required = false) ArrayList<Integer> comparisonChoices,
                                @RequestParam(name = "weight", required = false) ArrayList<Integer> weights) {
 
         return "index";
