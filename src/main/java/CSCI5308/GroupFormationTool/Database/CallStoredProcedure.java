@@ -53,6 +53,10 @@ public class CallStoredProcedure
 	{
 		statement.setString(paramIndex, value);
 	}
+	public void setParameter(int paramIndex, Double value) throws SQLException
+	{
+		statement.setDouble(paramIndex, value);
+	}
 	
 	public void registerOutputParameterString(int paramIndex) throws SQLException
 	{
@@ -92,5 +96,9 @@ public class CallStoredProcedure
 	{
 		int st = statement.executeUpdate();
 		return st;
+	}
+	public Long getLongParameters(int paramIndex)throws SQLException
+	{
+		return statement.getLong(paramIndex);
 	}
 }

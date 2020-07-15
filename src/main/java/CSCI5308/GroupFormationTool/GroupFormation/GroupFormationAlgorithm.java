@@ -2,6 +2,7 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Questions.Question;
@@ -11,12 +12,12 @@ public class GroupFormationAlgorithm {
 	private Course course;
 	private Date createdOn;
 	private int groupSize;
-	private ArrayList<Boolean> comparisonChoices;
-	private ArrayList<Question> questions;
-	private ArrayList<Double> weights;
+	private List<Boolean> comparisonChoices;
+	private List<Question> questions;
+	private List<Double> weights;
 
-	public GroupFormationAlgorithm(long id, Course course, Date createdOn, ArrayList<Boolean> comparisonChoices,
-			ArrayList<Question> questions, ArrayList<Double> weights, int groupSize) {
+	public GroupFormationAlgorithm(long id, Course course, Date createdOn, List<Boolean> comparisonChoices,
+								   List<Question> questions, List<Double> weights, int groupSize) {
 		super();
 		this.id = id;
 		this.course = course;
@@ -43,15 +44,15 @@ public class GroupFormationAlgorithm {
 		return groupSize;
 	}
 
-	public ArrayList<Boolean> getComparisonChoices() {
+	public List<Boolean> getComparisonChoices() {
 		return comparisonChoices;
 	}
 
-	public ArrayList<Question> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	public ArrayList<Double> getWeights() {
+	public List<Double> getWeights() {
 		return weights;
 	}
 

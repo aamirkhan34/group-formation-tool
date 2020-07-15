@@ -158,7 +158,7 @@ CREATE TABLE AlgorithmDefinition(
     algorithmID BIGINT NOT NULL,
     questionID BIGINT NOT NULL,
     weight int not null,
-    similarityMeasure TINYINT,
+    isChoiceSimilarity TINYINT,
     FOREIGN KEY (algorithmID) REFERENCES Algorithm(id),
     FOREIGN KEY (questionID) REFERENCES Question(id)
 );
