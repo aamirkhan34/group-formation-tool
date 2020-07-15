@@ -128,6 +128,10 @@ public class SurveyDB implements ISurveyPersistence {
                 while (results.next()) {
                     Question question = new Question();
                     question.setId(results.getInt(1));
+                    question.setType(results.getString(2));
+                    question.setTitle(results.getString(3));
+                    question.setText(results.getString(4));
+                    question.setCreatedOn(results.getDate(5));
                     questionList.add(question);
                 }
             }
