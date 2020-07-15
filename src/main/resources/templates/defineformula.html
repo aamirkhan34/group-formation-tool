@@ -52,6 +52,7 @@ table, th, td {
             <table>
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Question Title</th>
                     <th>Question Text on</th>
                     <th>Question Type</th>
@@ -62,12 +63,13 @@ table, th, td {
                 </thead>
                 <tbody>
                 <tr th:each="question : ${questionlist}">
+                    <td> <input type="hidden" name="questionid" th:value="${question.id}"/></td>
                     <td><a th:text="${question.title}"></a></td>
                     <td><a th:text="${question.text}"></a></td>
                     <td><a th:text="${question.type}"></a></td>
                     <td><a th:text="${question.createdOn}"></a></td>
-                    <td> <input type="radio" id="optionsRadios1" name="similarity"  th:value="0">Similar
-                        <input type="radio" id="optionsRadios2" name="similarity"  th:value="1">Dissimilar
+                    <td><input type="radio" id="optionsRadios1" name="similarity"  th:value="0">Similar</input>
+                        <input type="radio" id="optionsRadios2" name="similarity"  th:value="1">Dissimilar</input>
                     </td>
                     <td><input type="number" name="weight" required></td>
                 </tr>

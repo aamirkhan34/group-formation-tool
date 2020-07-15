@@ -14,6 +14,7 @@ public class GroupFormationAlgorithm {
 	private ArrayList<Boolean> comparisonChoices;
 	private ArrayList<Question> questions;
 	private ArrayList<Double> weights;
+	private ArrayList<Boolean> similarityChoices;
 
 	public GroupFormationAlgorithm(long id, Course course, Date createdOn, ArrayList<Boolean> comparisonChoices,
 			ArrayList<Question> questions, ArrayList<Double> weights, int groupSize) {
