@@ -34,7 +34,7 @@
 	</br>
 		<a th:href="@{/survey/createsurvey(id=${course.id})}"> Create Survey </a>
 	</div>
-	<div th:if="${instructor} or ${ta}">
+	<div th:if="${instructor}">
 		</br>
 		<a th:href="@{/survey/publishsurvey(id=${course.id})}"> Publish Survey </a>
 	</div>

@@ -2,6 +2,8 @@ package CSCI5308.GroupFormationTool.Survey;
 
 import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Courses.Course;
+import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
@@ -40,7 +42,7 @@ public class SurveyController {
     }
 
     @RequestMapping(value = "/survey/createsurvey", method = RequestMethod.POST)
-    public String createSurvey(@RequestParam(name = ID) long courseID,
+    public String createSurvey(Model model,@RequestParam(name = ID) long courseID,
                                          @RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs) {
         ISurveyPersistence questionDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
@@ -57,18 +59,27 @@ public class SurveyController {
         }
         s.setSurveyQuestionList(surveyQuestionList);
         s.createSurvey(questionDB);
-        return "createsurvey";
+        ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+        List<Course> allCourses = courseDB.loadAllCourses();
+        model.addAttribute("courses", allCourses);
+        model.addAttribute("summary", "Survey Created Successfully!!!");
+        return "index";
     }
 
     @GetMapping("/survey/publishsurvey")
-    public String publishSurvey(@RequestParam(name = ID) long courseID) {
+    public String publishSurvey(Model model,@RequestParam(name = ID) long courseID) {
         ISurveyPersistence questionDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
         Survey s = new Survey();
         s.setCourseID(courseID);
         s.setPublished(true);
         s.publishSurvey(questionDB);
-        return "createsurvey";
+
+        ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+        List<Course> allCourses = courseDB.loadAllCourses();
+        model.addAttribute("courses", allCourses);
+        model.addAttribute("summary", "Survey published Successfully!!!");
+        return "index";
     }
 
 
