@@ -13,6 +13,7 @@ public class GroupFormationAlgorithm {
 	private boolean isChoiceSimilarity;
 	private ArrayList<Question> questions;
 	private ArrayList<Double> weights;
+	private ArrayList<Boolean> similarityChoices;
 
 	public GroupFormationAlgorithm(long id, Course course, Date createdOn, boolean isChoiceSimilarity,
 			ArrayList<Question> questions, ArrayList<Double> weights) {
