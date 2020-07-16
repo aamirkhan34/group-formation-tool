@@ -22,10 +22,8 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 public class CourseController
 {
 	private static final String ID = "id";
-	private static final int NUMERIC_TYPE_ID = 1;
 	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
 	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
-	private static final int FREE_TEXT_TYPE_ID = 4;
 
 	@GetMapping("/course/course")
 	public String course(Model model, @RequestParam(name = ID) long courseID)
@@ -39,14 +37,13 @@ public class CourseController
 		model.addAttribute("notPublished", true);
 		List<Question> surveyQuestions = new ArrayList<>();
 		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
-		Boolean isSurveyProvided = responseDB.isResponseprovidedByStudent(user.getID(),courseID);
+		Boolean isSurveyProvided = responses.isResponseprovidedByStudent(responseDB, user.getID(),courseID);
 		if(isSurveyProvided){
 			model.addAttribute("issurveynotprovided", false);
 		}
 		else {
 			model.addAttribute("issurveynotprovided", true);
 		}
-
 		if (null != surveyQuestions){
 			model.addAttribute("responses", responses);
 			model.addAttribute("published", true);

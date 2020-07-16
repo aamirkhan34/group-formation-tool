@@ -71,7 +71,8 @@ public class ResponseController {
             }
             responses.add(response);
         }
-        responseDB.saveResponse(responses, surveyID);
+        Response response = new Response();
+        response.saveResponse(responseDB, responses, surveyID);
         Course course = new Course();
         courseDB.loadCourseByID(courseID, course);
         model.addAttribute("course", course);

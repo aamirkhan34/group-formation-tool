@@ -35,4 +35,11 @@ public class Response {
         this.response = response;
     }
 
+    public boolean saveResponse(IResponsePersistence responseDB, ArrayList<Response> responses, int surveyID){
+        return responseDB.saveResponse(responses,surveyID);
+    }
+
+    public boolean isResponseprovidedByStudent(IResponsePersistence responseDB, Long studentId, Long courseID){
+        return responseDB.isResponseprovidedByStudent(studentId, courseID);
+    }
 }
