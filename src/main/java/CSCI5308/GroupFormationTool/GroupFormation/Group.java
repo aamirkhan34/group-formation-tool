@@ -35,9 +35,13 @@ public class Group {
 	}
 
 	public ArrayList<User> getStudents() {
-		return students;
+		return students;	}
+	
+	public boolean createGroups(List<Group> groups, IGroupPersistence groupDB) {
+		boolean status = groupDB.createGroups(groups);
+		return status;
 	}
-
+	
 	public List<Group> loadGroupByCourse(IGroupPersistence groupDB, Course course){
 		return groupDB.loadGroupByCourse(course);
 	}

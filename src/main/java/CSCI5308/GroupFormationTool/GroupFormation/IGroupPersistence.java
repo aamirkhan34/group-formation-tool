@@ -7,6 +7,6 @@ import CSCI5308.GroupFormationTool.Courses.Course;
 
 public interface IGroupPersistence
 {
-	public boolean createGroup(Group group);
+	public boolean createGroups(List<Group> group);
 	public List<Group> loadGroupByCourse(Course course);
 }

@@ -13,7 +13,7 @@ import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 public class GroupDB implements IGroupPersistence {
 
 	@Override
-	public boolean createGroup(Group group) {
+	public boolean createGroups(List<Group> group) {
 		CallStoredProcedure proc = null;
 		return false;
 	}
