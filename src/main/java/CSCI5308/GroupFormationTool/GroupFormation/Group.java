@@ -1,12 +1,11 @@
 package CSCI5308.GroupFormationTool.GroupFormation;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
+import CSCI5308.GroupFormationTool.Response.Response;
 
 public class Group {
 	private long id;
@@ -44,6 +43,10 @@ public class Group {
 	
 	public List<Group> loadGroupByCourse(IGroupPersistence groupDB, Course course){
 		return groupDB.loadGroupByCourse(course);
+	}
+
+	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(IGroupPersistence groupDB, Long courseID){
+		return groupDB.loadUsersResponsesByCourseID(courseID);
 	}
 
 }
