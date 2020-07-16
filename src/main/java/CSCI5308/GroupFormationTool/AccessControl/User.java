@@ -130,7 +130,8 @@ public class User
 	public boolean createUser(
 		IUserPersistence userDB,
 		IPasswordEncryption passwordEncryption,
-		IUserNotifications notification) {
+		IUserNotifications notification)
+	{
 		String rawPassword = password;
 		this.password = passwordEncryption.encryptPassword(this.password);
 		boolean success = userDB.createUser(this);
@@ -138,9 +139,11 @@ public class User
 		ILogger logger = loggerFactory.createLogger();
 		if (success && (null != notification))
 		{
-			try {
+			try
+			{
 				notification.sendUserLoginCredentials(this, rawPassword);
-			} catch (MessagingException e) {
+			} catch (MessagingException e)
+			{
 				logger.logMessage(e.getMessage(),"Check with the mail server ", SystemConfig.instance().getLogDB());
 				e.printStackTrace();
 			}
@@ -190,7 +193,8 @@ public class User
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "User{" +
 				"id=" + id +
 				", password='" + password + '\'' +

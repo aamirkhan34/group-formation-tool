@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HistoryPasswordDB implements IHistoryPasswordDB {
+public class HistoryPasswordDB implements IHistoryPasswordDB
+{
     @Override
-    public void loadHistoryPasswordWithLimit(User user, List<String > passwords,Integer length) {
+    public void loadHistoryPasswordWithLimit(User user, List<String > passwords,Integer length)
+    {
         CallStoredProcedure proc = null;
         ILoggerFactory loggerFactory = new ErrorLoggerFactory();
         ILogger logger = loggerFactory.createLogger();
@@ -54,7 +56,8 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
 
     }
     @Override
-    public boolean addNewHistoryPassword(User user) {
+    public boolean addNewHistoryPassword(User user)
+    {
         CallStoredProcedure proc = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Integer insertedID = 0;

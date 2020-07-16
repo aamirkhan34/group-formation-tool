@@ -15,15 +15,6 @@ import CSCI5308.GroupFormationTool.passwordConstraint.DefaultPasswordHistoryCons
 import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordConstraintConfiguration;
 import CSCI5308.GroupFormationTool.passwordConstraint.IPasswordHistoryConstraintConfiguration;
 
-/*
- * This is a singleton, we will learn about these when we learn design patterns.
- * 
- * The single responsibility of this singleton is to store concrete classes
- * selected by the system for use in the rest of the system. This will allow
- * a form of dependency injection in places where we cannot use normal
- * dependency injection (for example classes that override or extend existing
- * library classes in the framework).
- */
 public class SystemConfig
 {
 	private static SystemConfig uniqueInstance = null;
@@ -38,8 +29,6 @@ public class SystemConfig
 	private IEmailConfiguration emailConfiguration;
 	private IQuestionPersistence questionDB;
 	private IPasswordHistoryConstraintConfiguration passwordHistoryConstraintConfiguration;
-	// This private constructor ensures that no class other than System can allocate
-	// the System object. The compiler would prevent it.
 
 	private SystemConfig()
 	{
@@ -62,7 +51,8 @@ public class SystemConfig
 		}
 		return uniqueInstance;
 	}
-	public ILogDB getLogDB() {
+	public ILogDB getLogDB()
+	{
 		return logDB;
 	}
 	public IPasswordHistoryConstraintConfiguration getPasswordHistoryConstraintConfiguration()

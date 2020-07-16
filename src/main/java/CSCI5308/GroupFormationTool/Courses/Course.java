@@ -81,7 +81,8 @@ public class Course
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "Course{" +
 				"id=" + id +
 				", title='" + title + '\'' +
