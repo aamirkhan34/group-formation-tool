@@ -67,15 +67,15 @@ public class ComparisonScoreMatrixGeneration implements IMatchMatrixGeneration {
 							// Getting right factory object for question-wise comparison
 							ComparisonFactory factory = ComparisonFactory.getComparisonFactory(curComparisonChoice);
 							if (curComparisonChoice) {
-								if (curQuestionType == QuestionType.NUMERIC.toString()) {
+								if (curQuestionType.equals(QuestionType.NUMERIC.toString())) {
 									INumericComparison comparer = factory.getNumericComparer(ComparisonMethod.CLOSE);
 									score = comparer.getScore(Integer.parseInt(resp1.get(i).getSingleresponse()), Integer.parseInt(resp2.get(i).getSingleresponse()));
 								}
-								else if (curQuestionType == QuestionType.SINGLECHOICE.toString()) {
+								else if (curQuestionType.equals(QuestionType.SINGLECHOICE.toString())) {
 									ISingleChoiceComparison comparer = factory.getSingleChoiceComparer(ComparisonMethod.EQUAL);
 									score = comparer.getScore(Integer.parseInt(resp1.get(i).getSingleresponse()), Integer.parseInt(resp2.get(i).getSingleresponse()));
 								}
-								else if (curQuestionType == QuestionType.MULTIPLECHOICE.toString()) {
+								else if (curQuestionType.equals(QuestionType.MULTIPLECHOICE.toString())) {
 									IMultipleChoiceComparison comparer = factory.getMultipleChoiceComparer(ComparisonMethod.AVERAGEMATCH);
 									score = comparer.getScore(convertStringListToIntegerList(resp1.get(i).getResponse()), convertStringListToIntegerList(resp2.get(i).getResponse()));
 								}
@@ -85,15 +85,15 @@ public class ComparisonScoreMatrixGeneration implements IMatchMatrixGeneration {
 								}
 							}
 							else {
-								if (curQuestionType == QuestionType.NUMERIC.toString()) {
+								if (curQuestionType.equals(QuestionType.NUMERIC.toString())) {
 									INumericComparison comparer = factory.getNumericComparer(ComparisonMethod.DISTANT);
 									score = comparer.getScore(Integer.parseInt(resp1.get(i).getSingleresponse()), Integer.parseInt(resp2.get(i).getSingleresponse()));
 								}
-								else if (curQuestionType == QuestionType.SINGLECHOICE.toString()) {
+								else if (curQuestionType.equals(QuestionType.SINGLECHOICE.toString())) {
 									ISingleChoiceComparison comparer = factory.getSingleChoiceComparer(ComparisonMethod.UNEQUAL);
 									score = comparer.getScore(Integer.parseInt(resp1.get(i).getSingleresponse()), Integer.parseInt(resp2.get(i).getSingleresponse()));
 								}
-								else if (curQuestionType == QuestionType.MULTIPLECHOICE.toString()) {
+								else if (curQuestionType.equals(QuestionType.MULTIPLECHOICE.toString())) {
 									IMultipleChoiceComparison comparer = factory.getMultipleChoiceComparer(ComparisonMethod.AVERAGEDIFFERENCE);
 									score = comparer.getScore(convertStringListToIntegerList(resp1.get(i).getResponse()), convertStringListToIntegerList(resp2.get(i).getResponse()));
 								}

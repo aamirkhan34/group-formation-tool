@@ -47,7 +47,6 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 			}
 		} catch (SQLException e) {
 			// Logging needed
-			System.out.println(e);
 			return false;
 		} finally {
 			if (null != proc) {
@@ -92,6 +91,7 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 					weights.add(results.getDouble(4));
 					comparisonChoices.add(results.getBoolean(5));
 					question.setType(results.getString(6));
+					questions.add(question);
 				}
 			}
 			algorithm = new GroupFormationAlgorithmBuilder().setId(algorithmID).setCourse(course)
@@ -117,19 +117,23 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 			LinkedHashMap<User, List<Response>> responses = new LinkedHashMap<>();
 			proc = new CallStoredProcedure("spLoadSurveyIdByCourseId(?)");
 			proc.setParameter(1,courseID);
+			
 			ResultSet resultSet = proc.executeWithResults();
 			while (resultSet.next()){
-				User user = new User();
-				List<Response> userResponses = new ArrayList<>();
 				int surveyId = resultSet.getInt(1);
 				proc = new CallStoredProcedure("spUsersBySurveyId(?)");
 				proc.setParameter(1,surveyId);
+				
 				ResultSet resultSet1 = proc.executeWithResults();
-				while (resultSet1.next()){
+				while (resultSet1.next()) {
+					User user = new User();
+					List<Response> userResponses = new ArrayList<>();
+					
 					int userID = resultSet1.getInt(1);
 					proc = new CallStoredProcedure("spLoadUser(?)");
 					proc.setParameter(1,userID);
 					ResultSet userDetails = proc.executeWithResults();
+
 					while (userDetails.next()){
 						long userId = userDetails.getLong(1);
 						String bannerID = userDetails.getString(2);
@@ -142,25 +146,32 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 						user.setLastName(lastName);
 						user.setEmail(email);
 					}
+					
 					proc = new CallStoredProcedure("spResponseIdByUserIDSurveyId(?,?)");
 					proc.setParameter(1,surveyId);
 					proc.setParameter(2,userID);
+					
 					ResultSet responseIDANDQuestionsID = proc.executeWithResults();
 					while (responseIDANDQuestionsID.next()){
 						int questionId = responseIDANDQuestionsID.getInt(2);
 						int responseID = responseIDANDQuestionsID.getInt(1);
 						proc = new CallStoredProcedure("spLoadQuestionById(?)");
 						proc.setParameter(1,questionId);
+						
 						ResultSet questionType = proc.executeWithResults();
 						while (questionType.next()){
 							Response response = new Response();
+							Question question = new Question();
+							question.setId(questionType.getLong(1));
+							response.setQuestion(question);
 							int eachQuestionType = questionType.getInt(3);
+							
 							if (eachQuestionType == MULTI_CHOICE_MULTI_ONE_TYPE_ID){
 								proc = new CallStoredProcedure("spLoadMultipleOptionSingleResponse(?)");
 								proc.setParameter(1,responseID);
 								ResultSet eachQuestionResponse = proc.executeWithResults();
 								while (eachQuestionResponse.next()){
-									String responseEach =  eachQuestionResponse.getString(1);
+									String responseEach = eachQuestionResponse.getString(1);
 									response.setSingleresponse(responseEach);
 								}
 							}

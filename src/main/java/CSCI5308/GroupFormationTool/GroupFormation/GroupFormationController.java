@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,9 +127,10 @@ public class GroupFormationController {
 		IGroupGeneration grpGen = new MatchScoreGroupGeneration();
 		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDB();
 		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
-		LinkedHashMap<User, List<Response>> responses = algorithmDB.loadUsersResponsesByCourseID(courseID);
-		System.out.println(responses);
-		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, responses);
+		LinkedHashMap<User, List<Response>> responses = algorithmDB.loadUsersResponsesByCourseID(courseID);		
+		
+		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, responses, course);
+		
 		IGroupPersistence groupDB = new GroupDB();
 		boolean status = groupDB.createGroups(groups);
 		
