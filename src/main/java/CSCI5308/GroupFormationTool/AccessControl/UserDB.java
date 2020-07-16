@@ -6,7 +6,17 @@ import java.sql.SQLException;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 
 public class UserDB implements IUserPersistence
-{	
+{
+	private static IUserPersistence instance;
+	public static IUserPersistence getInstance(){
+		if (null == instance){
+			instance = new UserDB();
+		}
+		return instance;
+	}
+	private UserDB(){
+
+	}
 	public void loadUserByID(long id, User user)
 	{
 		CallStoredProcedure proc = null;
