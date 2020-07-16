@@ -60,6 +60,10 @@ public class CallStoredProcedure
 	{
 		statement.setString(paramIndex, value);
 	}
+	public void setParameter(int paramIndex, Double value) throws SQLException
+	{
+		statement.setDouble(paramIndex, value);
+	}
 	
 	public void registerOutputParameterString(int paramIndex) throws SQLException
 	{
@@ -70,7 +74,12 @@ public class CallStoredProcedure
 	{
 		statement.setLong(paramIndex, value);
 	}
-	
+
+	public void setParameter(int paramIndex, boolean value) throws SQLException
+	{
+		statement.setBoolean(paramIndex, value);
+	}
+
 	public void registerOutputParameterLong(int paramIndex) throws SQLException
 	{
 		statement.registerOutParameter(paramIndex, java.sql.Types.BIGINT);
@@ -94,5 +103,9 @@ public class CallStoredProcedure
 	{
 		int st = statement.executeUpdate();
 		return st;
+	}
+	public Long getLongParameters(int paramIndex)throws SQLException
+	{
+		return statement.getLong(paramIndex);
 	}
 }

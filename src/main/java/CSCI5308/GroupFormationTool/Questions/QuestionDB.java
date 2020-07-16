@@ -76,9 +76,12 @@ public class QuestionDB implements IQuestionPersistence {
             proc = new CallStoredProcedure("spLoadQuestionById(?)");
             proc.setParameter(1,questionId);
             ResultSet resultSet = proc.executeWithResults();
-            while (resultSet.next()) {
+            while (resultSet.next())
+            {
+				question.setId(resultSet.getLong(1));
                 int type = resultSet.getInt(3);
-                if (type ==MULTI_CHOICE_MULTI_ONE_TYPE_ID || type == MULTI_CHOICE_MULTI_MULTI_TYPE_ID) {
+                if (type ==MULTI_CHOICE_MULTI_ONE_TYPE_ID || type == MULTI_CHOICE_MULTI_MULTI_TYPE_ID)
+                {
                     multipleChoiceOptionList =  loadMultipleChoiceOptions(questionId);
                     question.setMultipleChoiceOption(multipleChoiceOptionList);
                 }
