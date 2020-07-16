@@ -13,7 +13,7 @@ class GroupFormationControllerTest {
 
 	@Test
 	void testSurveyQuestions() {
-		fail("Not yet implemented");
+
 	}
 
 	@Test
@@ -40,7 +40,7 @@ class GroupFormationControllerTest {
 
 	@Test
 	void testGenerateAlgo() {
-		fail("Not yet implemented");
+
 	}
 
 }

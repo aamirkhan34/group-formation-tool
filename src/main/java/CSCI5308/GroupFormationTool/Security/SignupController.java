@@ -69,12 +69,10 @@ public class SignupController
 		ModelAndView m;
 		if (success)
 		{
-			// This is lame, I will improve this with auto-signin for M2.
 			m = new ModelAndView("login");
 		}
 		else
 		{
-			// Something wrong with the input data.
 			m = new ModelAndView("signup");
 			errorInformation.append("Invalid data, please check your values.");
 			m.addObject(ERROR, errorInformation.toString());

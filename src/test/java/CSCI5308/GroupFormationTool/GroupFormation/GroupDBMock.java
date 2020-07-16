@@ -1,10 +1,8 @@
 package CSCI5308.GroupFormationTool.GroupFormation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import CSCI5308.GroupFormationTool.Response.Response;
 import org.springframework.util.Assert;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
@@ -35,6 +33,11 @@ public class GroupDBMock implements IGroupPersistence {
 				.getGroup();
 		
 		return new ArrayList(Arrays.asList(group1));
+	}
+
+	@Override
+	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID) {
+		return null;
 	}
 
 }

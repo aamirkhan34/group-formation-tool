@@ -10,7 +10,11 @@ import java.util.List;
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Response.Response;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import javax.xml.transform.Result;
 
@@ -30,6 +34,8 @@ public class GroupDB implements IGroupPersistence {
 	@Override
 	public List<Group> loadGroupByCourse(Course course) {
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		List<Group> groups = new ArrayList<>();
 		try {
 			proc = new CallStoredProcedure("spGroupIDByCourseID(?)");
@@ -72,6 +78,7 @@ public class GroupDB implements IGroupPersistence {
 			return groups;
 		}
 		catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Error in loadGroupByCourse method", SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 		}
 		finally {
@@ -86,6 +93,8 @@ public class GroupDB implements IGroupPersistence {
 	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID){
 		LinkedHashMap<User, List<Response>> responses = new LinkedHashMap<>();
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
 			proc = new CallStoredProcedure("spLoadSurveyIdByCourseId(?)");
 			proc.setParameter(1,courseID);
@@ -174,6 +183,8 @@ public class GroupDB implements IGroupPersistence {
 			}
 		}
 		catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Error in loadUsersResponsesByCourseID method", SystemConfig.instance().getLogDB());
+
 			e.printStackTrace();
 		}
 		finally {
