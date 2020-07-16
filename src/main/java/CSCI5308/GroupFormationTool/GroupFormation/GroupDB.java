@@ -41,7 +41,6 @@ public class GroupDB implements IGroupPersistence {
 			}
 		} catch (SQLException e) {
 			// Logging needed
-			System.out.println(e);
 			return false;
 		} finally {
 			if (null != proc) {

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Questions.Question;
 import CSCI5308.GroupFormationTool.Response.Response;
 
@@ -47,6 +48,9 @@ class MatchScoreGroupGenerationTest {
 	@Test
 	void testGenerateGroups() {
 		int groupSize = 3;
+		Course course = new Course();
+		course.setId(3);
+		
 		List<User> students = new ArrayList<User>(Arrays.asList(student1, student2, student3, student4, student5));
 
 		Group g1 = new GroupBuilder().setStudents(new ArrayList<User>(Arrays.asList(student1, student2, student3)))
@@ -55,7 +59,8 @@ class MatchScoreGroupGenerationTest {
 		
 		List<Group> groupOutput = new ArrayList<Group>(Arrays.asList(g1, g2));
 		
-		List<Group> groups = msgg.generateGroups(comparisonMatrix, groupSize, students);
+		List<Group> groups = msgg.generateGroups(comparisonMatrix, groupSize, students, course);
+		
 		Assert.isTrue(groups.get(0).getStudents().equals(groupOutput.get(0).getStudents())
 				&& groups.get(1).getStudents().equals(groupOutput.get(1).getStudents()));
 	}
