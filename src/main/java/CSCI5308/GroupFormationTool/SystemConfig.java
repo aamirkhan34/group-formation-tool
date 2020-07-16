@@ -46,12 +46,12 @@ public class SystemConfig
 		passwordConstraintConfiguration =  DefaultPasswordConstraintConfiguration.getInstance();
 		passwordEncryption = new BCryptPasswordEncryption();
 		userDB = new UserDB();
-		databaseConfiguration = new DefaultDatabaseConfiguration();
+		databaseConfiguration = DefaultDatabaseConfiguration.getInstance();
 		courseDB = new CourseDB();
 		courseUserRelationshipDB = new CourseUserRelationshipDB();
-		emailConfiguration = new DefaultEmailConfiguration();
+		emailConfiguration = DefaultEmailConfiguration.getInstance();
 		questionDB = new QuestionDB();
-		passwordHistoryConstraintConfiguration = new DefaultPasswordHistoryConstraintConfiguration();
+		passwordHistoryConstraintConfiguration = DefaultPasswordHistoryConstraintConfiguration.getInstance();
 	}
 	// This is the way the rest of the application gets access to the System object.
 
