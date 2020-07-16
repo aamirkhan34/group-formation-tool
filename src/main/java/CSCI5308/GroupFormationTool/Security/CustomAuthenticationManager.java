@@ -80,7 +80,7 @@ public class CustomAuthenticationManager implements AuthenticationManager
 		catch (Exception e)
 		{
 			logger.logMessage(e.getMessage(),"check bannerID "+bannerID+" and password "+password , SystemConfig.instance().getLogDB());
-			throw new AuthenticationServiceException("1000");;
+			throw new AuthenticationServiceException("1000");
 		}
 		if (u.isValidUser())
 		{
