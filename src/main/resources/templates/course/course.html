@@ -48,6 +48,10 @@
 		</div>
 		<div th:if="${instructor}">
 			</br>
+			<a th:href="@{/groupformation/runalgorithm(id=${course.id})}"> Form groups by Running algorithm </a>
+		</div>
+		<div th:if="${instructor}">
+			</br>
 			<a th:href="@{/groupformation/groups(id=${course.id})}"> Result groups </a>
 		</div>
 		<div class="container">
