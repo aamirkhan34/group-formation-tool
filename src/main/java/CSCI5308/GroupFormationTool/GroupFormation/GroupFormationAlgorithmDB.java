@@ -17,11 +17,13 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 	@Override
 	public boolean createAlgorithm(GroupFormationAlgorithm algorithm) {
 		CallStoredProcedure proc = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
+
 			proc = new CallStoredProcedure("spCreateAlgorithm(?, ?, ?, ?, ?)");
 			proc.setParameter(1, algorithm.getCourse().getId());
-			proc.setParameter(2, algorithm.getCreatedOn().toString());
-			proc.setParameter(3, algorithm.getCreatedOn().toString());
+			proc.setParameter(2, sdf.format(algorithm.getCreatedOn()));
+			proc.setParameter(3, sdf.format(algorithm.getCreatedOn()));
 			proc.setParameter(4, algorithm.getGroupSize());
 			proc.registerOutputParameterLong(5);
 			proc.execute();
