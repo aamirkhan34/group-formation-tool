@@ -206,7 +206,6 @@ public class QuestionDB implements IQuestionPersistence {
 			int resultSet = proc.executeUpdate();
 			
 			if (resultSet == 0) {
-				// Deletion failed
 				return false;
 			}
 			return true;
