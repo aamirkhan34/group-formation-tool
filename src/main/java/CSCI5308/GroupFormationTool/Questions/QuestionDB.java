@@ -2,6 +2,11 @@ package CSCI5308.GroupFormationTool.Questions;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,6 +33,8 @@ public class QuestionDB implements IQuestionPersistence {
 	public List<Question> loadAllQuestionsByInstructor(long instructorId) {
 		CallStoredProcedure proc = null;
 		List<Question> questionList = new ArrayList<Question>();
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
 			proc = new CallStoredProcedure("spFindQuestionsByUserID(?)");
 			proc.setParameter(1, instructorId);
@@ -47,6 +54,8 @@ public class QuestionDB implements IQuestionPersistence {
 				}
 			}
 		} catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check with instructor id "+instructorId, SystemConfig.instance().getLogDB());
+
 			e.printStackTrace();
 		} finally {
 			if (null != proc) {
@@ -61,6 +70,8 @@ public class QuestionDB implements IQuestionPersistence {
         ArrayList<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
         CallStoredProcedure proc = null;
         Question question = new Question();
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
         try {
             proc = new CallStoredProcedure("spLoadQuestionById(?)");
             proc.setParameter(1,questionId);
@@ -80,6 +91,7 @@ public class QuestionDB implements IQuestionPersistence {
                 question.setCreatedOn(resultSet.getDate(6));
             }
         } catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check with question id "+questionId, SystemConfig.instance().getLogDB());
             e.printStackTrace();
         }
         finally {
@@ -93,6 +105,8 @@ public class QuestionDB implements IQuestionPersistence {
     private ArrayList<MultipleChoiceOption> loadMultipleChoiceOptions(long questionId){
         ArrayList<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
         CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
         try {
             proc = new CallStoredProcedure("spLoadQuestionOptionsById(?)");
             proc.setParameter(1, questionId);
@@ -105,6 +119,7 @@ public class QuestionDB implements IQuestionPersistence {
             }
         }
         catch (SQLException e){
+			logger.logMessage(e.getMessage(),"Check with question id "+questionId, SystemConfig.instance().getLogDB());
             e.printStackTrace();
         }
         finally {
@@ -118,6 +133,8 @@ public class QuestionDB implements IQuestionPersistence {
 	@Override
 	public boolean createQuestion(Question question) {
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
 			if (question.getTypeID() == NUMERIC_TYPE_ID || question.getTypeID() == FREE_TEXT_TYPE_ID) {
 				proc = new CallStoredProcedure("spCreateQuestion(?, ?, ?, ?)");
@@ -143,6 +160,7 @@ public class QuestionDB implements IQuestionPersistence {
 				return true;
 			}
 		} catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check with question "+ question.toString(), SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -155,6 +173,8 @@ public class QuestionDB implements IQuestionPersistence {
 
 	private boolean createMultipleQuestionOptions(long id, ArrayList<MultipleChoiceOption> options) {
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
 			for (int i = 0; i < options.size(); i++) {
 				proc = new CallStoredProcedure("spCreateQuestionWithOptions(?, ?, ?)");
@@ -165,6 +185,7 @@ public class QuestionDB implements IQuestionPersistence {
 			}
 			return true;
 		} catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check with question id "+ id, SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -177,6 +198,8 @@ public class QuestionDB implements IQuestionPersistence {
 	@Override
 	public boolean deleteQuestion(Question question) {
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
 			proc = new CallStoredProcedure("spDeleteQuestion(?)");
 			proc.setParameter(1, question.getId());
@@ -189,6 +212,7 @@ public class QuestionDB implements IQuestionPersistence {
 			return true;
 
 		} catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check with question "+ question.toString(), SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 			return false;
 
@@ -203,6 +227,8 @@ public class QuestionDB implements IQuestionPersistence {
 	public List<Question> loadAllQuestionTypes() {
 		List<Question> questions = new ArrayList<Question>();
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
 			proc = new CallStoredProcedure("spLoadAllQuestoinTypes()");
 			ResultSet results = proc.executeWithResults();
@@ -217,6 +243,7 @@ public class QuestionDB implements IQuestionPersistence {
 				}
 			}
 		} catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check with question table", SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 		} finally {
 			if (null != proc) {

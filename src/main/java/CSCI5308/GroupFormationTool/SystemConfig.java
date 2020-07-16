@@ -2,6 +2,8 @@ package CSCI5308.GroupFormationTool;
 
 import CSCI5308.GroupFormationTool.Email.DefaultEmailConfiguration;
 import CSCI5308.GroupFormationTool.Email.IEmailConfiguration;
+import CSCI5308.GroupFormationTool.Logger.ILogDB;
+import CSCI5308.GroupFormationTool.Logger.LogDB;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.QuestionDB;
 import CSCI5308.GroupFormationTool.Security.*;
@@ -26,6 +28,7 @@ public class SystemConfig
 {
 	private static SystemConfig uniqueInstance = null;
 
+	private ILogDB logDB;
 	private IPasswordEncryption passwordEncryption;
 	private IPasswordConstraintConfiguration passwordConstraintConfiguration;
 	private IUserPersistence userDB;
@@ -40,6 +43,7 @@ public class SystemConfig
 
 	private SystemConfig()
 	{
+		logDB = LogDB.getInstance();
 		passwordConstraintConfiguration =  DefaultPasswordConstraintConfiguration.getInstance();
 		passwordEncryption = BCryptPasswordEncryption.getInstance();
 		userDB = UserDB.getInstance();
@@ -58,7 +62,9 @@ public class SystemConfig
 		}
 		return uniqueInstance;
 	}
-
+	public ILogDB getLogDB() {
+		return logDB;
+	}
 	public IPasswordHistoryConstraintConfiguration getPasswordHistoryConstraintConfiguration()
 	{
 		return passwordHistoryConstraintConfiguration;

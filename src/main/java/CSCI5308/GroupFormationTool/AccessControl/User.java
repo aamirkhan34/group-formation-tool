@@ -185,4 +185,16 @@ public class User
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", password='" + password + '\'' +
+				", bannerID='" + bannerID + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
+				'}';
+	}
 }

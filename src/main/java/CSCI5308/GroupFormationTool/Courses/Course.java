@@ -83,4 +83,13 @@ public class Course
 	{
 		return userRoleDecider.loadAllRoluesForUserInCourse(CurrentUser.instance().getCurrentAuthenticatedUser(), this);
 	}
+
+	@Override
+	public String toString() {
+		return "Course{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", userRoleDecider=" + userRoleDecider +
+				'}';
+	}
 }
