@@ -44,7 +44,7 @@ table, th, td {
 			<pre></pre>
 			<form th:action="@{/groupformation/algorithm}" method="post">
 				<input type="hidden" name="id" th:value="${courseid}"></input> Group
-				Size(2-10) : <input type="number" name="noOfQuestions" min=2 max=10 required>
+				Size(2-10) : <input type="number" name="groupSize" min=2 max=10 required>
 				<h2>List of questions</h2>
 				<table>
 					<thead>

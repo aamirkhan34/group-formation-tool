@@ -2,10 +2,13 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.Response;
 
 public class GroupFormationAlgorithm {
 	private long id;
@@ -17,7 +20,7 @@ public class GroupFormationAlgorithm {
 	private List<Double> weights;
 
 	public GroupFormationAlgorithm(long id, Course course, Date createdOn, List<Boolean> comparisonChoices,
-								   List<Question> questions, List<Double> weights, int groupSize) {
+			List<Question> questions, List<Double> weights, int groupSize) {
 		super();
 		this.id = id;
 		this.course = course;
@@ -72,6 +75,14 @@ public class GroupFormationAlgorithm {
 			IGroupFormationAlgorithmPersistence algorithmDB) {
 		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
 		return algorithm;
+	}
+
+	public List<Group> runAlgorithm(IMatchMatrixGeneration matGen, IGroupGeneration grpGen,
+			GroupFormationAlgorithm algorithm, LinkedHashMap<User, List<Response>> studentsResponses) {
+		LinkedHashMap<List<User>, Double> matchMatrix = matGen.generateMatchMatrix(algorithm, studentsResponses);
+		List<Group> groups = grpGen.generateGroups(matchMatrix, algorithm.getGroupSize(),
+				new ArrayList<>(studentsResponses.keySet()));
+		return groups;
 	}
 
 }

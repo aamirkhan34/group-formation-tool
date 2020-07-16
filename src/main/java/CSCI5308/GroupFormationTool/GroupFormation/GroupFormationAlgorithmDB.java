@@ -27,7 +27,7 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 			proc.execute();
 			Long algorithmID = proc.getLongParameters(5);
 			proc = new CallStoredProcedure("spCreateAlgorithmDefinition(?, ?, ?, ?, ?)");
-			for (int i = 0; i <algorithm.getQuestions().size() ; i++) {
+			for (int i = 0; i < algorithm.getQuestions().size(); i++) {
 				proc.setParameter(1, algorithmID);
 				proc.setParameter(2, algorithm.getQuestions().get(i).getId());
 				proc.setParameter(3, algorithm.getWeights().get(i));
@@ -35,12 +35,11 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 				proc.registerOutputParameterLong(5);
 				proc.execute();
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// Logging needed
+			System.out.println(e);
 			return false;
-		}
-		finally {
+		} finally {
 			if (null != proc) {
 				proc.cleanup();
 			}
@@ -62,18 +61,18 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 		GroupFormationAlgorithm algorithm = null;
 		try {
 			proc = new CallStoredProcedure("spLoadAlgorithmByCourseId(?)");
-			proc.setParameter(1,course.getId());
+			proc.setParameter(1, course.getId());
 			ResultSet results = proc.executeWithResults();
 			if (null != results) {
 				while (results.next()) {
 					algorithmID = results.getLong(1);
 					createOn = sdf.parse(results.getString(3));
 					updateOn = sdf.parse(results.getString(4));
-					groupSize= results.getInt(1);
+					groupSize = results.getInt(1);
 				}
 			}
 			proc = new CallStoredProcedure("spLoadAlgorithmDefinitionByAlgorithmId(?)");
-			proc.setParameter(1,algorithmID);
+			proc.setParameter(1, algorithmID);
 			results = proc.executeWithResults();
 			if (null != results) {
 				Question question;
@@ -85,15 +84,15 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 					question.setType(results.getString(6));
 				}
 			}
-			algorithm = new GroupFormationAlgorithm(algorithmID,course,createOn,comparisonChoices,questions,weights,groupSize);
-		}
-		catch (SQLException e) {
+			algorithm = new GroupFormationAlgorithmBuilder().setId(algorithmID).setCourse(course)
+					.setComparisonChoices(comparisonChoices).setCreatedOn(createOn).setGroupSize(groupSize)
+					.setQuestions(questions).setWeights(weights).getGroupFormationAlgorithm();
+
+		} catch (SQLException e) {
 			// Logging needed.
-		}
-		catch (ParseException e){
+		} catch (ParseException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			if (null != proc) {
 				proc.cleanup();
 			}

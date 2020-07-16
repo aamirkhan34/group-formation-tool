@@ -19,4 +19,20 @@ public class Group {
 		this.createdOn = createdOn;
 		this.students = students;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public ArrayList<User> getStudents() {
+		return students;
+	}
 }

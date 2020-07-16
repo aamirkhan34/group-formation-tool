@@ -3,6 +3,7 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
@@ -16,9 +17,9 @@ class GroupFormationAlgorithmBuilderTest {
 	Course course = new Course();
 	Date createdOn = new Date();
 	int groupSize = 3;
-	ArrayList<Boolean> comparisonChoices = new ArrayList<Boolean>(Arrays.asList(true));
-	ArrayList<Question> questions = new ArrayList<Question>(Arrays.asList(new Question()));
-	ArrayList<Double> weights = new ArrayList<Double>(Arrays.asList(1.0));
+	List<Boolean> comparisonChoices = new ArrayList<Boolean>(Arrays.asList(true));
+	List<Question> questions = new ArrayList<Question>(Arrays.asList(new Question()));
+	List<Double> weights = new ArrayList<Double>(Arrays.asList(1.0));
 
 	@Test
 	void testSetId() {

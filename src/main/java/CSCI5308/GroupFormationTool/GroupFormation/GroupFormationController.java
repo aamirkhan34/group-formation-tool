@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,35 +38,66 @@ public class GroupFormationController {
 		model.addAttribute("courseid", courseID);
 		return "definealgorithm";
 	}
-	
-	public List<Integer> parseComparisonChoices(String requestBody) {
-		List<Integer> allMatches = new ArrayList<Integer>();
-		Matcher m = Pattern.compile("comparisonChoice[0-9]+=[0-9]{1}")
-		     .matcher(requestBody);
-		
+
+	public List<Boolean> parseComparisonChoices(String requestBody) {
+		List<Boolean> allMatches = new ArrayList<Boolean>();
+		Matcher m = Pattern.compile("comparisonChoice[0-9]+=[0-9]{1}").matcher(requestBody);
+
 		while (m.find()) {
-			System.out.println(m.group().split("=")[1]);
 			int choice = Integer.parseInt(m.group().split("=")[1].trim());
-			allMatches.add(choice);
+			
+			if (choice == 1) {
+				allMatches.add(true);
+			} else {
+				allMatches.add(false);
+			}
+
 		}
-		
+
 		return allMatches;
 	}
 
+	public List<Double> normaliseWeights(ArrayList<Integer> enteredWeights) {
+		double sum = 0;
+		List<Double> normalisedWeights = new ArrayList<Double>();
+
+		for (int i = 0; i < enteredWeights.size(); i++)
+			sum += enteredWeights.get(i);
+
+		for (int i = 0; i < enteredWeights.size(); i++) {
+			normalisedWeights.add(Math.round((enteredWeights.get(i) / sum) * 100.0) / 100.0);
+		}
+
+		return normalisedWeights;
+	}
+
 	@RequestMapping(value = "/groupformation/algorithm", method = RequestMethod.POST)
-	public String generateAlgo(Model model, @RequestParam(name = ID) long courseID,
-			@RequestBody String body,
-			@RequestParam(name = "noOfQuestions") int noOfQuestions,
+	public String generateAlgo(Model model, @RequestParam(name = ID) long courseID, @RequestBody String body,
+			@RequestParam(name = "groupSize") int groupSize,
 			@RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs,
 			@RequestParam(name = "weight", required = false) ArrayList<Integer> weights) {
-		
+
 		Course course = new Course();
 		course.setId(courseID);
-		List<Integer> comparisonChoices = parseComparisonChoices(body);
-		System.out.println(noOfQuestions);
-		System.out.println(questionIDs);
-		System.out.println(weights);
-		System.out.println(body);
-		return "index";
+
+		List<Question> questions = new ArrayList<Question>();
+		for (int qID : questionIDs) {
+			Question question = new Question();
+			question.setId(qID);
+			questions.add(question);
+		}
+
+		List<Boolean> comparisonChoices = parseComparisonChoices(body);
+		List<Double> newWeights = normaliseWeights(weights);
+
+		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDB();
+		
+		GroupFormationAlgorithm algorithm = new GroupFormationAlgorithmBuilder().setCourse(course)
+				.setComparisonChoices(comparisonChoices).setCreatedOn(new Date()).setGroupSize(groupSize)
+				.setQuestions(questions).setWeights(newWeights).getGroupFormationAlgorithm();
+		
+		boolean status = algorithm.createAlgorithm(algorithm, algorithmDB);
+		System.out.println(status);
+		return "definealgorithm";
 	}
 }
