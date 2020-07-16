@@ -3,6 +3,10 @@ package CSCI5308.GroupFormationTool.Courses;
 import java.util.List;
 
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +31,8 @@ public class CourseDB implements ICoursePersistence
 	{
 		List<Course> courses = new ArrayList<Course>();
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spLoadAllCourses()");
@@ -46,7 +52,8 @@ public class CourseDB implements ICoursePersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"Check with course table", SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -61,6 +68,8 @@ public class CourseDB implements ICoursePersistence
 	public void loadCourseByID(long id, Course course)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spFindCourseByID(?)");
@@ -78,7 +87,8 @@ public class CourseDB implements ICoursePersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"Check with course id"+ id, SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -92,6 +102,8 @@ public class CourseDB implements ICoursePersistence
 	public boolean createCourse(Course course)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spCreateCourse(?, ?)");
@@ -101,7 +113,7 @@ public class CourseDB implements ICoursePersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed
+			logger.logMessage(e.getMessage(),"Check with course input "+ course.toString() , SystemConfig.instance().getLogDB());
 			return false;
 		}
 		finally
@@ -117,6 +129,8 @@ public class CourseDB implements ICoursePersistence
 	public boolean deleteCourse(long id)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spDeleteCourse(?)");
@@ -125,7 +139,7 @@ public class CourseDB implements ICoursePersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed
+			logger.logMessage(e.getMessage(),"Check course table with id "+ id , SystemConfig.instance().getLogDB());
 			return false;
 		}
 		finally

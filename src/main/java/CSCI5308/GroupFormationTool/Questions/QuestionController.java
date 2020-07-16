@@ -2,6 +2,9 @@ package CSCI5308.GroupFormationTool.Questions;
 
 import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
 import CSCI5308.GroupFormationTool.SystemConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,9 @@ public class QuestionController {
 
 	@RequestMapping("/question/questionmanager")
 	public String createQuestion(Model model) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("accessing /question/questionmanager ",null, SystemConfig.instance().getLogDB());
 	    IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
 	    User user = CurrentUser.instance().getCurrentAuthenticatedUser();
 	    Question q = new Question();
@@ -38,6 +44,9 @@ public class QuestionController {
 	public String createQuestion(@ModelAttribute Question question, Model model, RedirectAttributes attr,
 			@RequestParam(name = "displayText", required = false) ArrayList<String> displaytext,
 			@RequestParam(name = "optionNumber", required = false) ArrayList<Integer> optionNumber) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("accessing /question/createQuestion with "+ question.toString(),null, SystemConfig.instance().getLogDB());
 		IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
 		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
 		model.addAttribute("question", question);
@@ -62,6 +71,9 @@ public class QuestionController {
 
 	@RequestMapping(value = "/question/questionoptions", method = RequestMethod.GET)
 	public String displayQuestion(@ModelAttribute Question question, Model model, RedirectAttributes attr) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/question/questionoptions with "+ question.toString(),null, SystemConfig.instance().getLogDB());
 		List<MultipleChoiceOption> multipleChoiceOptionList = new ArrayList<>();
 		attr.addFlashAttribute("question", question);
 		MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
@@ -78,6 +90,8 @@ public class QuestionController {
 			@RequestParam(name = "displayText", required = false) ArrayList<String> displaytext,
 			@RequestParam(name = "optionNumber", required = false) ArrayList<Integer> optionNumber) {
 
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
 		IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
 		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
 		Question q = new Question();
@@ -96,11 +110,15 @@ public class QuestionController {
 		}
 		q.setMultipleChoiceOption(multipleChoices);
 		q.createQuestion(questionDB);
+		infoLogger.logMessage("/question/createQuestionmultiple with "+question.toString(),null, SystemConfig.instance().getLogDB());
 		return "redirect:/question/questionmanager";
 	}
 
 	@GetMapping("/question/questionmanagement")
 	public String questionManagement(Model model) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/question/questionmanagement",null, SystemConfig.instance().getLogDB());
 		IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
 		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
 		Question q = new Question();
@@ -114,6 +132,9 @@ public class QuestionController {
 	public String renderCourseAdminPage(@PathVariable("questionId") long questionId, Model model,
 			RedirectAttributes redirectAttributes) {
 		// Delete selected question
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/question/questiondelete with questionID" + questionId,null, SystemConfig.instance().getLogDB());
 		IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
 		Question q = new Question();
 		q.setId(questionId);
@@ -139,7 +160,9 @@ public class QuestionController {
 		Question q = new Question();
 		q.setInstructor(user);
 		List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
-
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/question/questionsort with body " + body+" user "+user.toString(),null, SystemConfig.instance().getLogDB());
 		// Sort
 		String sortOption = body.split("sort=")[1];
 		ISortQuestions sq = new SortQuestions();
@@ -164,6 +187,9 @@ public class QuestionController {
     @GetMapping("/question/viewquestion")
     public ModelAndView viewCourse(@RequestParam(name = ID) long id, Model model)
     {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/question/viewquestion with questionID" + id,null, SystemConfig.instance().getLogDB());
         ModelAndView modelAndView = new ModelAndView("viewquestion");
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         Question question = questionDB.loadQuestionById(id);

@@ -102,4 +102,17 @@ public class Question {
         return questionDB.loadQuestionById(this.getId());
     }
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", typeID=" + typeID +
+                ", type='" + type + '\'' +
+                ", instructor=" + instructor +
+                ", createdOn=" + createdOn +
+                ", multipleChoiceOption=" + multipleChoiceOption +
+                '}';
+    }
 }

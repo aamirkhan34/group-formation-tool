@@ -1,6 +1,8 @@
 package CSCI5308.GroupFormationTool.Logger;
 
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Database.ConnectionManager;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import java.sql.SQLException;
 
@@ -16,10 +18,15 @@ public class LogDB implements ILogDB
     @Override
     public boolean createRecord(LogDAO log)
     {
+
         CallStoredProcedure proc = null;
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         try
         {
-            System.out.println("---------------");
+            if (ConnectionManager.instance().getDBConnection().isClosed()){
+                return true;
+            }
             proc = new CallStoredProcedure("spCreateLog(?,?,?,?,?,?,?)");
             proc.setParameter(1, log.getClassName());
             proc.setParameter(2, log.getMethodName());
@@ -33,8 +40,8 @@ public class LogDB implements ILogDB
         }
         catch (SQLException e)
         {
+            logger.logMessage(e.getMessage(),"check the database about log" + log.toString() , SystemConfig.instance().getLogDB());
             e.printStackTrace();
-            // TODO Logging needed
             return false;
         }
         finally

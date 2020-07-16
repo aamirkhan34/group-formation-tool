@@ -2,6 +2,9 @@ package CSCI5308.GroupFormationTool.Courses;
 
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +16,17 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 public class CourseController
 {
 	private static final String ID = "id";
-	
+
 	@GetMapping("/course/course")
 	public String course(Model model, @RequestParam(name = ID) long courseID)
 	{
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("accessing /course/course with courseID"+courseID,null, SystemConfig.instance().getLogDB());
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		Course course = new Course();
 		courseDB.loadCourseByID(courseID, course);
 		model.addAttribute("course", course);
-		// This is likely something I would repeat elsewhere, I should come up with a generic solution
-		// for this in milestone 2.
 		List<Role> userRoles = course.getAllRolesForCurrentUserInCourse();
 		if (null == userRoles)
 		{

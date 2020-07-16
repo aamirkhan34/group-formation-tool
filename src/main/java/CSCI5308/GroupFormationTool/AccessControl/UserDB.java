@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 public class UserDB implements IUserPersistence
 {
@@ -20,6 +24,8 @@ public class UserDB implements IUserPersistence
 	public void loadUserByID(long id, User user)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spLoadUser(?)");
@@ -46,7 +52,8 @@ public class UserDB implements IUserPersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"check the data base with user id" + id , SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -60,6 +67,8 @@ public class UserDB implements IUserPersistence
 	public void loadUserByBannerID(String bannerID, User user)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		long userID = -1;
 		try
 		{
@@ -76,7 +85,8 @@ public class UserDB implements IUserPersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"check the data base with banner id" + bannerID , SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -95,6 +105,8 @@ public class UserDB implements IUserPersistence
 	public boolean createUser(User user)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spCreateUser(?, ?, ?, ?, ?, ?)");
@@ -108,7 +120,8 @@ public class UserDB implements IUserPersistence
 		}
 		catch (SQLException e)
 		{
-			// Logging needed
+			logger.logMessage(e.getMessage(),"check the data base about user" + user.toString() , SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 			return false;
 		}
 		finally

@@ -32,7 +32,7 @@ public class ErrorLogger extends AbstractLogger implements ILogger {
         if (checkLogValid(msg,possibleSolution)){
             return;
         }
-        StringBuffer sb = buildHeading(this.level,this.className, this.methodName,msg,possibleSolution, logDB);
+        StringBuffer sb = buildHeading(this.level,this.className, this.methodName,msg,possibleSolution, null);
         if (null != possibleSolution){
             sb.append("\n Suggested Action");
             sb.append(possibleSolution);

@@ -1,5 +1,10 @@
 package CSCI5308.GroupFormationTool.Database;
 
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
+
 import java.sql.*;
 
 public class CallStoredProcedure
@@ -29,6 +34,8 @@ public class CallStoredProcedure
 	
 	public void cleanup()
 	{
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			if (null != statement)
@@ -45,7 +52,7 @@ public class CallStoredProcedure
 		}
 		catch (Exception e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"Seems no solution to this" , SystemConfig.instance().getLogDB());
 		}
 	}
 	

@@ -1,5 +1,10 @@
 package CSCI5308.GroupFormationTool.passwordConstraint;
 
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
+
 public class DefaultPasswordConstraintConfiguration implements IPasswordConstraintConfiguration{
     private final static String PASS_MIN = System.getenv("PASS_MIN");
     private final static String PASS_MAX = System.getenv("PASS_MAX");
@@ -54,10 +59,12 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
 
     private Integer covertAndCatchingException(String numberConfig){
         Integer config = null;
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         try{
             config = Integer.valueOf(numberConfig);
         }catch (NumberFormatException e){
-            //TODO LOGGER NEEDED
+            logger.logMessage("This is an error because of string format","Pleases check your env variables to ensure you are converting numbers", SystemConfig.instance().getLogDB());
             e.printStackTrace();
         }
         return config;

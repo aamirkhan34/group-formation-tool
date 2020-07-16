@@ -24,6 +24,6 @@ class LoggerFactoryTest {
         assertFalse(logger.checkLogValid("test message","leave this alone"));
         assertTrue(logger.checkLogValid(null,"leave this alone"));
         assertTrue(logger.checkLogValid("test message",null));
-        assertEquals(LogDBMock.getInstance().toString(),"2");
+        assertEquals(LogDBMock.getInstance().toString(),"1");
     }
 }
