@@ -77,6 +77,11 @@ public class GroupFormationAlgorithm {
 		return algorithm;
 	}
 
+	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(IGroupFormationAlgorithmPersistence algorithmDB,
+			Long courseID) {
+		return algorithmDB.loadUsersResponsesByCourseID(courseID);
+	}
+
 	public List<Group> runAlgorithm(IMatchMatrixGeneration matGen, IGroupGeneration grpGen,
 			GroupFormationAlgorithm algorithm, LinkedHashMap<User, List<Response>> studentsResponses) {
 		LinkedHashMap<List<User>, Double> matchMatrix = matGen.generateMatchMatrix(algorithm, studentsResponses);

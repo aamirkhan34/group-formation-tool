@@ -12,5 +12,4 @@ public interface IGroupPersistence
 {
 	public boolean createGroups(List<Group> group);
 	public List<Group> loadGroupByCourse(Course course);
-	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID);
 }

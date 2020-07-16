@@ -44,9 +44,4 @@ public class Group {
 	public List<Group> loadGroupByCourse(IGroupPersistence groupDB, Course course){
 		return groupDB.loadGroupByCourse(course);
 	}
-
-	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(IGroupPersistence groupDB, Long courseID){
-		return groupDB.loadUsersResponsesByCourseID(courseID);
-	}
-
 }

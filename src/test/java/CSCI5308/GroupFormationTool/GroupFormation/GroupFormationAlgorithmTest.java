@@ -153,4 +153,10 @@ class GroupFormationAlgorithmTest {
 		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, studentsResponses);
 		Assert.isTrue(groups.get(0).getStudents().equals(groupOutput.get(0).getStudents()));
 	}
+	
+	@Test
+	void testLoadUsersResponsesByCourseID() {
+		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDBMock();
+		Assert.isTrue(algorithmDB.loadUsersResponsesByCourseID(1223L) instanceof LinkedHashMap);
+	}
 }
