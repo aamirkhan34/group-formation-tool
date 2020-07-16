@@ -1,7 +1,5 @@
 package CSCI5308.GroupFormationTool.GroupFormation;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

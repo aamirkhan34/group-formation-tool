@@ -7,35 +7,50 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
     private final static String PASS_LOWER_MIN = System.getenv("PASS_LOWER_MIN");
     private final static String PASS_SYMBOL_MIN = System.getenv("PASS_SYMBOL_MIN");
     private final static String BANNED_RE = System.getenv("BANNED_RE");
+    private final static String DEFAULT_BANNED_RE = "abc|bcd|first";
 
 
     @Override
-    public String getPasswordMin() {
-        return PASS_MIN;
+    public Integer getPasswordMin() {
+        return covertAndCatchingException(PASS_MIN);
     }
 
     @Override
-    public String getPasswordMax() {
-        return PASS_MAX;
+    public Integer getPasswordMax() {
+        return covertAndCatchingException(PASS_MAX);
     }
 
     @Override
-    public String getPasswordUpperMin() {
-        return PASS_UPPER_MIN;
+    public Integer getPasswordUpperMin() {
+        return covertAndCatchingException(PASS_UPPER_MIN);
     }
 
     @Override
-    public String getPasswordLowerMin() {
-        return PASS_LOWER_MIN;
+    public Integer getPasswordLowerMin() {
+        return covertAndCatchingException(PASS_LOWER_MIN);
     }
 
     @Override
-    public String getPasswordSymbolMin() {
-        return PASS_SYMBOL_MIN;
+    public Integer getPasswordSymbolMin() {
+        return covertAndCatchingException(PASS_SYMBOL_MIN);
     }
 
     @Override
     public String getBannedRe() {
+        if (null == BANNED_RE){
+            return  DEFAULT_BANNED_RE;
+        }
         return BANNED_RE;
+    }
+
+    private Integer covertAndCatchingException(String numberConfig){
+        Integer config = null;
+        try{
+            config = Integer.valueOf(numberConfig);
+        }catch (NumberFormatException e){
+            //TODO LOGGER NEEDED
+            e.printStackTrace();
+        }
+        return config;
     }
 }
