@@ -50,3 +50,5 @@ DROP TABLE AlgorithmDefinition;
 DROP TABLE FormedGroup;
 
 DROP TABLE GroupMember;
+
+DROP TABLE Log;
