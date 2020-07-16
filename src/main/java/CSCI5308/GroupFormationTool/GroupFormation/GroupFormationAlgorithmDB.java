@@ -112,9 +112,9 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 
 	@Override
 	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID) {
-		LinkedHashMap<User, List<Response>> responses = new LinkedHashMap<>();
 		CallStoredProcedure proc = null;
 		try {
+			LinkedHashMap<User, List<Response>> responses = new LinkedHashMap<>();
 			proc = new CallStoredProcedure("spLoadSurveyIdByCourseId(?)");
 			proc.setParameter(1,courseID);
 			ResultSet resultSet = proc.executeWithResults();
@@ -125,7 +125,7 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 				proc = new CallStoredProcedure("spUsersBySurveyId(?)");
 				proc.setParameter(1,surveyId);
 				ResultSet resultSet1 = proc.executeWithResults();
-				while (resultSet.next()){
+				while (resultSet1.next()){
 					int userID = resultSet1.getInt(1);
 					proc = new CallStoredProcedure("spLoadUser(?)");
 					proc.setParameter(1,userID);
@@ -198,18 +198,18 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 					}
 					responses.put(user,userResponses);
 				}
-				return responses;
 			}
+			return responses;
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 		finally {
 			if (null != proc) {
 				proc.cleanup();
 			}
 		}
-		return  responses;
 	}
 
 }

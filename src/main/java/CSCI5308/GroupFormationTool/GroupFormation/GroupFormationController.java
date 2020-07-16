@@ -128,9 +128,9 @@ public class GroupFormationController {
 		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
 		LinkedHashMap<User, List<Response>> responses = algorithmDB.loadUsersResponsesByCourseID(courseID);
 		System.out.println(responses);
-//		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, responses);
-//		IGroupPersistence groupDB = new GroupDB();
-//		boolean status = groupDB.createGroups(groups);
+		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, responses);
+		IGroupPersistence groupDB = new GroupDB();
+		boolean status = groupDB.createGroups(groups);
 		
 		return "definealgorithm";
 	}
