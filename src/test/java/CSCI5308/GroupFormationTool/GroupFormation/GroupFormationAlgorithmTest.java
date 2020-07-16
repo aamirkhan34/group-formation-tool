@@ -23,25 +23,25 @@ class GroupFormationAlgorithmTest {
 
 	GroupFormationAlgorithm gfa = new GroupFormationAlgorithm(id, course, createdOn, comparisonChoices, questions,
 			weights, groupSize);
-	
+
 	@Test
 	void testConstructor() {
-			
+
 		Assert.isTrue(gfa.getId() == id);
-		
+
 		Assert.isTrue(gfa.getCourse() == course);
-		
+
 		Assert.isTrue(gfa.getCreatedOn() == createdOn);
-		
+
 		Assert.isTrue(gfa.getGroupSize() == groupSize);
-		
+
 		Assert.isTrue(gfa.getComparisonChoices().equals(comparisonChoices));
-		
+
 		Assert.isTrue(gfa.getQuestions().equals(questions));
-		
+
 		Assert.isTrue(gfa.getWeights().equals(weights));
 	}
-	
+
 	@Test
 	void testGetId() {
 		Assert.isTrue(gfa.getId() == id);
@@ -58,7 +58,7 @@ class GroupFormationAlgorithmTest {
 	}
 
 	@Test
-	void testGetComparisonChoices() {		
+	void testGetComparisonChoices() {
 		Assert.isTrue(gfa.getComparisonChoices().equals(comparisonChoices));
 	}
 
@@ -77,4 +77,28 @@ class GroupFormationAlgorithmTest {
 		Assert.isTrue(gfa.getGroupSize() == groupSize);
 	}
 
+	@Test
+	void testCreateAlgorithm() {
+		int groupSize = 3;
+		
+		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDBMock();
+		
+		GroupFormationAlgorithm algorithm = new GroupFormationAlgorithmBuilder().setGroupSize(groupSize)
+				.getGroupFormationAlgorithm();
+		
+		algorithmDB.createAlgorithm(algorithm);
+		
+		Assert.isTrue(algorithm.getGroupSize() == groupSize);
+	}
+
+	@Test
+	void testLoadAlgorithmByCourse() {
+		Course course = new Course();
+		
+		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDBMock();
+		
+		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
+		
+		Assert.isTrue(algorithm.getCourse() == course);
+	}
 }

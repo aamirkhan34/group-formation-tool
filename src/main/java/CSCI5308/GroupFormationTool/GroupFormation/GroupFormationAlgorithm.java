@@ -62,4 +62,15 @@ public class GroupFormationAlgorithm {
 				+ weights + "]";
 	}
 
+	public boolean createAlgorithm(GroupFormationAlgorithm algorithm, IGroupFormationAlgorithmPersistence algorithmDB) {
+		boolean status = algorithmDB.createAlgorithm(algorithm);
+		return status;
+	}
+
+	public GroupFormationAlgorithm loadAlgorithmByCourse(Course course,
+			IGroupFormationAlgorithmPersistence algorithmDB) {
+		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
+		return algorithm;
+	}
+
 }
