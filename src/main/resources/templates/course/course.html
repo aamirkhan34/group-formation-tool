@@ -46,6 +46,10 @@
 			</br>
 			<a th:href="@{/groupformation/algorithm(id=${course.id})}"> Define Group Formation Algorithm </a>
 		</div>
+		<div th:if="${instructor}">
+			</br>
+			<a th:href="@{/groupformation/groups(id=${course.id})}"> Result groups </a>
+		</div>
 		<div class="container">
 			<h3 th:if="${!issurveynotprovided}"> You have provided youre responses to the survey </h3>
 			<div th:if="${student} and ${issurveynotprovided}">

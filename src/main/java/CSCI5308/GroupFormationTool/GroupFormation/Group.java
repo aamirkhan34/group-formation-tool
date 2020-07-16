@@ -2,9 +2,11 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
+import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 
 public class Group {
 	private long id;
@@ -35,4 +37,9 @@ public class Group {
 	public ArrayList<User> getStudents() {
 		return students;
 	}
+
+	public List<Group> loadGroupByCourse(IGroupPersistence groupDB, Course course){
+		return groupDB.loadGroupByCourse(course);
+	}
+
 }

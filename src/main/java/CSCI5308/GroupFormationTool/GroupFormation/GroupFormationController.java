@@ -97,7 +97,21 @@ public class GroupFormationController {
 				.setQuestions(questions).setWeights(newWeights).getGroupFormationAlgorithm();
 		
 		boolean status = algorithm.createAlgorithm(algorithm, algorithmDB);
-		System.out.println(status);
+
 		return "definealgorithm";
+	}
+
+	@RequestMapping(value = "/groupformation/groups", method = RequestMethod.GET)
+	public String displayGroups(Model model, @RequestParam(name = ID) long courseID){
+		Course course = new Course();
+		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		courseDB.loadCourseByID(courseID, course);
+		model.addAttribute("course", course);
+		model.addAttribute("courseid", courseID);
+		Group group = new GroupBuilder().getGroup();
+		IGroupPersistence groupDB = SystemConfig.instance().getGroupDB();
+		List<Group> groups =  group.loadGroupByCourse(groupDB, course);
+		model.addAttribute("groups", groups);
+		return "displaygroups";
 	}
 }
