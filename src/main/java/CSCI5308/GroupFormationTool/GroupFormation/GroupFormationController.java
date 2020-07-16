@@ -114,4 +114,9 @@ public class GroupFormationController {
 		model.addAttribute("groups", groups);
 		return "displaygroups";
 	}
+
+	@RequestMapping(value = "/groupformation/runalgorithm")
+	public String generateGroups(Model model, @RequestParam(name = ID) long courseID) {
+		return "definealgorithm";
+	}
 }
