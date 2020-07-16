@@ -5,8 +5,14 @@ import org.springframework.security.crypto.bcrypt.*;
 public class BCryptPasswordEncryption implements IPasswordEncryption
 {
 	private BCryptPasswordEncoder encoder;
-	
-	public BCryptPasswordEncryption()
+	private static IPasswordEncryption instance;
+	public static IPasswordEncryption getInstance(){
+		if (null == instance){
+			instance = new BCryptPasswordEncryption();
+		}
+		return instance;
+	}
+	private BCryptPasswordEncryption()
 	{
 		encoder = new BCryptPasswordEncoder();
 	}

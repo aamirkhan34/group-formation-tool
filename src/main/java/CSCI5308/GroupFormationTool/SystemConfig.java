@@ -41,7 +41,7 @@ public class SystemConfig
 	private SystemConfig()
 	{
 		passwordConstraintConfiguration =  DefaultPasswordConstraintConfiguration.getInstance();
-		passwordEncryption = new BCryptPasswordEncryption();
+		passwordEncryption = BCryptPasswordEncryption.getInstance();
 		userDB = UserDB.getInstance();
 		databaseConfiguration = DefaultDatabaseConfiguration.getInstance();
 		courseDB = CourseDB.getInstance();
