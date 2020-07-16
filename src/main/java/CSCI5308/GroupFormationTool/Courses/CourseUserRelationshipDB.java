@@ -10,6 +10,16 @@ import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 
 public class CourseUserRelationshipDB implements ICourseUserRelationshipPersistence
 {
+	private static ICourseUserRelationshipPersistence instance;
+	public static ICourseUserRelationshipPersistence getInstance(){
+		if (instance == null){
+			instance = new CourseUserRelationshipDB();
+		}
+		return instance;
+	}
+	private CourseUserRelationshipDB(){
+
+	}
 	public List<User> findAllUsersWithoutCourseRole(Role role, long courseID)
 	{
 		List<User> users = new ArrayList<User>();

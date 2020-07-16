@@ -10,6 +10,19 @@ import java.util.ArrayList;
 
 public class CourseDB implements ICoursePersistence
 {
+	private static ICoursePersistence instance;
+	public static ICoursePersistence getInstance()
+	{
+		if (null == instance)
+		{
+			instance = new CourseDB();
+		}
+		return instance;
+	}
+	private CourseDB()
+	{
+
+	}
 	public List<Course> loadAllCourses()
 	{
 		List<Course> courses = new ArrayList<Course>();

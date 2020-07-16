@@ -40,26 +40,18 @@ public class SystemConfig
 
 	private SystemConfig()
 	{
-		// The default instantiations are the choices that would be used in the
-		// production application. These choices can all be overridden by test
-		// setup logic when necessary.
-		passwordConstraintConfiguration = new DefaultPasswordConstraintConfiguration();
-		passwordEncryption = new BCryptPasswordEncryption();
-		userDB = new UserDB();
-		databaseConfiguration = new DefaultDatabaseConfiguration();
-		courseDB = new CourseDB();
-		courseUserRelationshipDB = new CourseUserRelationshipDB();
-		emailConfiguration = new DefaultEmailConfiguration();
-		questionDB = new QuestionDB();
-		passwordHistoryConstraintConfiguration = new DefaultPasswordHistoryConstraintConfiguration();
+		passwordConstraintConfiguration =  DefaultPasswordConstraintConfiguration.getInstance();
+		passwordEncryption = BCryptPasswordEncryption.getInstance();
+		userDB = UserDB.getInstance();
+		databaseConfiguration = DefaultDatabaseConfiguration.getInstance();
+		courseDB = CourseDB.getInstance();
+		courseUserRelationshipDB = CourseUserRelationshipDB.getInstance();
+		emailConfiguration = DefaultEmailConfiguration.getInstance();
+		questionDB = QuestionDB.getInstance();
+		passwordHistoryConstraintConfiguration = DefaultPasswordHistoryConstraintConfiguration.getInstance();
 	}
-	// This is the way the rest of the application gets access to the System object.
-
-
 	public static SystemConfig instance()
 	{
-		// Using lazy initialization, this is the one and only place that the System
-		// object will be instantiated.
 		if (null == uniqueInstance)
 		{
 			uniqueInstance = new SystemConfig();

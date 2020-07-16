@@ -13,6 +13,17 @@ public class QuestionDB implements IQuestionPersistence {
 	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
 	private static final int FREE_TEXT_TYPE_ID = 4;
 
+	private static IQuestionPersistence instance;
+	public static IQuestionPersistence getInstance(){
+		if (null == instance){
+			instance = new QuestionDB();
+		}
+		return instance;
+	}
+	private QuestionDB(){
+
+	}
+
 	@Override
 	public List<Question> loadAllQuestionsByInstructor(long instructorId) {
 		CallStoredProcedure proc = null;
