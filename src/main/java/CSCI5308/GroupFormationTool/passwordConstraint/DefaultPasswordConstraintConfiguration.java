@@ -9,7 +9,16 @@ public class DefaultPasswordConstraintConfiguration implements IPasswordConstrai
     private final static String BANNED_RE = System.getenv("BANNED_RE");
     private final static String DEFAULT_BANNED_RE = "abc|bcd|first";
 
+    private static IPasswordConstraintConfiguration instance;
+    public static IPasswordConstraintConfiguration getInstance(){
+        if (null == instance ){
+            instance = new DefaultPasswordConstraintConfiguration();
+        }
+        return instance;
+    }
+    private DefaultPasswordConstraintConfiguration(){
 
+    }
     @Override
     public Integer getPasswordMin() {
         return covertAndCatchingException(PASS_MIN);

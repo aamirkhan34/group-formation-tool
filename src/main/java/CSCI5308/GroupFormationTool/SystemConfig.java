@@ -43,7 +43,7 @@ public class SystemConfig
 		// The default instantiations are the choices that would be used in the
 		// production application. These choices can all be overridden by test
 		// setup logic when necessary.
-		passwordConstraintConfiguration = new DefaultPasswordConstraintConfiguration();
+		passwordConstraintConfiguration =  DefaultPasswordConstraintConfiguration.getInstance();
 		passwordEncryption = new BCryptPasswordEncryption();
 		userDB = new UserDB();
 		databaseConfiguration = new DefaultDatabaseConfiguration();
