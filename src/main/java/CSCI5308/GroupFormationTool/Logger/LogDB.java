@@ -14,23 +14,26 @@ public class LogDB implements ILogDB
         return instance;
     }
     @Override
-    public boolean createRecord(ILog log, String className , String methodName,String createTime, String msg, String possibleSolution)
+    public boolean createRecord(LogDAO log)
     {
         CallStoredProcedure proc = null;
         try
         {
+            System.out.println("---------------");
             proc = new CallStoredProcedure("spCreateLog(?,?,?,?,?,?,?)");
-            proc.setParameter(1, className);
-            proc.setParameter(2, methodName);
-            proc.setParameter(3, methodName);
+            proc.setParameter(1, log.getClassName());
+            proc.setParameter(2, log.getMethodName());
+            proc.setParameter(3, log.getCreateTime());
+            System.out.println(log.getCreateTime());
             proc.setParameter(4, log.getLevel().getTypeName());
-            proc.setParameter(5, msg);
-            proc.setParameter(6, possibleSolution);
+            proc.setParameter(5, log.getMessage());
+            proc.setParameter(6, log.getPossibleSolution());
             proc.registerOutputParameterLong(7);
             proc.execute();
         }
         catch (SQLException e)
         {
+            e.printStackTrace();
             // TODO Logging needed
             return false;
         }

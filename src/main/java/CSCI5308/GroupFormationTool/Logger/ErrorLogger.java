@@ -12,26 +12,31 @@ public class ErrorLogger extends AbstractLogger implements ILogger {
     }
 
     @Override
-    public boolean checkLogValid(String msg,String possibleSolution) {
-        // Do things different for different types logger
-        switch (this.level){
-            case ERROR:{
-                return (null != possibleSolution);
+    public boolean checkLogValid(String msg,String possibleSolution)  {
+        try{
+            if (null == possibleSolution){
+                throw new ErrorLogMissingException("possibleSolution");
+
             }
-            default:{
-                return null !=msg;
+            if (null ==msg){
+                throw new ErrorLogMissingException("message");
             }
+        }catch (ErrorLogMissingException e){
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void logMessage( String msg,String possibleSolution) {
-        StringBuffer sb = buildHeading(this.level,this.className, this.methodName,msg);
+    public void logMessage( String msg,String possibleSolution,ILogDB logDB) {
+        if (checkLogValid(msg,possibleSolution)){
+            return;
+        }
+        StringBuffer sb = buildHeading(this.level,this.className, this.methodName,msg,possibleSolution, logDB);
         if (null != possibleSolution){
             sb.append("\n Suggested Action");
             sb.append(possibleSolution);
             System.err.println(sb.toString());
         }
-        this.getFormattedTime();
     }
 }

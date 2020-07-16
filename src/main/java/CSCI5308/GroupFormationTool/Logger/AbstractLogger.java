@@ -4,12 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AbstractLogger {
-    private final static SimpleDateFormat sdf = new SimpleDateFormat("");
-    public String getFormattedTime(){
-        return sdf.format(new Date());
-    }
-    public StringBuffer buildHeading(LogType level, String className, String methodName,String msg){
-        StringBuffer sb = new StringBuffer("");
+    public StringBuffer buildHeading(LogType level, String className, String methodName,String msg,String possibleSolution, ILogDB logDB){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        logDB.createRecord(new LogDAO(level,className,methodName,sdf.format(new Date()),msg,possibleSolution));
+        System.out.println("==============");
+        StringBuffer sb = new StringBuffer(sdf.format(new Date()));
         sb.append("[");
         sb.append(level.getTypeName());
         sb.append("], at class '");

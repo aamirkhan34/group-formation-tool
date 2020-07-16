@@ -13,24 +13,23 @@ public class InfoLogger extends AbstractLogger implements ILogger{
 
     @Override
     public boolean checkLogValid(String msg,String possibleSolution) {
-        // Do things different for different types logger
-        switch (this.level){
-            case ERROR:{
-                return (null != possibleSolution);
-            }
-            default:{
-                return null !=msg;
-            }
-        }
+        return null ==msg;
     }
 
     @Override
-    public void logMessage( String msg,String possibleSolution) {
-        StringBuffer sb = buildHeading(this.level,this.className, this.methodName,msg);
+    public void logMessage( String msg,String possibleSolution,ILogDB logDB) {
+        try{
+            if (checkLogValid(msg,possibleSolution)){
+                throw new ErrorLogMissingException();
+            }
+        }catch (ErrorLogMissingException e){
+            return;
+        }
+        StringBuffer sb = buildHeading(this.level,this.className, this.methodName,msg,possibleSolution,logDB);
         if (null != possibleSolution){
             sb.append("\n Suggested Action");
             sb.append(possibleSolution);
-            System.err.println(sb.toString());
+            System.out.println(sb.toString());
         }
     }
 
