@@ -1,14 +1,14 @@
 package CSCI5308.GroupFormationTool.ResponseTest;
 
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
 import CSCI5308.GroupFormationTool.Response.Response;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @SuppressWarnings("deprecation")
@@ -23,6 +23,15 @@ public class ResponseTest {
         response.setQuestion(question);
         assertEquals(1, response.getQuestion().getId());
     }
+    @Test
+    public void SetQuestionTest()
+    {
+        Response response = new Response();
+        Question question = new Question();
+        question.setId(123);
+        response.setQuestion(question);
+        assertEquals(123, response.getQuestion().getId());
+    }
 
     @Test
     public void getSingleResponseTest()
@@ -31,15 +40,48 @@ public class ResponseTest {
         response.setSingleresponse("test");
         assertEquals("test", response.getSingleresponse());
     }
+    @Test
+    public void setSingleResponseTest()
+    {
+        Response response = new Response();
+        response.setSingleresponse("sample");
+        assertEquals("sample", response.getSingleresponse());
+    }
 
     @Test
-    public void getResponse()
+    public void getResponseTest()
     {
         ArrayList<String> responses = new ArrayList<>();
         responses.add("test");
         Response response = new Response();
         response.setResponse(responses);
         assertNotNull(response.getResponse());
+    }
+
+    @Test
+    public void setResponseTest()
+    {
+        ArrayList<String> responses = new ArrayList<>();
+        responses.add("sample");
+        Response response = new Response();
+        response.setResponse(responses);
+        assertNotNull(response.getResponse());
+    }
+
+    @Test
+    public void saveResponseTest(){
+        ArrayList<Response> responses = new ArrayList<>();
+        Response response = new Response();
+        response.setSingleresponse("singleResponse");
+        responses.add(response);
+        IResponsePersistence responseDBMock = new ResponseDBMock();
+        assertTrue(responseDBMock.saveResponse(responses,1));
+    }
+
+    @Test
+    public void isResponseprovidedByStudentTest(){
+        IResponsePersistence responseDBMock = new ResponseDBMock();
+        assertTrue(responseDBMock.isResponseprovidedByStudent(Long.valueOf(3),Long.valueOf(2)));
     }
 
 }
