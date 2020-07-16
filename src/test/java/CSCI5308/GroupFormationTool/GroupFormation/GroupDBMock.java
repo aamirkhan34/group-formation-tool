@@ -41,9 +41,5 @@ public class GroupDBMock implements IGroupPersistence {
 		return new ArrayList(Arrays.asList(group1));
 	}
 
-	@Override
-	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID) {
-		return null;
-	}
 
 }
