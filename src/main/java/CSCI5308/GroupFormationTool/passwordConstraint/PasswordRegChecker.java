@@ -1,5 +1,10 @@
 package CSCI5308.GroupFormationTool.passwordConstraint;
 
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
+
 public class PasswordRegChecker implements IPasswordChecker {
     private String reg;
     private String info;
@@ -12,6 +17,8 @@ public class PasswordRegChecker implements IPasswordChecker {
     @Override
     public boolean check(String password, StringBuffer sb) {
         String temp = password.replaceAll(reg," ");
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         if (temp.equals(password)){
             return true;
         }else {
@@ -20,7 +27,7 @@ public class PasswordRegChecker implements IPasswordChecker {
             try{
                 sb.append(reg.replace("|",","));
             }catch (NullPointerException e){
-                //TODO add logging
+                logger.logMessage(e.getMessage(),"check the StringBuffer and config about regex" , SystemConfig.instance().getLogDB());
                 e.printStackTrace();
             }
             sb.append(".<br/> \n");

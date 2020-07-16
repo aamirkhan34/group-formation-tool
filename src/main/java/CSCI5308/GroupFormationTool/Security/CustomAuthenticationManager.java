@@ -3,6 +3,9 @@ package CSCI5308.GroupFormationTool.Security;
 import java.util.ArrayList;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -68,13 +71,16 @@ public class CustomAuthenticationManager implements AuthenticationManager
 		String password = authentication.getCredentials().toString();
 		IUserPersistence userDB = SystemConfig.instance().getUserDB();
 		User u;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			u = new User(bannerID, userDB);
 		}
 		catch (Exception e)
 		{
-			throw new AuthenticationServiceException("1000");
+			logger.logMessage(e.getMessage(),"check bannerID "+bannerID+" and password "+password , SystemConfig.instance().getLogDB());
+			throw new AuthenticationServiceException("1000");;
 		}
 		if (u.isValidUser())
 		{

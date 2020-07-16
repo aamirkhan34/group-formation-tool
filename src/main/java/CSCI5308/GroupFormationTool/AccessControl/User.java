@@ -3,7 +3,11 @@ package CSCI5308.GroupFormationTool.AccessControl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import javax.mail.MessagingException;
 
@@ -134,11 +138,14 @@ public class User
 		String rawPassword = password;
 		this.password = passwordEncryption.encryptPassword(this.password);
 		boolean success = userDB.createUser(this);
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		if (success && (null != notification))
 		{
 			try {
 				notification.sendUserLoginCredentials(this, rawPassword);
 			} catch (MessagingException e) {
+				logger.logMessage(e.getMessage(),"Check with the mail server ", SystemConfig.instance().getLogDB());
 				e.printStackTrace();
 			}
 		}

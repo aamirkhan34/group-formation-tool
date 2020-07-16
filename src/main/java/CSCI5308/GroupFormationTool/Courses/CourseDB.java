@@ -53,6 +53,7 @@ public class CourseDB implements ICoursePersistence
 		catch (SQLException e)
 		{
 			logger.logMessage(e.getMessage(),"Check with course table", SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -87,6 +88,7 @@ public class CourseDB implements ICoursePersistence
 		catch (SQLException e)
 		{
 			logger.logMessage(e.getMessage(),"Check with course id"+ id, SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
