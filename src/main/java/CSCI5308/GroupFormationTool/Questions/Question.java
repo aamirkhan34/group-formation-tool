@@ -109,4 +109,17 @@ public class Question {
 	public void setQuestionAddedToSurvey(boolean questionAddedToSurvey) {
 		isQuestionAddedToSurvey = questionAddedToSurvey;
 	}
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", typeID=" + typeID +
+                ", type='" + type + '\'' +
+                ", instructor=" + instructor +
+                ", createdOn=" + createdOn +
+                ", multipleChoiceOption=" + multipleChoiceOption +
+                '}';
+    }
 }

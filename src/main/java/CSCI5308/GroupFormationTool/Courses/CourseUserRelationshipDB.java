@@ -7,13 +7,29 @@ import java.util.List;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 public class CourseUserRelationshipDB implements ICourseUserRelationshipPersistence
 {
+	private static ICourseUserRelationshipPersistence instance;
+	public static ICourseUserRelationshipPersistence getInstance(){
+		if (instance == null){
+			instance = new CourseUserRelationshipDB();
+		}
+		return instance;
+	}
+	private CourseUserRelationshipDB(){
+
+	}
 	public List<User> findAllUsersWithoutCourseRole(Role role, long courseID)
 	{
 		List<User> users = new ArrayList<User>();
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spFindUsersWithoutCourseRole(?, ?)");
@@ -39,7 +55,8 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"Check with course id"+ courseID +" and role "+ role.name(), SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -55,6 +72,8 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 	{
 		List<User> users = new ArrayList<User>();
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spFindUsersWithCourseRole(?, ?)");
@@ -74,8 +93,7 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
-		}
+			logger.logMessage(e.getMessage(),"Check with course id"+ courseID +" and role "+ role.name(), SystemConfig.instance().getLogDB());		}
 		finally
 		{
 			if (null != proc)
@@ -89,6 +107,8 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 	public boolean enrollUser(Course course, User user, Role role)
 	{
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spEnrollUser(?, ?, ?)");
@@ -99,7 +119,7 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 		}
 		catch (SQLException e)
 		{
-			// Logging needed
+			logger.logMessage(e.getMessage(),"Check with input course "+ course.toString()+" user "+user.toString()+" and role "+ role.name() , SystemConfig.instance().getLogDB());
 			return false;
 		}
 		finally
@@ -116,6 +136,8 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 	{
 		List<Role> roles = new ArrayList<Role>();
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			proc = new CallStoredProcedure("spLoadUserRolesForCourse(?, ?)");
@@ -133,7 +155,8 @@ public class CourseUserRelationshipDB implements ICourseUserRelationshipPersiste
 		}
 		catch (SQLException e)
 		{
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"Check with input course "+ course.toString()+" user "+user.toString() , SystemConfig.instance().getLogDB());
+			e.printStackTrace();
 		}
 		finally
 		{

@@ -2,6 +2,9 @@ package CSCI5308.GroupFormationTool.passwordConstraint;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.SystemConfig;
 
 
@@ -16,6 +19,8 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
     @Override
     public void loadHistoryPasswordWithLimit(User user, List<String > passwords,Integer length) {
         CallStoredProcedure proc = null;
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         try
         {
             proc = new CallStoredProcedure("spLoadPasswords(?,?)");
@@ -36,6 +41,7 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
         }
         catch (SQLException e)
         {
+            logger.logMessage(e.getMessage(),"Check"+user.toString(),SystemConfig.instance().getLogDB());
             e.printStackTrace();
         }
         finally
@@ -52,6 +58,8 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
         CallStoredProcedure proc = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Integer insertedID = 0;
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         try
         {
             proc = new CallStoredProcedure("spCreateHistoryPassword(?,?,?,?)");
@@ -63,6 +71,7 @@ public class HistoryPasswordDB implements IHistoryPasswordDB {
         }
         catch (SQLException e)
         {
+            logger.logMessage(e.getMessage(),"Check"+user.toString(),SystemConfig.instance().getLogDB());
             e.printStackTrace();
             return false;
         }

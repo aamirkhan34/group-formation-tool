@@ -3,14 +3,17 @@ package CSCI5308.GroupFormationTool.AccessControl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import CSCI5308.GroupFormationTool.Database.ConnectionManager;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import javax.mail.MessagingException;
 
 public class User
 {
-	// This regex comes from here:
-	// https://howtodoinjava.com/regex/java-regex-validate-email-address/
 	private static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 	
 	private long id;
@@ -56,8 +59,6 @@ public class User
 	{
 		return id;
 	}
-	
-	// These are here for the Thymeleaf / Spring binding nonsense.
 	public void setId(long id)
 	{
 		this.id = id;
@@ -86,7 +87,6 @@ public class User
 	{
 		return bannerID;
 	}
-	// Also here for Thymeleaf nonsense.
 	public String getBanner()
 	{
 		return bannerID;
@@ -134,11 +134,14 @@ public class User
 		String rawPassword = password;
 		this.password = passwordEncryption.encryptPassword(this.password);
 		boolean success = userDB.createUser(this);
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		if (success && (null != notification))
 		{
 			try {
 				notification.sendUserLoginCredentials(this, rawPassword);
 			} catch (MessagingException e) {
+				logger.logMessage(e.getMessage(),"Check with the mail server ", SystemConfig.instance().getLogDB());
 				e.printStackTrace();
 			}
 		}
@@ -184,5 +187,17 @@ public class User
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", password='" + password + '\'' +
+				", bannerID='" + bannerID + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
+				'}';
 	}
 }
