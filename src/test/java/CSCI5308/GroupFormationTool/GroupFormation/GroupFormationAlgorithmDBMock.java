@@ -3,10 +3,13 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.Response;
 
 public class GroupFormationAlgorithmDBMock implements IGroupFormationAlgorithmPersistence {
 
@@ -53,6 +56,12 @@ public class GroupFormationAlgorithmDBMock implements IGroupFormationAlgorithmPe
 				.getGroupFormationAlgorithm();
 		
 		return algorithm;
+	}
+
+	@Override
+	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID) {
+		LinkedHashMap<User, List<Response>> responses = new LinkedHashMap<>();
+		return responses;
 	}
 
 }

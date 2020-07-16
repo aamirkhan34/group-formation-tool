@@ -6,6 +6,7 @@ import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.Response;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import CSCI5308.GroupFormationTool.Survey.Survey;
 import CSCI5308.GroupFormationTool.SystemConfig;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +48,7 @@ public class GroupFormationController {
 
 		while (m.find()) {
 			int choice = Integer.parseInt(m.group().split("=")[1].trim());
-			
+
 			if (choice == 1) {
 				allMatches.add(true);
 			} else {
@@ -91,18 +94,18 @@ public class GroupFormationController {
 		List<Double> newWeights = normaliseWeights(weights);
 
 		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDB();
-		
+
 		GroupFormationAlgorithm algorithm = new GroupFormationAlgorithmBuilder().setCourse(course)
 				.setComparisonChoices(comparisonChoices).setCreatedOn(new Date()).setGroupSize(groupSize)
 				.setQuestions(questions).setWeights(newWeights).getGroupFormationAlgorithm();
-		
+
 		boolean status = algorithm.createAlgorithm(algorithm, algorithmDB);
 
 		return "definealgorithm";
 	}
 
 	@RequestMapping(value = "/groupformation/groups", method = RequestMethod.GET)
-	public String displayGroups(Model model, @RequestParam(name = ID) long courseID){
+	public String displayGroups(Model model, @RequestParam(name = ID) long courseID) {
 		Course course = new Course();
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		courseDB.loadCourseByID(courseID, course);
@@ -110,13 +113,27 @@ public class GroupFormationController {
 		model.addAttribute("courseid", courseID);
 		Group group = new GroupBuilder().getGroup();
 		IGroupPersistence groupDB = SystemConfig.instance().getGroupDB();
-		List<Group> groups =  group.loadGroupByCourse(groupDB, course);
+		List<Group> groups = group.loadGroupByCourse(groupDB, course);
 		model.addAttribute("groups", groups);
 		return "displaygroups";
 	}
 
 	@RequestMapping(value = "/groupformation/runalgorithm")
 	public String generateGroups(Model model, @RequestParam(name = ID) long courseID) {
+		Course course = new Course();
+		course.setId(courseID);
+		
+		IMatchMatrixGeneration matGen = new ComparisonScoreMatrixGeneration();
+		IGroupGeneration grpGen = new MatchScoreGroupGeneration();
+		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDB();
+		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
+		LinkedHashMap<User, List<Response>> responses = algorithmDB.loadUsersResponsesByCourseID(courseID);		
+		
+		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, responses, course);
+		
+		IGroupPersistence groupDB = new GroupDB();
+		boolean status = groupDB.createGroups(groups);
+		
 		return "definealgorithm";
 	}
 }

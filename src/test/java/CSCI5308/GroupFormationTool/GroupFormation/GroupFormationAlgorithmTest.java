@@ -110,6 +110,7 @@ class GroupFormationAlgorithmTest {
 		IMatchMatrixGeneration matGen = new ComparisonScoreMatrixGeneration();
 		IGroupGeneration grpGen = new MatchScoreGroupGeneration();
 		Course course = new Course();
+		course.setId(2);
 		List<Boolean> comparisonChoices = new ArrayList<Boolean>(Arrays.asList(true, false));
 		List<Double> weights = new ArrayList<Double>(Arrays.asList(0.5, 0.5));
 		LinkedHashMap<List<User>, Double> comparisonMatrix = new LinkedHashMap<List<User>, Double>();
@@ -150,7 +151,13 @@ class GroupFormationAlgorithmTest {
 
 		List<Group> groupOutput = new ArrayList<Group>(Arrays.asList(g1));
 
-		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, studentsResponses);
+		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, studentsResponses, course);
 		Assert.isTrue(groups.get(0).getStudents().equals(groupOutput.get(0).getStudents()));
+	}
+	
+	@Test
+	void testLoadUsersResponsesByCourseID() {
+		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDBMock();
+		Assert.isTrue(algorithmDB.loadUsersResponsesByCourseID(1223L) instanceof LinkedHashMap);
 	}
 }

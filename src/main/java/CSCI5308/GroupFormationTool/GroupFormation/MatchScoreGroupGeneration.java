@@ -2,11 +2,13 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Response.Response;
 
 public class MatchScoreGroupGeneration implements IGroupGeneration {
@@ -76,8 +78,8 @@ public class MatchScoreGroupGeneration implements IGroupGeneration {
 	}
 
 	@Override
-	public List<Group> generateGroups(LinkedHashMap<List<User>, Double> matchMatrix, int groupSize,
-			List<User> students) {
+	public List<Group> generateGroups(LinkedHashMap<List<User>, Double> matchMatrix, int groupSize, List<User> students,
+			Course course) {
 		List<Group> groups = new ArrayList<Group>();
 
 		for (int i = 0; i < students.size() / groupSize; i++) {
@@ -89,7 +91,8 @@ public class MatchScoreGroupGeneration implements IGroupGeneration {
 					groupx.add(bestMatchedStudentx);
 				}
 			}
-			groups.add(new GroupBuilder().setStudents((ArrayList) groupx).getGroup());
+			groups.add(new GroupBuilder().setStudents((ArrayList) groupx).setCourse(course).setCreatedOn(new Date())
+					.getGroup());
 			matchMatrix = removeAlreadyGroupedStudents(matchMatrix, groupx);
 		}
 
@@ -102,14 +105,14 @@ public class MatchScoreGroupGeneration implements IGroupGeneration {
 				}
 			}
 		}
-		
+
 		if (students.size() < groups.size()) {
 			for (int k = 0; k < students.size(); k++) {
-				groups.get(groups.size()-1-k).getStudents().add(students.get(k));
+				groups.get(groups.size() - 1 - k).getStudents().add(students.get(k));
 			}
-		}
-		else {
-			groups.add(new GroupBuilder().setStudents((ArrayList) students).getGroup());
+		} else {
+			groups.add(new GroupBuilder().setStudents((ArrayList) students).setCourse(course).setCreatedOn(new Date())
+					.getGroup());
 		}
 
 		return groups;
