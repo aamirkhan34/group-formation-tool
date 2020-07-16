@@ -62,10 +62,23 @@ public class GroupFormationController {
 		Course course = new Course();
 		course.setId(courseID);
 		List<Integer> comparisonChoices = parseComparisonChoices(body);
-		System.out.println(noOfQuestions);
-		System.out.println(questionIDs);
-		System.out.println(weights);
-		System.out.println(body);
+		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		List<Course> allCourses = courseDB.loadAllCourses();
+		model.addAttribute("courses", allCourses);
 		return "index";
+	}
+
+	@RequestMapping(value = "/groupformation/groups", method = RequestMethod.GET)
+	public String displayGroups(Model model, @RequestParam(name = ID) long courseID){
+		Course course = new Course();
+		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		courseDB.loadCourseByID(courseID, course);
+		model.addAttribute("course", course);
+		model.addAttribute("courseid", courseID);
+		Group group = new Group();
+		IGroupPersistence groupDB = SystemConfig.instance().getGroupDB();
+		List<Group> groups =  group.loadGroupByCourse(groupDB, course);
+		model.addAttribute("groups", groups);
+		return "displaygroups";
 	}
 }

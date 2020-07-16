@@ -2,6 +2,8 @@ package CSCI5308.GroupFormationTool;
 
 import CSCI5308.GroupFormationTool.Email.DefaultEmailConfiguration;
 import CSCI5308.GroupFormationTool.Email.IEmailConfiguration;
+import CSCI5308.GroupFormationTool.GroupFormation.GroupDB;
+import CSCI5308.GroupFormationTool.GroupFormation.IGroupPersistence;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.QuestionDB;
 import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
@@ -35,6 +37,7 @@ public class SystemConfig
 	private IUserPersistence userDB;
 	private IDatabaseConfiguration databaseConfiguration;
 	private ICoursePersistence courseDB;
+	private IGroupPersistence groupDB;
 	private ICourseUserRelationshipPersistence courseUserRelationshipDB;
 	private IEmailConfiguration emailConfiguration;
 	private IQuestionPersistence questionDB;
@@ -50,6 +53,14 @@ public class SystemConfig
 
 	public void setResponseDB(IResponsePersistence responseDB) {
 		this.responseDB = responseDB;
+	}
+
+	public IGroupPersistence getGroupDB() {
+		return groupDB;
+	}
+
+	public void setGroupDB(IGroupPersistence groupDB) {
+		this.groupDB = groupDB;
 	}
 
 	private SystemConfig()
@@ -68,6 +79,7 @@ public class SystemConfig
 		passwordHistoryConstraintConfiguration = new DefaultPasswordHistoryConstraintConfiguration();
 		surveyDB = new SurveyDB();
 		responseDB = new ResponseDB();
+		groupDB = new GroupDB();
 	}
 	// This is the way the rest of the application gets access to the System object.
 
