@@ -1,4 +1,4 @@
-package CSCI5308.GroupFormationTool.Courses;
+package CSCI5308.GroupFormationTool.CSV;
 
 import java.util.List;
 

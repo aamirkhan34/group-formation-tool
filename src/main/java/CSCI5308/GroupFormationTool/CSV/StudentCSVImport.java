@@ -1,8 +1,10 @@
-package CSCI5308.GroupFormationTool.Courses;
+package CSCI5308.GroupFormationTool.CSV;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.Courses.Course;
+import CSCI5308.GroupFormationTool.Courses.Role;
 import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.*;
 import CSCI5308.GroupFormationTool.Security.IPasswordEncryption;
