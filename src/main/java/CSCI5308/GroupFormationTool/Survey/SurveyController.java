@@ -24,12 +24,12 @@ public class SurveyController {
         IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
         ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
-        Question q = new Question();
-        q.setInstructor(user);
-        List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
+        Question question = new Question();
+        question.setInstructor(user);
+        List<Question> questionList = question.loadAllQuestionsByInstructor(questionDB);
         List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
-        Survey s = new Survey();
-        List<Question> surveyQuestions = s.getAllSurveyQuestions(questionList, questionsAddedToSurvey);
+        Survey survey = new Survey();
+        List<Question> surveyQuestions = survey.getAllSurveyQuestions(questionList, questionsAddedToSurvey);
         int isPublished = surveyDB.isSurveyPublished(courseID);
         model.addAttribute("questionlist", surveyQuestions);
         model.addAttribute("courseid", courseID);
@@ -40,11 +40,11 @@ public class SurveyController {
     @RequestMapping(value = "/survey/createsurvey", method = RequestMethod.POST)
     public String createSurvey(Model model, @RequestParam(name = ID) long courseID,
                                @RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs) {
-        ISurveyPersistence questionDB = SystemConfig.instance().getSurveyDB();
+        ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
-        Survey s = new Survey();
-        s.setCourseID(courseID);
-        s.setInstructor(user);
+        Survey survey = new Survey();
+        survey.setCourseID(courseID);
+        survey.setInstructor(user);
         ArrayList<Question> surveyQuestionList = new ArrayList<Question>();
         for (int i = 0; i < questionIDs.size(); i++) {
             if (questionIDs.get(i) != null && questionIDs.get(i) != 0) {
@@ -53,8 +53,8 @@ public class SurveyController {
                 surveyQuestionList.add(q);
             }
         }
-        s.setSurveyQuestionList(surveyQuestionList);
-        s.createSurvey(questionDB);
+        survey.setSurveyQuestionList(surveyQuestionList);
+        survey.createSurvey(surveyDB);
         ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
         List<Course> allCourses = courseDB.loadAllCourses();
         model.addAttribute("courses", allCourses);
@@ -64,12 +64,12 @@ public class SurveyController {
 
     @GetMapping("/survey/publishsurvey")
     public String publishSurvey(Model model, @RequestParam(name = ID) long courseID) {
-        ISurveyPersistence questionDB = SystemConfig.instance().getSurveyDB();
+        ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
-        Survey s = new Survey();
-        s.setCourseID(courseID);
-        s.setPublished(true);
-        s.publishSurvey(questionDB);
+        Survey survey = new Survey();
+        survey.setCourseID(courseID);
+        survey.setPublished(true);
+        survey.publishSurvey(surveyDB);
         ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
         List<Course> allCourses = courseDB.loadAllCourses();
         model.addAttribute("courses", allCourses);
@@ -84,12 +84,12 @@ public class SurveyController {
         ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
         User user = CurrentUser.instance().getCurrentAuthenticatedUser();
         User instructor = surveyDB.findInstructorOfTA(courseID);
-        Question q = new Question();
-        q.setInstructor(instructor);
-        List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
+        Question question = new Question();
+        question.setInstructor(instructor);
+        List<Question> questionList = question.loadAllQuestionsByInstructor(questionDB);
         List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
-        Survey s = new Survey();
-        List<Question> surveyQuestions = s.getAllSurveyQuestions(questionList, questionsAddedToSurvey);
+        Survey survey = new Survey();
+        List<Question> surveyQuestions = survey.getAllSurveyQuestions(questionList, questionsAddedToSurvey);
         int isPublished = surveyDB.isSurveyPublished(courseID);
         model.addAttribute("questionlist", surveyQuestions);
         model.addAttribute("courseid", courseID);
