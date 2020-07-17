@@ -12,7 +12,11 @@ import java.util.List;
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.Response.Response;
 
 public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersistence {
@@ -26,8 +30,9 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 	public boolean createAlgorithm(GroupFormationAlgorithm algorithm) {
 		CallStoredProcedure proc = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try {
-
 			proc = new CallStoredProcedure("spCreateAlgorithm(?, ?, ?, ?, ?)");
 			proc.setParameter(1, algorithm.getCourse().getId());
 			proc.setParameter(2, sdf.format(algorithm.getCreatedOn()));
@@ -46,7 +51,7 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 				proc.execute();
 			}
 		} catch (SQLException e) {
-			// Logging needed
+			logger.logMessage(e.getMessage(),"Check create Algorithm method", SystemConfig.instance().getLogDB());
 			return false;
 		} finally {
 			if (null != proc) {
@@ -59,6 +64,8 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 	@Override
 	public GroupFormationAlgorithm loadAlgorithmByCourse(Course course) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		List<Question> questions = new ArrayList<>();
 		List<Double> weights = new ArrayList<>();
 		List<Boolean> comparisonChoices = new ArrayList<>();
@@ -99,8 +106,9 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 					.setQuestions(questions).setWeights(weights).getGroupFormationAlgorithm();
 
 		} catch (SQLException e) {
-			// Logging needed.
+			logger.logMessage(e.getMessage(),"Check load algorithm by course method", SystemConfig.instance().getLogDB());
 		} catch (ParseException e) {
+			logger.logMessage(e.getMessage(),"Parse error in load algorithm by course method", SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 		} finally {
 			if (null != proc) {

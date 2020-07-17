@@ -1,7 +1,11 @@
 package CSCI5308.GroupFormationTool.Response;
 
 import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +21,8 @@ public class ResponseDB implements IResponsePersistence {
     @Override
     public boolean saveResponse(ArrayList<Response> responses, int surveyID) {
         CallStoredProcedure proc = null;
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         try {
             for (Response r : responses) {
                 proc = new CallStoredProcedure("spSaveSurveyResponse(?,?,?)");
@@ -72,6 +78,7 @@ public class ResponseDB implements IResponsePersistence {
             return true;
         }
         catch (SQLException e) {
+            logger.logMessage(e.getMessage(),"Check question type in saveResponse function", SystemConfig.instance().getLogDB());
             e.printStackTrace();
             return false;
         }
@@ -85,6 +92,8 @@ public class ResponseDB implements IResponsePersistence {
     @Override
     public boolean isResponseprovidedByStudent(Long studentId, Long courseID) {
         CallStoredProcedure proc = null;
+        ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+        ILogger logger = loggerFactory.createLogger();
         try {
             proc = new CallStoredProcedure("spIsResponseprovidedByStudent(?,?)");
             proc.setParameter(1,courseID);
@@ -97,6 +106,7 @@ public class ResponseDB implements IResponsePersistence {
         }
         catch (SQLException e) {
             e.printStackTrace();
+            logger.logMessage(e.getMessage(),"Check student id in isResponseprovidedByStudent function", SystemConfig.instance().getLogDB());
             return false;
         }
         finally {

@@ -1,5 +1,8 @@
 package CSCI5308.GroupFormationTool.Security;
 
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
 import CSCI5308.GroupFormationTool.passwordConstraint.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +59,9 @@ public class SignupController
 			u.setFirstName(firstName);
 			u.setLastName(lastName);
 			u.setEmail(email);
+			ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+			ILogger infoLogger = infoLoggerFactory.createLogger();
+			infoLogger.logMessage("accessing /signup with user "+ u.toString(),null, SystemConfig.instance().getLogDB());
 			IUserPersistence userDB = SystemConfig.instance().getUserDB();
 			IPasswordEncryption passwordEncryption = SystemConfig.instance().getPasswordEncryption();
 			success = u.createUser(userDB, passwordEncryption, new UserNotification());
@@ -63,12 +69,10 @@ public class SignupController
 		ModelAndView m;
 		if (success)
 		{
-			// This is lame, I will improve this with auto-signin for M2.
 			m = new ModelAndView("login");
 		}
 		else
 		{
-			// Something wrong with the input data.
 			m = new ModelAndView("signup");
 			errorInformation.append("Invalid data, please check your values.");
 			m.addObject(ERROR, errorInformation.toString());

@@ -8,6 +8,16 @@ public class DefaultEmailConfiguration implements IEmailConfiguration {
     public static final String  STARTTLS = System.getenv("EMAIL_STARTTLS");
     public static final String  AUTH = System.getenv("EMAIL_AUTH");
     public static final String  CONTENT_TYPE = System.getenv("EMAIL_CONTENT_TYPE");
+    private static IEmailConfiguration instance;
+    private DefaultEmailConfiguration(){
+
+    }
+    public static IEmailConfiguration getInstance(){
+        if (null == instance){
+            instance = new DefaultEmailConfiguration();
+        }
+        return instance;
+    }
     @Override
     public String getHost() {
         return HOST;

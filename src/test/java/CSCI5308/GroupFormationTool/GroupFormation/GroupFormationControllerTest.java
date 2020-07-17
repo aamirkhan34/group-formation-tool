@@ -13,6 +13,7 @@ class GroupFormationControllerTest {
 
 	@Test
 	void testSurveyQuestions() {
+
 	}
 
 	@Test
@@ -39,6 +40,7 @@ class GroupFormationControllerTest {
 
 	@Test
 	void testGenerateAlgo() {
+
 	}
 
 }

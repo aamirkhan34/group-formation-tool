@@ -11,6 +11,9 @@ import CSCI5308.GroupFormationTool.Questions.Question;
 import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
 import CSCI5308.GroupFormationTool.Response.Response;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +28,13 @@ public class CourseController
 	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
 	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
 
+
 	@GetMapping("/course/course")
 	public String course(Model model, @RequestParam(name = ID) long courseID)
 	{
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("accessing /course/course with courseID"+courseID,null, SystemConfig.instance().getLogDB());
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
 		IResponsePersistence responseDB = SystemConfig.instance().getResponseDB();

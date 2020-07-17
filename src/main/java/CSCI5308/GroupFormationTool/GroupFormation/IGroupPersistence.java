@@ -12,4 +12,5 @@ public interface IGroupPersistence
 {
 	public boolean createGroups(List<Group> group);
 	public List<Group> loadGroupByCourse(Course course);
+
 }

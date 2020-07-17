@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.SystemConfig;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
@@ -23,12 +27,13 @@ public class StudentCSVParser implements IStudentCSVParser
 	public StudentCSVParser(MultipartFile file) 
 	{
 		this.uploadedFile = file;
-
 	}
 	
 	@Override
 	public List<User> parseCSVFile(List<String> failureResults) 
 	{
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		try
 		{
 			Reader reader = new InputStreamReader(uploadedFile.getInputStream());
@@ -56,10 +61,12 @@ public class StudentCSVParser implements IStudentCSVParser
 		}
 		catch (IOException e)
 		{
+			logger.logMessage(e.getMessage(),"Failure reading uploaded file", SystemConfig.instance().getLogDB());
 			failureResults.add("Failure reading uploaded file: " + e.getMessage());
 		}
 		catch (Exception e)
 		{
+			logger.logMessage(e.getMessage(),"Failure parsing CSV file", SystemConfig.instance().getLogDB());
 			failureResults.add("Failure parsing CSV file: " + e.getMessage());
 		}
 
