@@ -51,7 +51,6 @@ public class CustomAuthenticationManager implements AuthenticationManager
 			// Grant USER rights system-wide, this is used to protect controller mappings.
 			List<GrantedAuthority> rights = new ArrayList<GrantedAuthority>();
 			rights.add(new SimpleGrantedAuthority("USER"));
-			// Return valid authentication token.
 			UsernamePasswordAuthenticationToken token;
 			token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
 																			authentication.getCredentials(),

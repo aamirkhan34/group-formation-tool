@@ -1,7 +1,16 @@
 package CSCI5308.GroupFormationTool.Courses;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
+import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
+import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
+import CSCI5308.GroupFormationTool.Questions.Question;
+import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
+import CSCI5308.GroupFormationTool.Response.Response;
+import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import CSCI5308.GroupFormationTool.Logger.ILogger;
 import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
@@ -16,6 +25,9 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 public class CourseController
 {
 	private static final String ID = "id";
+	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
+	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
+
 
 	@GetMapping("/course/course")
 	public String course(Model model, @RequestParam(name = ID) long courseID)
@@ -24,13 +36,43 @@ public class CourseController
 		ILogger infoLogger = infoLoggerFactory.createLogger();
 		infoLogger.logMessage("accessing /course/course with courseID"+courseID,null, SystemConfig.instance().getLogDB());
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
+		IResponsePersistence responseDB = SystemConfig.instance().getResponseDB();
+		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
+		Response responses = new Response();
+		model.addAttribute("published", false);
+		model.addAttribute("notPublished", true);
+		List<Question> surveyQuestions = new ArrayList<>();
+		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
+		Boolean isSurveyProvided = responses.isResponseprovidedByStudent(responseDB, user.getID(),courseID);
+		if(isSurveyProvided){
+			model.addAttribute("issurveynotprovided", false);
+		}
+		else {
+			model.addAttribute("issurveynotprovided", true);
+		}
+		if (null != surveyQuestions){
+			model.addAttribute("responses", responses);
+			model.addAttribute("published", true);
+			model.addAttribute("notPublished", false);
+			ArrayList<MultipleChoiceOption> choices = new ArrayList<>();
+			for (Question question : surveyQuestions) {
+				if (question.getTypeID() == MULTI_CHOICE_MULTI_ONE_TYPE_ID || question.getTypeID() == MULTI_CHOICE_MULTI_MULTI_TYPE_ID) {
+					choices = question.getMultipleChoiceOption();
+					for (MultipleChoiceOption option : choices) {
+						model.addAttribute("choices", choices);
+						question.setMultipleChoiceOption(choices);
+					}
+				}
+			}
+			model.addAttribute("questionlist", surveyQuestions);
+		}
 		Course course = new Course();
 		courseDB.loadCourseByID(courseID, course);
 		model.addAttribute("course", course);
 		List<Role> userRoles = course.getAllRolesForCurrentUserInCourse();
 		if (null == userRoles)
 		{
-			// Default is user is a guest.
 			model.addAttribute("instructor", false);
 			model.addAttribute("ta", false);
 			model.addAttribute("student", false);

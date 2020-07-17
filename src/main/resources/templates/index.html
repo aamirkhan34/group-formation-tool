@@ -31,8 +31,8 @@
 				<h2>Welcome to the CSCI5308 Group 1 M3</h2>
 			</aside>
 			<div class="mainGridRow" sec:authorize="isAuthenticated()">
-				<!-- Display list of courses. -->
-				<!-- Learned how to do this here: https://www.baeldung.com/thymeleaf-list -->
+
+				<h1 th:if="${summary != null}" style="background-color:powderblue;"><span th:if="${summary != null}" th:text="${summary}"></span></h1>
 				<h3>GROUP1:</h3>
 				<h4>Available courses:</h4>
 				<table>
