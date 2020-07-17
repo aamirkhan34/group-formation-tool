@@ -1,6 +1,5 @@
 package CSCI5308.GroupFormationTool.GroupFormation;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

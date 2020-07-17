@@ -1,10 +1,8 @@
 package CSCI5308.GroupFormationTool.GroupFormation;
 
-import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
-import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
 import CSCI5308.GroupFormationTool.Response.Response;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
@@ -22,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +33,6 @@ public class GroupFormationController {
 		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
 		Survey s = new Survey();
 		List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
-
 		model.addAttribute("questionlist", questionsAddedToSurvey);
 		model.addAttribute("courseid", courseID);
 		return "definealgorithm";
@@ -79,26 +75,20 @@ public class GroupFormationController {
 			@RequestParam(name = "groupSize") int groupSize,
 			@RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs,
 			@RequestParam(name = "weight", required = false) ArrayList<Integer> weights) {
-
 		Course course = new Course();
 		course.setId(courseID);
-
 		List<Question> questions = new ArrayList<Question>();
 		for (int qID : questionIDs) {
 			Question question = new Question();
 			question.setId(qID);
 			questions.add(question);
 		}
-
 		List<Boolean> comparisonChoices = parseComparisonChoices(body);
 		List<Double> newWeights = normaliseWeights(weights);
-
-		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDB();
-
+		IGroupFormationAlgorithmPersistence algorithmDB = SystemConfig.instance().getAlgorithmDB();
 		GroupFormationAlgorithm algorithm = new GroupFormationAlgorithmBuilder().setCourse(course)
 				.setComparisonChoices(comparisonChoices).setCreatedOn(new Date()).setGroupSize(groupSize)
 				.setQuestions(questions).setWeights(newWeights).getGroupFormationAlgorithm();
-
 		boolean status = algorithm.createAlgorithm(algorithm, algorithmDB);
 
 		return "definealgorithm";
@@ -122,16 +112,13 @@ public class GroupFormationController {
 	public String generateGroups(Model model, @RequestParam(name = ID) long courseID) {
 		Course course = new Course();
 		course.setId(courseID);
-		
 		IMatchMatrixGeneration matGen = new ComparisonScoreMatrixGeneration();
 		IGroupGeneration grpGen = new MatchScoreGroupGeneration();
-		IGroupFormationAlgorithmPersistence algorithmDB = new GroupFormationAlgorithmDB();
+		IGroupFormationAlgorithmPersistence algorithmDB = SystemConfig.instance().getAlgorithmDB();
 		GroupFormationAlgorithm algorithm = algorithmDB.loadAlgorithmByCourse(course);
 		LinkedHashMap<User, List<Response>> responses = algorithmDB.loadUsersResponsesByCourseID(courseID);		
-		
 		List<Group> groups = algorithm.runAlgorithm(matGen, grpGen, algorithm, responses, course);
-		
-		IGroupPersistence groupDB = new GroupDB();
+		IGroupPersistence groupDB = SystemConfig.instance().getGroupDB();
 		boolean status = groupDB.createGroups(groups);
 		
 		return "definealgorithm";

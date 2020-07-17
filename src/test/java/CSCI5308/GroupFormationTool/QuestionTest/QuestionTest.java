@@ -1,23 +1,13 @@
 package CSCI5308.GroupFormationTool.QuestionTest;
 
-import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Courses.Course;
-import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
-import CSCI5308.GroupFormationTool.CoursesTest.CourseDBMock;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
-
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,69 +17,69 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QuestionTest {
 
     @Test
-    public void getIdTest() {
+    public void testGetId() {
         Question question = new Question();
         question.setId(123);
         assertEquals(123, question.getId());
     }
 
     @Test
-    public void setIdTest() {
+    public void testSetId() {
         Question question = new Question();
         question.setId(1234);
         assertEquals(1234,question.getId());
     }
 
     @Test
-    public void getTitleTest() {
+    public void testGetTitle() {
         Question question = new Question();
         question.setTitle("Question title getter test");
         assertEquals("Question title getter test", question.getTitle());
     }
 
     @Test
-    public void setTitleTest() {
+    public void testSetTitle() {
         Question question = new Question();
         question.setType("Question title setter test");
         assertEquals("Question title setter test",question.getType());
     }
 
     @Test
-    public void getTextTest() {
+    public void testGetText() {
         Question question = new Question();
         question.setText("Question text getter test");
         assertEquals("Question text getter test", question.getText());
     }
     @Test
-    public void gettypeIDtest(){
+    public void testGettypeID(){
         Question question = new Question();
         question.setTypeID(123);
         assertEquals(123, question.getTypeID());
     }
 
     @Test
-    public void setTextTest() {
+    public void testSetText() {
         Question question = new Question();
         question.setText("Question text setter test");
         assertEquals("Question text setter test", question.getText());
     }
 
     @Test
-    public void getTypeTest() {
+    public void testGetType() {
         Question question = new Question();
         question.setType("Question type getter test");
         assertEquals("Question type getter test", question.getType());
     }
 
     @Test
-    public void setTypeTest() {
+    public void testSetType() {
         Question question = new Question();
         question.setType("Question type setter test");
         assertEquals("Question type setter test",question.getType());
     }
 
     @Test
-    public void getInstructorTest() {
+    public void testGetInstructor() {
         Question question = new Question();
         User u = new User();
         u.setId(1234);
@@ -98,7 +88,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void setInstructorTest() {
+    public void testSetInstructor() {
         Question question = new Question();
         User u = new User();
         u.setId(100);
@@ -108,7 +98,7 @@ public class QuestionTest {
 
 
     @Test
-    public void getMultipleChoiceOptionTest() {
+    public void testGetMultipleChoiceOption() {
         Question question = new Question();
         ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
 
@@ -133,7 +123,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void setMultipleChoiceOptionTest() {
+    public void testSetMultipleChoiceOption() {
         Question question = new Question();
         ArrayList<MultipleChoiceOption> choices = new ArrayList<MultipleChoiceOption>();
 
@@ -158,7 +148,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void createQuestionTest() {
+    public void testCreateQuestion() {
         IQuestionPersistence queDB = new QuestionDBMock();
 
         Question question = new Question();
@@ -187,18 +177,17 @@ public class QuestionTest {
 
 
     @Test
-    public void loadAllQuestionTypes()
+    public void testLoadAllQuestionTypes()
     {
         IQuestionPersistence queDB = new QuestionDBMock();
         List<Question> questionList  = queDB.loadAllQuestionTypes();
         for (Question questionin: questionList) {
             assertNotNull(questionin);
         }
-
     }
 
     @Test
-    public void loadAllQuestionsByInstructor()
+    public void testLoadAllQuestionsByInstructor()
     {
         IQuestionPersistence queDB = new QuestionDBMock();
         List<Question> questions  = queDB.loadAllQuestionsByInstructor(1);
@@ -208,7 +197,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void loadQuestionById(){
+    public void testLoadQuestionById(){
         IQuestionPersistence queDB = new QuestionDBMock();
 
         Question question = queDB.loadQuestionById(1);
@@ -226,7 +215,7 @@ public class QuestionTest {
     }
     
     @Test
-	public void deleteQuestionTest() {
+	public void testDeleteQuestion() {
     	// Create a question
     	IQuestionPersistence queDB = new QuestionDBMock();
 

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MultipleChoiceOptionTest {
 
     @Test
-    public void getDisplayTextTest() {
+    public void testGetDisplayText() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         assertTrue(multipleChoiceOption.getDisplayText().isEmpty());
         multipleChoiceOption.setDisplayText("test");
@@ -17,21 +17,21 @@ public class MultipleChoiceOptionTest {
     }
 
     @Test
-    public void setDisplayTextTest() {
+    public void testSetDisplayText() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         multipleChoiceOption.setDisplayText("Display text");
         assertTrue(multipleChoiceOption.getDisplayText().equals("Display text"));
     }
 
     @Test
-    public void getOptionNumberTest() {
+    public void testGetOptionNumber() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         multipleChoiceOption.setOptionNumber(1000);
         assertEquals(1000, multipleChoiceOption.getOptionNumber());
     }
 
     @Test
-    public void setOptionNumberTest() {
+    public void testSetOptionNumber() {
         MultipleChoiceOption multipleChoiceOption = new MultipleChoiceOption();
         multipleChoiceOption.setOptionNumber(1234);
         assertEquals(1234, multipleChoiceOption.getOptionNumber());

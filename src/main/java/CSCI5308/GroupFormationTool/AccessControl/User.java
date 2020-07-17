@@ -3,7 +3,6 @@ package CSCI5308.GroupFormationTool.AccessControl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import CSCI5308.GroupFormationTool.Database.ConnectionManager;
 import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
 import CSCI5308.GroupFormationTool.Logger.ILogger;
 import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;

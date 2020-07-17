@@ -26,7 +26,7 @@ class CourseUserRelationshipTest
 	}
 
 	@Test
-	public void userHasRoleInCourse() 
+	public void testUserHasRoleInCourse() 
 	{
 		Course course = new Course();
 		course.setId(0);
@@ -39,7 +39,7 @@ class CourseUserRelationshipTest
 	}
 
 	@Test
-	public void loadAllRoluesForUserInCourse() 
+	public void testLoadAllRoluesForUserInCourse() 
 	{
 		Course course = new Course();
 		course.setId(0);
@@ -50,7 +50,7 @@ class CourseUserRelationshipTest
 	}
 
 	@Test
-	public void enrollUserInCourse() 
+	public void testEnrollUserInCourse() 
 	{
 		Course course = new Course();
 		CurrentUserMock currentUser = new CurrentUserMock();

@@ -5,7 +5,6 @@ import java.util.List;
 
 import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
 import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
@@ -29,14 +28,9 @@ public class CourseController
 	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
 	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
 
-
 	@GetMapping("/course/course")
 	public String course(Model model, @RequestParam(name = ID) long courseID)
 	{
-		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
-		ILogger infoLogger = infoLoggerFactory.createLogger();
-		Survey survey = new Survey();
-		infoLogger.logMessage("accessing /course/course with courseID"+courseID,null, SystemConfig.instance().getLogDB());
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
 		IResponsePersistence responseDB = SystemConfig.instance().getResponseDB();
@@ -45,9 +39,14 @@ public class CourseController
 		model.addAttribute("published", false);
 		model.addAttribute("notPublished", true);
 		List<Question> surveyQuestions = new ArrayList<>();
-		surveyQuestions = survey.loadSurveyQuestionsByCourseId(surveyDB,courseID);
+		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
 		Boolean isSurveyProvided = responses.isResponseprovidedByStudent(responseDB, user.getID(),courseID);
-		model.addAttribute("issurveynotprovided", !isSurveyProvided);
+		if(isSurveyProvided){
+			model.addAttribute("issurveynotprovided", false);
+		}
+		else {
+			model.addAttribute("issurveynotprovided", true);
+		}
 		if (null != surveyQuestions){
 			model.addAttribute("responses", responses);
 			model.addAttribute("published", true);
@@ -84,4 +83,5 @@ public class CourseController
 		}
 		return "course/course";
 	}
+
 }

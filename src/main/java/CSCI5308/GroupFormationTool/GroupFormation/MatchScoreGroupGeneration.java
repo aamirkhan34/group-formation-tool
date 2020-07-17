@@ -1,7 +1,6 @@
 package CSCI5308.GroupFormationTool.GroupFormation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
-import CSCI5308.GroupFormationTool.Response.Response;
 
 public class MatchScoreGroupGeneration implements IGroupGeneration {
 
@@ -96,7 +94,6 @@ public class MatchScoreGroupGeneration implements IGroupGeneration {
 			matchMatrix = removeAlreadyGroupedStudents(matchMatrix, groupx);
 		}
 
-		// Leftovers, if any
 		List<User> extras = new ArrayList<User>();
 		for (Group group : groups) {
 			for (User student : group.getStudents()) {

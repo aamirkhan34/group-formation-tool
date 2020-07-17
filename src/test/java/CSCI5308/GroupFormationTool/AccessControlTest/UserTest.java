@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 public class UserTest
 {
 	@Test
-	public void ConstructorTests()
+	public void testConstructor()
 	{
 		User u = new User();
 		Assert.isTrue(u.getBannerID().isEmpty());
@@ -28,7 +28,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void setIDTest()
+	public void testSetID()
 	{
 		User u = new User();
 		u.setID(10);
@@ -36,7 +36,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void getIDTest()
+	public void testGetID()
 	{
 		User u = new User();
 		u.setID(10);
@@ -44,7 +44,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void setBannerIDTest()
+	public void testSetBannerID()
 	{
 		User u = new User();
 		u.setBannerID("B00000000");
@@ -52,7 +52,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void getBannerIDTest()
+	public void testGetBannerID()
 	{
 		User u = new User();
 		u.setBannerID("B00000000");
@@ -60,7 +60,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void setFirstNameTest()
+	public void testSetFirstName()
 	{
 		User u = new User();
 		u.setFirstName("Rob");
@@ -68,7 +68,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void getFirstNameTest()
+	public void testGetFirstName()
 	{
 		User u = new User();
 		u.setFirstName("Rob");
@@ -76,7 +76,7 @@ public class UserTest
 	}
 
 	@Test
-	public void setLastNameTest()
+	public void testSetLastName()
 	{
 		User u = new User();
 		u.setLastName("Hawkey");
@@ -84,7 +84,7 @@ public class UserTest
 	}
 
 	@Test
-	public void getLastNameTest()
+	public void testGetLastName()
 	{
 		User u = new User();
 		u.setLastName("Hawkey");
@@ -92,7 +92,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void setEmailTest()
+	public void testSetEmail()
 	{
 		User u = new User();
 		u.setEmail("rhawkey@dal.ca");
@@ -100,7 +100,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void getEmailTest()
+	public void testGetEmail()
 	{
 		User u = new User();
 		u.setEmail("rhawkey@dal.ca");
@@ -108,7 +108,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void createUser()
+	public void testCreateUser()
 	{		
 		IUserPersistence userDB = new UserDBMock();
 		User user = new User();
@@ -118,7 +118,7 @@ public class UserTest
 	}
 
 	@Test
-	public void isBannerIDValidTest()
+	public void testIsBannerIDValid()
 	{
 		Assert.isTrue(User.isBannerIDValid("B000000000"));
 		Assert.isTrue(!User.isBannerIDValid(null));
@@ -126,7 +126,7 @@ public class UserTest
 	}
 		
 	@Test
-	public void isFirstNameValidTest()
+	public void testIsFirstNameValid()
 	{
 		Assert.isTrue(User.isFirstNameValid("rob"));
 		Assert.isTrue(!User.isFirstNameValid(null));
@@ -134,7 +134,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void isLastNameValidTest()
+	public void testIsLastNameValid()
 	{
 		Assert.isTrue(User.isLastNameValid("hawkey"));
 		Assert.isTrue(!User.isLastNameValid(null));
@@ -142,7 +142,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void isEmailValidTest()
+	public void testIsEmailValid()
 	{
 		Assert.isTrue(User.isEmailValid("rhawkey@dal.ca"));
 		Assert.isTrue(!User.isEmailValid(null));

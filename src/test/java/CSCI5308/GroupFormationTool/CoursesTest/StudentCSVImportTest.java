@@ -22,7 +22,7 @@ class StudentCSVImportTest
 {
 
 	@Test
-	public void enrollStudentFromRecord() 
+	public void testEnrollStudentFromRecord() 
 	{
 		User user = new User();
 		Course course = new Course();
@@ -33,7 +33,7 @@ class StudentCSVImportTest
 	}
 
 	@Test
-	public void getSuccessResults() 
+	public void testGetSuccessResults() 
 	{
 		List<String> successResults = new ArrayList<String>();
 		successResults.add("Created record");
@@ -43,7 +43,7 @@ class StudentCSVImportTest
 	}
 
 	@Test
-	public void getFailureResults() 
+	public void testGetFailureResults() 
 	{
 		List<String> failureResults = new ArrayList<String>();
 		failureResults.add("Created record");

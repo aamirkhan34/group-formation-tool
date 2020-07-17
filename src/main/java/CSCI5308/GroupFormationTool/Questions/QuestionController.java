@@ -131,7 +131,6 @@ public class QuestionController {
 	@GetMapping("/question/questiondelete/{questionId}")
 	public String renderCourseAdminPage(@PathVariable("questionId") long questionId, Model model,
 			RedirectAttributes redirectAttributes) {
-		// Delete selected question
 		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
 		ILogger infoLogger = infoLoggerFactory.createLogger();
 		infoLogger.logMessage("/question/questiondelete with questionID" + questionId,null, SystemConfig.instance().getLogDB());
@@ -145,7 +144,6 @@ public class QuestionController {
 			redirectAttributes.addFlashAttribute("message", "Failed to delete");
 		}
 
-		// Get updated questions list
 		User user = CurrentUser.instance().getCurrentAuthenticatedUser();
 		q.setInstructor(user);
 		List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
@@ -163,7 +161,6 @@ public class QuestionController {
 		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
 		ILogger infoLogger = infoLoggerFactory.createLogger();
 		infoLogger.logMessage("/question/questionsort with body " + body+" user "+user.toString(),null, SystemConfig.instance().getLogDB());
-		// Sort
 		String sortOption = body.split("sort=")[1];
 		ISortQuestions sq = new SortQuestions();
 
