@@ -26,7 +26,7 @@ public class InstructorAdminController
 	{
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		Course course = new Course();
-		courseDB.loadCourseByID(courseID, course);
+		course.loadCourseByID(courseID, course);
 		model.addAttribute("course", course);
 		model.addAttribute("displayresults", false);
 		if (course.isCurrentUserEnrolledAsRoleInCourse(Role.INSTRUCTOR) ||
@@ -50,7 +50,7 @@ public class InstructorAdminController
 	{
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		Course course = new Course();
-		courseDB.loadCourseByID(courseID, course);
+		course.loadCourseByID(courseID, course);
 		model.addAttribute("course", course);
 		model.addAttribute("displayresults", false);
 		model.addAttribute(SUCCESSFUL, successful);
@@ -73,7 +73,7 @@ public class InstructorAdminController
 	{
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		Course course = new Course();
-		courseDB.loadCourseByID(courseID, course);
+		course.loadCourseByID(courseID, course);
 		model.addAttribute("course", course);
 		if (course.isCurrentUserEnrolledAsRoleInCourse(Role.INSTRUCTOR) ||
 			 course.isCurrentUserEnrolledAsRoleInCourse(Role.TA))
@@ -91,7 +91,7 @@ public class InstructorAdminController
    {
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		Course course = new Course();
-		courseDB.loadCourseByID(courseID, course);
+		course.loadCourseByID(courseID, course);
 		IStudentCSVParser parser = new StudentCSVParser(file);
 		StudentCSVImport importer = new StudentCSVImport(parser, course);
 		ModelAndView mav = new ModelAndView("redirect:/course/instructoradminresults?id=" + Long.toString(courseID));

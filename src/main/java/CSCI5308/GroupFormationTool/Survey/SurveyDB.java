@@ -7,10 +7,8 @@ import CSCI5308.GroupFormationTool.Logger.ILogger;
 import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
-import CSCI5308.GroupFormationTool.Questions.QuestionDB;
 import CSCI5308.GroupFormationTool.SystemConfig;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ public class SurveyDB implements ISurveyPersistence {
             createSurveyQuestions(surveyIdfromDB, survey.getSurveyQuestionList());
             return true;
         } catch (SQLException e) {
-            logger.logMessage(e.getMessage(),"Check surveyID in DB and error is from createSurvey method",SystemConfig.instance().getLogDB());
+            logger.logMessage(e.getMessage(), "Check surveyID in DB and error is from createSurvey method", SystemConfig.instance().getLogDB());
             e.printStackTrace();
             return false;
         } finally {
@@ -59,7 +57,7 @@ public class SurveyDB implements ISurveyPersistence {
             }
             return true;
         } catch (SQLException e) {
-            logger.logMessage(e.getMessage(),"Check surveyID from DB and error is from publishSurvey method",SystemConfig.instance().getLogDB());
+            logger.logMessage(e.getMessage(), "Check surveyID from DB and error is from publishSurvey method", SystemConfig.instance().getLogDB());
             e.printStackTrace();
             return false;
         } finally {
@@ -74,39 +72,38 @@ public class SurveyDB implements ISurveyPersistence {
         ILoggerFactory loggerFactory = new ErrorLoggerFactory();
         ILogger logger = loggerFactory.createLogger();
         CallStoredProcedure proc = null;
-            try {
-                if(isSurveyPublished(courseId) != 0) {
-                    List<Question> surveyQuestions = new ArrayList<Question>();
-                    List<Long> questionIDs = null;
-                    IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
-                    int surveyID = isSurveyPublished(courseId);
-                    proc = new CallStoredProcedure("spLoadSurveyQuestionsBySurveyId(?)");
-                    proc.setParameter(1, surveyID);
-                    ResultSet resultSet = proc.executeWithResults();
-                    while (resultSet.next()) {
-                        int questionID = resultSet.getInt(1);
-                        Question question = new Question();
-                        question = questionDB.loadQuestionById(questionID);
-                        surveyQuestions.add(question);
-                    }
-                    return surveyQuestions;
+        try {
+            if (isSurveyPublished(courseId) != 0) {
+                List<Question> surveyQuestions = new ArrayList<Question>();
+                List<Long> questionIDs = null;
+                IQuestionPersistence questionDB = SystemConfig.instance().getQuestionDB();
+                int surveyID = isSurveyPublished(courseId);
+                proc = new CallStoredProcedure("spLoadSurveyQuestionsBySurveyId(?)");
+                proc.setParameter(1, surveyID);
+                ResultSet resultSet = proc.executeWithResults();
+                while (resultSet.next()) {
+                    int questionID = resultSet.getInt(1);
+                    Question question = new Question();
+                    question = questionDB.loadQuestionById(questionID);
+                    surveyQuestions.add(question);
                 }
-                else {
-                    return null;
-                }
-            } catch (SQLException e) {
-                logger.logMessage(e.getMessage(),"Check questionID in DB and error is from loadSurveyQuestions method",SystemConfig.instance().getLogDB());
-                e.printStackTrace();
-            } finally {
-                if (null != proc) {
-                    proc.cleanup();
-                }
+                return surveyQuestions;
+            } else {
+                return null;
             }
+        } catch (SQLException e) {
+            logger.logMessage(e.getMessage(), "Check questionID in DB and error is from loadSurveyQuestions method", SystemConfig.instance().getLogDB());
+            e.printStackTrace();
+        } finally {
+            if (null != proc) {
+                proc.cleanup();
+            }
+        }
         return null;
     }
 
     @Override
-    public int isSurveyPublished(Long courseID){
+    public int isSurveyPublished(Long courseID) {
         ILoggerFactory loggerFactory = new ErrorLoggerFactory();
         ILogger logger = loggerFactory.createLogger();
         CallStoredProcedure proc = null;
@@ -119,9 +116,8 @@ public class SurveyDB implements ISurveyPersistence {
                 surveyID = resultSet.getInt(1);
             }
             return surveyID;
-        }
-        catch (SQLException e) {
-            logger.logMessage(e.getMessage(),"Check surveyID in DB and error is from isSurveyPublished method",SystemConfig.instance().getLogDB());
+        } catch (SQLException e) {
+            logger.logMessage(e.getMessage(), "Check surveyID in DB and error is from isSurveyPublished method", SystemConfig.instance().getLogDB());
             e.printStackTrace();
             return surveyID;
         } finally {
@@ -153,7 +149,7 @@ public class SurveyDB implements ISurveyPersistence {
                 }
             }
         } catch (SQLException e) {
-            logger.logMessage(e.getMessage(),"Check question details in DB and error is from loadSurveyQuestionsByCourseId method",SystemConfig.instance().getLogDB());
+            logger.logMessage(e.getMessage(), "Check question details in DB and error is from loadSurveyQuestionsByCourseId method", SystemConfig.instance().getLogDB());
             e.printStackTrace();
         } finally {
             if (null != proc) {
@@ -168,18 +164,18 @@ public class SurveyDB implements ISurveyPersistence {
         ILoggerFactory loggerFactory = new ErrorLoggerFactory();
         ILogger logger = loggerFactory.createLogger();
         CallStoredProcedure proc = null;
-        int instructorId =0;
+        int instructorId = 0;
         try {
             proc = new CallStoredProcedure("spFindInstructorOfTA(?)");
             proc.setParameter(1, courseID);
             ResultSet results = proc.executeWithResults();
             if (null != results) {
                 while (results.next()) {
-                    instructorId=results.getInt(1);
+                    instructorId = results.getInt(1);
                 }
             }
         } catch (SQLException e) {
-            logger.logMessage(e.getMessage(),"Check InstructorID in DB and error is from findInstructorOfTA method",SystemConfig.instance().getLogDB());
+            logger.logMessage(e.getMessage(), "Check InstructorID in DB and error is from findInstructorOfTA method", SystemConfig.instance().getLogDB());
             e.printStackTrace();
         } finally {
             if (null != proc) {
@@ -204,7 +200,7 @@ public class SurveyDB implements ISurveyPersistence {
             }
             return true;
         } catch (SQLException e) {
-            logger.logMessage(e.getMessage(),"Check stored procedure in DB and error is from createSurveyQuestions method",SystemConfig.instance().getLogDB());
+            logger.logMessage(e.getMessage(), "Check stored procedure in DB and error is from createSurveyQuestions method", SystemConfig.instance().getLogDB());
             e.printStackTrace();
             return false;
         } finally {

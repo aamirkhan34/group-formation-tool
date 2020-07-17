@@ -14,6 +14,7 @@ import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import CSCI5308.GroupFormationTool.Logger.ILogger;
 import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
+import CSCI5308.GroupFormationTool.Survey.Survey;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class CourseController
 	{
 		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
 		ILogger infoLogger = infoLoggerFactory.createLogger();
+		Survey survey = new Survey();
 		infoLogger.logMessage("accessing /course/course with courseID"+courseID,null, SystemConfig.instance().getLogDB());
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
@@ -43,14 +45,9 @@ public class CourseController
 		model.addAttribute("published", false);
 		model.addAttribute("notPublished", true);
 		List<Question> surveyQuestions = new ArrayList<>();
-		surveyQuestions = surveyDB.loadSurveyQuestions(courseID);
+		surveyQuestions = survey.loadSurveyQuestionsByCourseId(surveyDB,courseID);
 		Boolean isSurveyProvided = responses.isResponseprovidedByStudent(responseDB, user.getID(),courseID);
-		if(isSurveyProvided){
-			model.addAttribute("issurveynotprovided", false);
-		}
-		else {
-			model.addAttribute("issurveynotprovided", true);
-		}
+		model.addAttribute("issurveynotprovided", !isSurveyProvided);
 		if (null != surveyQuestions){
 			model.addAttribute("responses", responses);
 			model.addAttribute("published", true);
