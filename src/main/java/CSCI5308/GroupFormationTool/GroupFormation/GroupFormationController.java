@@ -3,6 +3,9 @@ package CSCI5308.GroupFormationTool.GroupFormation;
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
 import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
+import CSCI5308.GroupFormationTool.Logger.ILogger;
+import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
+import CSCI5308.GroupFormationTool.Logger.InfoLoggerFactory;
 import CSCI5308.GroupFormationTool.Questions.Question;
 import CSCI5308.GroupFormationTool.Response.Response;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
@@ -30,6 +33,9 @@ public class GroupFormationController {
 
 	@GetMapping("/groupformation/algorithm")
 	public String surveyQuestions(Model model, @RequestParam(name = ID) long courseID) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/groupformation/algorithm with course id "+ courseID,null, SystemConfig.instance().getLogDB());
 		ISurveyPersistence surveyDB = SystemConfig.instance().getSurveyDB();
 		Survey s = new Survey();
 		List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
@@ -75,6 +81,12 @@ public class GroupFormationController {
 			@RequestParam(name = "groupSize") int groupSize,
 			@RequestParam(name = QUESTIONID, required = false) ArrayList<Integer> questionIDs,
 			@RequestParam(name = "weight", required = false) ArrayList<Integer> weights) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/groupformation/algorithm with course id " + courseID
+				+ " body: "+body
+				+" group size "+groupSize
+				+" questions and weights ",null, SystemConfig.instance().getLogDB());
 		Course course = new Course();
 		course.setId(courseID);
 		List<Question> questions = new ArrayList<Question>();
@@ -96,6 +108,9 @@ public class GroupFormationController {
 
 	@RequestMapping(value = "/groupformation/groups", method = RequestMethod.GET)
 	public String displayGroups(Model model, @RequestParam(name = ID) long courseID) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/groupformation/groups with course id " + courseID ,null, SystemConfig.instance().getLogDB());
 		Course course = new Course();
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
 		courseDB.loadCourseByID(courseID, course);
@@ -110,6 +125,9 @@ public class GroupFormationController {
 
 	@RequestMapping(value = "/groupformation/runalgorithm")
 	public String generateGroups(Model model, @RequestParam(name = ID) long courseID) {
+		ILoggerFactory infoLoggerFactory = new InfoLoggerFactory();
+		ILogger infoLogger = infoLoggerFactory.createLogger();
+		infoLogger.logMessage("/groupformation/runalgorithm with course id"+ courseID,null, SystemConfig.instance().getLogDB());
 		Course course = new Course();
 		course.setId(courseID);
 		IMatchMatrixGeneration matGen = new ComparisonScoreMatrixGeneration();
