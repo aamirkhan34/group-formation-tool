@@ -1,7 +1,6 @@
 package CSCI5308.GroupFormationTool.Logger;
 
 
-
 public class ErrorLoggerFactory implements ILoggerFactory {
     @Override
     public ILogger createLogger() {

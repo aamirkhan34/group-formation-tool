@@ -1,23 +1,13 @@
 package CSCI5308.GroupFormationTool.QuestionTest;
 
-import CSCI5308.GroupFormationTool.SystemConfig;
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Courses.Course;
-import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
-import CSCI5308.GroupFormationTool.CoursesTest.CourseDBMock;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
-
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

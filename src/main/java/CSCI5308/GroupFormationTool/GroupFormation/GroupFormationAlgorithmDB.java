@@ -120,6 +120,8 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 
 	@Override
 	public LinkedHashMap<User, List<Response>> loadUsersResponsesByCourseID(Long courseID) {
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		CallStoredProcedure proc = null;
 		try {
 			LinkedHashMap<User, List<Response>> responses = new LinkedHashMap<>();
@@ -221,6 +223,7 @@ public class GroupFormationAlgorithmDB implements IGroupFormationAlgorithmPersis
 			return responses;
 		}
 		catch (SQLException e) {
+			logger.logMessage(e.getMessage(),"Check loadUsersResponsesByCourseID method", SystemConfig.instance().getLogDB());
 			e.printStackTrace();
 			return null;
 		}

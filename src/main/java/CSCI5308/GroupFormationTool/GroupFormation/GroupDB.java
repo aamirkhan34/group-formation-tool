@@ -17,7 +17,6 @@ import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
 import CSCI5308.GroupFormationTool.Response.Response;
 import CSCI5308.GroupFormationTool.SystemConfig;
 
-import javax.xml.transform.Result;
 
 public class GroupDB implements IGroupPersistence {
 	private static final int NUMERIC_TYPE_ID = 1;

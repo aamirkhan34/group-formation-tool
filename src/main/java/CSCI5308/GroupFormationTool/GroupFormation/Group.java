@@ -4,8 +4,6 @@ import java.util.*;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
 import CSCI5308.GroupFormationTool.Courses.Course;
-import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
-import CSCI5308.GroupFormationTool.Response.Response;
 
 public class Group {
 	private long id;

@@ -4,7 +4,6 @@ import CSCI5308.GroupFormationTool.Database.CallStoredProcedure;
 import CSCI5308.GroupFormationTool.Logger.ErrorLoggerFactory;
 import CSCI5308.GroupFormationTool.Logger.ILogger;
 import CSCI5308.GroupFormationTool.Logger.ILoggerFactory;
-import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.SystemConfig;
 
 import java.sql.ResultSet;
