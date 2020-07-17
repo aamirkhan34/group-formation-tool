@@ -19,10 +19,6 @@ import CSCI5308.GroupFormationTool.SystemConfig;
 
 
 public class GroupDB implements IGroupPersistence {
-	private static final int NUMERIC_TYPE_ID = 1;
-	private static final int MULTI_CHOICE_MULTI_ONE_TYPE_ID = 2;
-	private static final int MULTI_CHOICE_MULTI_MULTI_TYPE_ID = 3;
-	private static final int FREE_TEXT_TYPE_ID = 4;
 
 	@Override
 	public boolean createGroups(List<Group> group) {
