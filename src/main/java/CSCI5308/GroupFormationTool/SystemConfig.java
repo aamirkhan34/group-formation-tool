@@ -3,6 +3,8 @@ package CSCI5308.GroupFormationTool;
 import CSCI5308.GroupFormationTool.Email.DefaultEmailConfiguration;
 import CSCI5308.GroupFormationTool.Email.IEmailConfiguration;
 import CSCI5308.GroupFormationTool.GroupFormation.GroupDB;
+import CSCI5308.GroupFormationTool.GroupFormation.GroupFormationAlgorithmDB;
+import CSCI5308.GroupFormationTool.GroupFormation.IGroupFormationAlgorithmPersistence;
 import CSCI5308.GroupFormationTool.GroupFormation.IGroupPersistence;
 import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.QuestionDB;
@@ -44,6 +46,7 @@ public class SystemConfig
 	private IPasswordHistoryConstraintConfiguration passwordHistoryConstraintConfiguration;
 	private ISurveyPersistence surveyDB;
 	private IResponsePersistence responseDB;
+	private IGroupFormationAlgorithmPersistence algorithmDB;
 	// This private constructor ensures that no class other than System can allocate
 	// the System object. The compiler would prevent it.
 
@@ -61,6 +64,14 @@ public class SystemConfig
 
 	public void setGroupDB(IGroupPersistence groupDB) {
 		this.groupDB = groupDB;
+	}
+	
+	public IGroupFormationAlgorithmPersistence getAlgorithmDB() {
+		return algorithmDB;
+	}
+
+	public void setGroupDB(IGroupFormationAlgorithmPersistence algorithmDB) {
+		this.algorithmDB = algorithmDB;
 	}
 
 	private SystemConfig()
@@ -80,6 +91,7 @@ public class SystemConfig
 		surveyDB = new SurveyDB();
 		responseDB = new ResponseDB();
 		groupDB = new GroupDB();
+		algorithmDB = new GroupFormationAlgorithmDB();
 	}
 	// This is the way the rest of the application gets access to the System object.
 
