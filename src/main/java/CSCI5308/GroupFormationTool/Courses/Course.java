@@ -4,6 +4,7 @@ import java.util.List;
 
 import CSCI5308.GroupFormationTool.AccessControl.CurrentUser;
 import CSCI5308.GroupFormationTool.AccessControl.User;
+import CSCI5308.GroupFormationTool.SystemConfig;
 
 public class Course
 {
@@ -87,5 +88,16 @@ public class Course
 				", title='" + title + '\'' +
 				", userRoleDecider=" + userRoleDecider +
 				'}';
+	}
+
+	public void loadCourseByID(long id, Course course)
+	{
+		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		courseDB.loadCourseByID(id,course);
+	}
+
+	public List<Course> loadAllCourses(){
+		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
+		return courseDB.loadAllCourses();
 	}
 }

@@ -71,4 +71,9 @@ public class Survey {
         }
         return questionList;
     }
+
+    public List<Question> loadSurveyQuestionsByCourseId(ISurveyPersistence surveyDB,Long courseID)
+    {
+     return surveyDB.loadSurveyQuestionsByCourseId(courseID);
+    }
 }
