@@ -1,7 +1,6 @@
 package CSCI5308.GroupFormationTool.SurveyTest;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import CSCI5308.GroupFormationTool.Survey.Survey;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SurveyDBMock implements ISurveyPersistence {
+
     @Override
     public boolean createSurvey(Survey survey) {
         User user = new User();
@@ -43,7 +43,6 @@ public class SurveyDBMock implements ISurveyPersistence {
         question3.setId(3);
         questions.add(question3);
         survey.setSurveyQuestionList(questions);
-
         return true;
     }
 
@@ -123,8 +122,8 @@ public class SurveyDBMock implements ISurveyPersistence {
         questions.add(question3);
 
         if (id != 0) {
-            for(Question  q:questions){
-                if(q.getId()==id){
+            for (Question q : questions) {
+                if (q.getId() == id) {
                     surveyQuestions.add(q);
                 }
             }
@@ -142,8 +141,7 @@ public class SurveyDBMock implements ISurveyPersistence {
         user.setFirstName("Pratz");
         user.setLastName("B");
         user.setEmail("pr676280@dal.ca");
-        if(id == 1)
-        {
+        if (id == 1) {
             return user;
         }
         return null;

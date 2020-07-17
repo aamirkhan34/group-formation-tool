@@ -1,7 +1,6 @@
 package CSCI5308.GroupFormationTool.Survey;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
 import CSCI5308.GroupFormationTool.Questions.Question;
 
 import java.util.ArrayList;
@@ -63,13 +62,13 @@ public class Survey {
     }
 
     public List<Question> getAllSurveyQuestions(List<Question> questionList, List<Question> questionsAddedToSurvey) {
-        for(Question queList:questionList){
-            for(Question q:questionsAddedToSurvey){
-                if(queList.getId() == q.getId()){
+        for (Question queList : questionList) {
+            for (Question q : questionsAddedToSurvey) {
+                if (queList.getId() == q.getId()) {
                     queList.setQuestionAddedToSurvey(true);
                 }
             }
         }
-        return  questionList;
+        return questionList;
     }
 }

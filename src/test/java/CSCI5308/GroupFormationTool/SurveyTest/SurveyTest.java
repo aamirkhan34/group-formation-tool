@@ -1,15 +1,9 @@
 package CSCI5308.GroupFormationTool.SurveyTest;
 
 import CSCI5308.GroupFormationTool.AccessControl.User;
-import CSCI5308.GroupFormationTool.QuestionTest.QuestionDBMock;
-import CSCI5308.GroupFormationTool.Questions.IQuestionPersistence;
-import CSCI5308.GroupFormationTool.Questions.MultipleChoiceOption;
 import CSCI5308.GroupFormationTool.Questions.Question;
-import CSCI5308.GroupFormationTool.Response.IResponsePersistence;
-import CSCI5308.GroupFormationTool.ResponseTest.ResponseDBMock;
 import CSCI5308.GroupFormationTool.Survey.ISurveyPersistence;
 import CSCI5308.GroupFormationTool.Survey.Survey;
-import CSCI5308.GroupFormationTool.Survey.SurveyDB;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
@@ -17,7 +11,6 @@ import org.springframework.util.Assert;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @SuppressWarnings("deprecation")
@@ -70,7 +63,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void getSurveyQuestionList() {
+    public void getSurveyQuestionListTest() {
         Survey s = new Survey();
         ArrayList<Question> questions = new ArrayList<Question>();
 
@@ -95,7 +88,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void setSurveyQuestionList() {
+    public void setSurveyQuestionListTest() {
         Survey s = new Survey();
         ArrayList<Question> questions = new ArrayList<Question>();
 
@@ -120,14 +113,14 @@ public class SurveyTest {
     }
 
     @Test
-    public void isPublished() {
+    public void isPublishedTest() {
         Survey survey = new Survey();
         survey.setPublished(true);
         assertEquals(true, survey.isPublished());
     }
 
     @Test
-    public void setPublished() {
+    public void setPublishedTest() {
         Survey survey = new Survey();
         survey.setPublished(true);
         assertEquals(true, survey.isPublished());
@@ -223,7 +216,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void loadSurveyQuestionsByCourseId() {
+    public void loadSurveyQuestionsByCourseIdTest() {
         ISurveyPersistence dbMock = new SurveyDBMock();
         ArrayList<Question> q1 = (ArrayList<Question>) dbMock.loadSurveyQuestionsByCourseId((long) 1);
         Assert.isTrue(q1.get(0).getText().equals("Option 1"));
