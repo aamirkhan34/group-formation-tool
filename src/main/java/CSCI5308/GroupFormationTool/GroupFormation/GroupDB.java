@@ -28,6 +28,8 @@ public class GroupDB implements IGroupPersistence {
 	@Override
 	public boolean createGroups(List<Group> group) {
 		CallStoredProcedure proc = null;
+		ILoggerFactory loggerFactory = new ErrorLoggerFactory();
+		ILogger logger = loggerFactory.createLogger();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			for (Group g : group) {
@@ -48,7 +50,7 @@ public class GroupDB implements IGroupPersistence {
 				}
 			}
 		} catch (SQLException e) {
-			// Logging needed
+			logger.logMessage(e.getMessage(),"Error in createGroups method", SystemConfig.instance().getLogDB());
 			return false;
 		} finally {
 			if (null != proc) {

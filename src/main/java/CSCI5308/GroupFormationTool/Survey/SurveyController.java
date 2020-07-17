@@ -31,7 +31,6 @@ public class SurveyController {
         q.setInstructor(user);
         List<Question> questionList = q.loadAllQuestionsByInstructor(questionDB);
         List<Question> questionsAddedToSurvey = surveyDB.loadSurveyQuestionsByCourseId(courseID);
-
         Survey s = new Survey();
         List<Question> surveyQuestions = s.getAllSurveyQuestions(questionList,questionsAddedToSurvey);
         int isPublished = surveyDB.isSurveyPublished(courseID);

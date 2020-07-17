@@ -24,8 +24,8 @@ public class CourseAdminController
 	@GetMapping("/admin/course")
 	public String course(Model model)
 	{
-		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
-		List<Course> allCourses = courseDB.loadAllCourses();
+		Course course = new Course();
+		List<Course> allCourses = course.loadAllCourses();
 		model.addAttribute("courses", allCourses);
 		return "admin/course";
 	}
@@ -34,9 +34,9 @@ public class CourseAdminController
 	public String assignInstructor(Model model, @RequestParam(name = ID) long courseID)
 	{
 		ICoursePersistence courseDB = SystemConfig.instance().getCourseDB();
-		Course c = new Course();
-		courseDB.loadCourseByID(courseID, c);
-		model.addAttribute("course", c);
+		Course course = new Course();
+		course.loadCourseByID(courseID, course);
+		model.addAttribute("course", course);
 		ICourseUserRelationshipPersistence courseUserRelationshipDB = SystemConfig.instance().getCourseUserRelationshipDB();
 		List<User> allUsersNotCurrentlyInstructors = courseUserRelationshipDB.findAllUsersWithoutCourseRole(Role.INSTRUCTOR, courseID);
 		model.addAttribute("users", allUsersNotCurrentlyInstructors);
