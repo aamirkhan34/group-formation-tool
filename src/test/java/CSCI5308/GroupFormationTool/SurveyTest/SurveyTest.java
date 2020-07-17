@@ -24,35 +24,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SurveyTest {
 
     @Test
-    public void getIdTest() {
+    public void testGetId() {
         Survey survey = new Survey();
         survey.setId(123);
         assertEquals(123, survey.getId());
     }
 
     @Test
-    public void setIdTest() {
+    public void testSetId() {
         Survey survey = new Survey();
         survey.setId(1234);
         assertEquals(1234, survey.getId());
     }
 
     @Test
-    public void getCourseIDTest() {
+    public void testGetCourseID() {
         Survey survey = new Survey();
         survey.setCourseID(123);
         assertEquals(123, survey.getCourseID());
     }
 
     @Test
-    public void setCourseIDTest() {
+    public void testSetCourseID() {
         Survey survey = new Survey();
         survey.setCourseID(1234);
         assertEquals(1234, survey.getCourseID());
     }
 
     @Test
-    public void getInstructorTest() {
+    public void testGetInstructor() {
         Survey survey = new Survey();
         User u = new User();
         u.setId(1234);
@@ -61,7 +61,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void setInstructorTest() {
+    public void testSetInstructor() {
         Question question = new Question();
         User u = new User();
         u.setId(100);
@@ -70,7 +70,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void getSurveyQuestionList() {
+    public void testGetSurveyQuestion() {
         Survey s = new Survey();
         ArrayList<Question> questions = new ArrayList<Question>();
 
@@ -95,7 +95,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void setSurveyQuestionList() {
+    public void testSetSurveyQuestionList() {
         Survey s = new Survey();
         ArrayList<Question> questions = new ArrayList<Question>();
 
@@ -120,21 +120,21 @@ public class SurveyTest {
     }
 
     @Test
-    public void isPublished() {
+    public void testIsPublished() {
         Survey survey = new Survey();
         survey.setPublished(true);
         assertEquals(true, survey.isPublished());
     }
 
     @Test
-    public void setPublished() {
+    public void testSetPublished() {
         Survey survey = new Survey();
         survey.setPublished(true);
         assertEquals(true, survey.isPublished());
     }
 
     @Test
-    public void createSurveyTest() {
+    public void testCreateSurvey() {
         ISurveyPersistence surveyDB = new SurveyDBMock();
         Survey survey = new Survey();
         User user = new User();
@@ -181,13 +181,13 @@ public class SurveyTest {
     }
 
     @Test
-    public void isSurveyPublishedTest() {
+    public void testIsSurveyPublished() {
         ISurveyPersistence dbMock = new SurveyDBMock();
         Assert.isTrue(dbMock.isSurveyPublished(Long.valueOf(1)) == 1);
     }
 
     @Test
-    public void publishSurveyTest() {
+    public void testPublishSurvey() {
         ISurveyPersistence dbMock = new SurveyDBMock();
         User user = new User();
         user.setID(1);
@@ -204,7 +204,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void loadSurveyQuestionsTest() {
+    public void testLoadSurveyQuestions() {
         ISurveyPersistence dbMock = new SurveyDBMock();
         ArrayList<Question> surveyQuestions = (ArrayList<Question>) dbMock.loadSurveyQuestions((long) 1);
         Assert.isTrue(surveyQuestions.get(0).getText().equals("Option 1"));
@@ -214,7 +214,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void findInstructorOfTATest() {
+    public void testFindInstructorOfTA() {
         ISurveyPersistence dbMock = new SurveyDBMock();
         User user = dbMock.findInstructorOfTA((long) 1);
         Assert.isTrue(user.getBanner().equals("B00847415"));
@@ -223,7 +223,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void loadSurveyQuestionsByCourseId() {
+    public void testLoadSurveyQuestionsByCourseId() {
         ISurveyPersistence dbMock = new SurveyDBMock();
         ArrayList<Question> q1 = (ArrayList<Question>) dbMock.loadSurveyQuestionsByCourseId((long) 1);
         Assert.isTrue(q1.get(0).getText().equals("Option 1"));

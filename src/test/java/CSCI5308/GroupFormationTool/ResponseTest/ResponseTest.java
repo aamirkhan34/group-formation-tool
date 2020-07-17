@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ResponseTest {
 
     @Test
-    public void getQuestionTest()
+    public void testGetQuestion()
     {
         Response response = new Response();
         Question question = new Question();
@@ -24,7 +24,7 @@ public class ResponseTest {
         assertEquals(1, response.getQuestion().getId());
     }
     @Test
-    public void SetQuestionTest()
+    public void testSetQuestion()
     {
         Response response = new Response();
         Question question = new Question();
@@ -34,14 +34,14 @@ public class ResponseTest {
     }
 
     @Test
-    public void getSingleResponseTest()
+    public void testGetSingleResponse()
     {
         Response response = new Response();
         response.setSingleresponse("test");
         assertEquals("test", response.getSingleresponse());
     }
     @Test
-    public void setSingleResponseTest()
+    public void testSetSingleResponse()
     {
         Response response = new Response();
         response.setSingleresponse("sample");
@@ -49,7 +49,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void getResponseTest()
+    public void testGetResponse()
     {
         ArrayList<String> responses = new ArrayList<>();
         responses.add("test");
@@ -59,7 +59,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void setResponseTest()
+    public void testSetResponse()
     {
         ArrayList<String> responses = new ArrayList<>();
         responses.add("sample");
@@ -69,7 +69,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void saveResponseTest(){
+    public void testSaveResponse(){
         ArrayList<Response> responses = new ArrayList<>();
         Response response = new Response();
         response.setSingleresponse("singleResponse");
@@ -79,7 +79,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void isResponseprovidedByStudentTest(){
+    public void testIsResponseprovidedByStudent(){
         IResponsePersistence responseDBMock = new ResponseDBMock();
         assertTrue(responseDBMock.isResponseprovidedByStudent(Long.valueOf(3),Long.valueOf(2)));
     }

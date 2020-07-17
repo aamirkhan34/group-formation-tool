@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 class StudentCSVParserTest 
 {
 	@Test
-	public void parseCSVFile() 
+	public void testParseCSVFile() 
 	{
 		Reader reader = null;
 		CSVReaderMock csvReader = new CSVReaderMock();

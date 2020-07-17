@@ -12,7 +12,7 @@ import CSCI5308.GroupFormationTool.Courses.ICoursePersistence;
 class CourseTest 
 {
 	@Test
-	public void ConstructorTests() 
+	public void testConstructor() 
 	{
 		Course course = new Course();
 		Assert.isTrue(course.getId() == -1);
@@ -25,7 +25,7 @@ class CourseTest
 	}
 
 	@Test
-	public void setIdTest() 
+	public void testSetId() 
 	{
 		Course course = new Course();
 		course.setId(7);
@@ -33,7 +33,7 @@ class CourseTest
 	}
 
 	@Test
-	public void getIdTest() 
+	public void testGetId() 
 	{
 		Course course = new Course();
 		course.setId(7);
@@ -41,7 +41,7 @@ class CourseTest
 	}
 
 	@Test
-	public void setTitleTest() 
+	public void testSetTitle() 
 	{
 		Course course = new Course();
 		course.setTitle("Advanced Topics in Software Development");
@@ -49,7 +49,7 @@ class CourseTest
 	}
 
 	@Test
-	public void getTitleTest() 
+	public void testGetTitle() 
 	{
 		Course course = new Course();
 		course.setTitle("Advanced Topics in Software Development");
@@ -57,7 +57,7 @@ class CourseTest
 	}
 
 	@Test
-	public void deleteCourseTest() 
+	public void testDeleteCourse() 
 	{
 		ICoursePersistence courseDB = new CourseDBMock();
 		boolean status = courseDB.deleteCourse(0);
@@ -65,7 +65,7 @@ class CourseTest
 	}
 
 	@Test
-	public void createCourseTest() 
+	public void testCreateCourse() 
 	{
 		ICoursePersistence courseDB = new CourseDBMock();
 		Course course = new Course();
